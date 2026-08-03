@@ -49,6 +49,7 @@ can cheaply remove.
 | `uc-caja-los-andes-2022-vi-encuesta-calidad-vida-vejez.pdf` | Centro UC Estudios de Vejez y Envejecimiento / Caja Los Andes, *Chile y sus mayores. Sexta Encuesta Nacional de Calidad de Vida en la Vejez 2022*, August 2023 |
 | `suseso-2026-afiliados-ccaf.xlsx` | SUSESO, affiliate statistics by CCAF, 2026. Companies, workers, pensioners and totals by month |
 | `laaraucana-beneficios-via-ssms.pdf` | Caja La Araucana benefits presentation, undated, hosted by the Servicio de Salud Metropolitano Sur. Used because `laaraucana.cl` blocks fetchers |
+| `lab-2026-wiki-datos-salud.txt` | Bendita IA / Caja La Araucana, *Wiki de Datos — Salud*, Claude Impact Lab · Longevidad. Text snapshot of `longevidad.benditaia.cl/es/wiki-legal` as retrieved 3 August 2026. **The authority for the Lab's data and AI rules**, archived because it is a live page with no version marker |
 
 Sources cited but not archived, because they are web pages rather than documents: the
 Superintendencia de Salud GES pages, the SUSESO pages on what a CCAF does and on the fiscalización of
@@ -96,25 +97,33 @@ the surgical median peaked at 661 days in 2021 — but neither is current, and n
 The trend also runs against the framing: waiting times have fallen every quarter recently. The pitch
 should not imply they are worsening.
 
-**Added after workstream 6: the 2,4 million figure is the Lab's own, and that changes the decision.**
-Workstream 2 offered three hypotheses for its origin and could not settle it. The Lab's site states
-verbatim "2,4 millones esperan una consulta, un procedimiento o una cirugía. Algunos llevan más de
-dos años", and press coverage of the launch repeats it unattributed. The wording — consultation,
-procedure **or surgery** — reads as the sum of the two waiting lists, which Glosa 06 explicitly warns
-must not be added because a person on both is counted twice. That inference is mine; the components
-are verified.
+**Resolved by workstream 6: all four figures are the Lab's, verbatim, and the Lab attributes them to
+MINSAL.** Workstream 2 offered three hypotheses and could not settle it. The Lab's *Wiki de Datos —
+Salud* lists them as "las cifras sobre las que van a construir los equipos":
 
-So correcting the figure on stage means contradicting the host institution's framing in front of the
-host institution. That may still be right, because the panel includes government and health-management
-judges who know the Glosa 06 numbers, and being the team that used the real ones is a stronger
-position than being the team that repeated the brief. But it is now a **deliberate choice for Felipe**
-rather than a correction of an error. The middle path exists and is probably the best of the three:
-say "más de dos millones de personas esperan una primera consulta de especialidad, 2.088.245 al 31 de
-marzo de 2026", which is true, close to the Lab's number, and sourced — without ever saying the Lab's
-figure is wrong.
+> ~2,4 millones de personas — En listas de espera del sistema público
+> 330.000–350.000 — Esperando una cirugía
+> 400+ días promedio — En consulta de especialidad
+> 500+ días promedio — En cirugía — con casos de 3 y 4 años
 
-The root `README.md` already reads that way, so nothing needs reverting there. The observation only
-changes the register of the correction, not its content.
+attributed on the same panel to "Ministerio de Salud" and "DEIS — Estadísticas de salud". Every one
+is out of date against Glosa 06 Q1 2026, including a fourth we had not checked: the wiki's
+330.000–350.000 waiting for surgery against **398.496** people.
+
+**So PRD section 1 is not sloppy — it copied the brief faithfully, and the brief is stale.** That
+changes the register of the correction entirely. Because the wiki names MINSAL as its own source, and
+Glosa 06 *is* MINSAL's legally mandated quarterly report to Congress, the pitch is not contradicting
+the host. It is citing the host's own source at its most recent cut.
+
+**The line to use:** "las cifras del Lab vienen del Minsal; estas son las del último informe
+trimestral del Minsal al Congreso, al 31 de marzo de 2026." Then give the numbers.
+
+The root `README.md` already reads that way, so nothing needs reverting there.
+
+**And note where the waiting-list framing belongs.** The wiki maps waiting lists to the
+**Descompresión** challenge line; ours, Continuidad, is mapped to "egresos hospitalarios, datos
+agregados de crónicos". PRD section 1 currently opens on the other line's problem statement. That is
+a second, independent argument for the P2 pivot below.
 
 ### P2. Section 1 — "En el intervalo no hay nadie mirando" is not accurate
 
@@ -342,6 +351,47 @@ deciding before anything is written into `clinical/`. **I am not a lawyer and th
 advice.** The three options are to license, to not use it, or to align to it conceptually without
 reproducing its items.
 
+### P12. The pitch — name the licencias médicas chain as the scale-up path
+
+**Severity: medium, decided.** New, from the Lab's data wiki via workstream 6.
+
+The Lab's own return-on-investment story runs through medical leave, verbatim: "COMPIN valida las
+licencias médicas → las Cajas de Compensación (como La Araucana) pagan el subsidio → SUSESO
+supervigila. Menos listas de espera → menos licencias → menos gasto → más productividad país", with
+La Araucana paying "del orden de mil millones CLP/año" into it.
+
+Medical leave is a **worker** benefit. PreventIA's population is pensioners. So the host institution's
+stated economics do not pass through our target population at all — which is exactly the structural
+finding workstream 6 reached from the other direction, before this page was read.
+
+**Felipe's decision, 3 August 2026: keep older adults, name the chain as the scale-up path.** No
+scope change. The pitch says that the same architecture applied to working-age chronic patients — the
+majority of the PSCV's 2,3 million, since the programme covers people from 15 up — lands directly on
+the COMPIN–CCAF–SUSESO chain, and that this is what the Phase 5 pilot would measure. It costs
+nothing, it shows we read the brief, and it answers the management-criteria judge before the question
+arrives.
+
+This sits alongside P6, not instead of it. The municipal burden argument is the one that stands
+without any evidence we lack; the licencias chain is the one the host recognises as money.
+
+### P13. Not a PRD change — a repository inconsistency that will mislead Angel
+
+**Severity: high, and it is mechanical.** Flagged here because it is the last loose end from
+ADR-0010.
+
+`CLAUDE.md` section 4 currently states "**The default runtime is a local model served by Ollama on the
+Mac Studio**" and "**Claude is the tool we build the software with. It is not the runtime.** Do not
+conflate the two and do not write code that assumes Anthropic is answering."
+
+Those two sentences mirror ADR-0008, which ADR-0010 has now superseded. The Lab's published rule is
+"Claude como motor principal — Sin llamadas reales a la API de Claude → descalificado". `CLAUDE.md`
+is the contract between the two developers and it is the first thing Angel reads, so leaving it as is
+means he builds against Ollama and against an accepted ADR.
+
+The third sentence stays true and should not be touched: no code should assume Anthropic is
+answering, because the provider seam is what makes both runtimes possible. Only the default and the
+"it is not the runtime" claim need to change.
+
 ---
 
 ## PRD claims this research could not substantiate
@@ -350,33 +400,51 @@ Listed as the brief requires, separately from the corrections above.
 
 | PRD claim | Status |
 |---|---|
-| "alrededor de 2,4 millones de personas esperan en listas" | **Traced, not substantiated.** No published official figure equals it; it is the Lab's own framing, and the phrasing reads as the sum of two lists Glosa 06 says not to add. See P1. |
-| "El promedio de espera supera los 400 días para una consulta de especialidad" | **Contradicted.** Mean 329 days. |
-| "y los 500 días para cirugía" | **Contradicted.** Mean 383 days. |
+| "alrededor de 2,4 millones de personas esperan en listas" | **Traced to the Lab's own wiki, verbatim, and stale.** No published official figure equals it. See P1. |
+| "El promedio de espera supera los 400 días para una consulta de especialidad" | **Contradicted.** Mean 329 days. Also verbatim from the Lab wiki. |
+| "y los 500 días para cirugía" | **Contradicted.** Mean 383 days. Also verbatim from the Lab wiki. |
 | "En el intervalo no hay nadie mirando" | **Contradicted.** See P2. |
 | "un control cada 3 a 6 meses" | **Substantiated**, and conservative: 6-12 months at low cardiovascular risk. |
 | Target population of polymedicated older adults with the three conditions | **Substantiated.** 65% multimorbidity in the PSCV; 53% hypertension, 34% diabetes and only 16% taking no medication among Chileans 60+. |
 | Section 10: fewer emergency reconsultations and avoidable readmissions | **Not substantiated, and now assessed.** No study reports either outcome for a conversational agent in older adults. The positive evidence is for nurse-led telephone support and telemonitoring; the two largest individual trials are null; the one direct test of interactive against one-way messaging found no difference. See P5. |
 | Section 2: that a two-way conversation is a different intervention from a one-way reminder | **Unsupported as an outcome claim.** True as a description; StAR tested the distinction directly and found no added effect. Still not refuted for a conversational agent, which nobody has tested at scale. |
 | Section 8: an adapter reading the Lab dataset "en el mismo esquema" | **Probably not possible as written.** Aggregated data has no person-level row. See P9. |
-| Section 8: that the anonymized dataset "hace creíble la proyección" | **Depends on an unresolved fact.** The Lab site is ambiguous about whether that dataset reaches non-winning teams during the two days at all. See P9. |
+| Section 8: that the anonymized dataset "hace creíble la proyección" | **Plausible, and now narrower than the PRD implies.** The dataset does arrive, but for our line it is hospital discharges and aggregated chronic-patient data, which supports a population-level projection and not a per-patient one. See P9. |
 | Section 9: WhatsApp as the channel, voice out of scope | **Substantiated as a decision, silent on its cost.** The modality gap is 78% / 51% / 22% by age band. See P7. Also contradicts the project description submitted to the Lab. |
 | "matrona o médico de cabecera" as the escalation target | **Partially substantiated.** PSCV follow-up is nurse-led, which fits. The specific role of *matrona* in cardiovascular follow-up was not verified. |
 | Implicit throughout: that patients are reachable | **Contradicted by the deployment record.** Wrong contact data has defeated three separate Chilean efforts to reach this population. See P10. |
 
-## Questions for the Lab organisers
+## What the Lab's own wiki settled
 
-New, from workstream 6, and all three fit in one message. Send it before Phase 0 closes; the first
-one changes what Phase 3 has to deliver.
+The organisers are not reachable — Felipe's assessment on 3 August 2026 is that they have enough
+disorganisation on their hands that a clarification request will not come back in time. The three
+questions this section originally posed have been answered instead by the Lab's *Wiki de Datos —
+Salud*, archived as `sources/lab-2026-wiki-datos-salud.txt`.
 
-1. **When does the Caja La Araucana dataset arrive, and to whom?** The site lists "Datasets curados"
-   under "Acceso post-Lab" while also describing La Araucana as contributing anonymized health data.
-   If it is post-Lab and for winners only, ADR-0007's premise is wrong.
-2. **What is "Acompañamiento paciente crónico"?** It is in La Araucana's published catalogue,
-   pensioner-only, plan ilimitado, delivered by telemedicine. PreventIA is adjacent to it, and the
-   pitch is much stronger naming it than appearing not to know it exists.
-3. **What is the source of the 2,4 million figure?** Asked so that using the Glosa 06 numbers instead
-   is a courtesy rather than a contradiction. See P1.
+| Question | Answer |
+|---|---|
+| When does the Caja dataset arrive, and to whom? | **Closed.** Curated datasets, anonimizados y agregados, "se publican al abrir la convocatoria". My earlier post-Lab reading was wrong |
+| What does our challenge line get? | **Egresos hospitalarios, datos agregados de crónicos.** Waiting lists belong to Descompresión |
+| Where do the 2,4 million and 400/500-day figures come from? | **The wiki itself**, attributed to Minsal and DEIS. All four are stale against Glosa 06 Q1 2026. See P1 |
+
+**And one thing it settled that nobody had thought to ask.** The wiki states "Claude como motor
+principal — Sin llamadas reales a la API de Claude → descalificado", which contradicted ADR-0008's
+stated basis for making Ollama the default runtime. Resolved by **ADR-0010**: Claude is the runtime
+for the build, demo and pitch; Ollama becomes the documented deployment path. One environment
+variable, no module code, disqualification risk removed under either reading of the rule.
+
+Two of the Lab's rules are conditions rather than guidance and are worth knowing: **every team must
+include at least one health professional**, and every clinical claim must carry a verifiable source
+or say "no sé". The second is why workstream 1 attaches a MINSAL citation to every candidate signal
+instead of proposing thresholds.
+
+Still open, and now answerable only on the day or by decision:
+
+1. **What is "Acompañamiento paciente crónico"?** La Araucana runs it — pensioner-only, plan
+   ilimitado, by telemedicine. The wiki does not list it among the data sources, so it probably is
+   not the dataset, but a judge from the host institution will know it exists and the pitch is
+   stronger naming it.
+2. Does the Lab mean "agregado" strictly or loosely? Answerable by looking at the data on day one.
 
 ## Questions for the clinical teammate
 
