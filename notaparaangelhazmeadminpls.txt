@@ -1,0 +1,30 @@
+Angel:
+
+Intenté dejarle al repo la descripción y los topics y me rebotó con un 404. No es que no exista,
+es GitHub diciendo que tengo push pero no admin. Cuando pides editar algo que no te corresponde te
+contesta 404 en vez de 403, para no confirmarte ni que el repo está ahí.
+
+Así que o me haces admin, o corres esto tú:
+
+gh repo edit angelhurst/PreventIA \
+  --description "Seguimiento diario por WhatsApp a adultos mayores polimedicados: verifica adherencia, detecta descompensación temprana y escala al equipo de salud." \
+  --add-topic ai-agents --add-topic healthcare --add-topic conversational-ai \
+  --add-topic whatsapp-bot --add-topic chile --add-topic digital-health \
+  --add-topic elderly-care --add-topic patient-monitoring --add-topic medication-adherence
+
+Cualquiera de las dos sirve. La primera te ahorra que te vuelva a molestar la próxima vez que haya
+que tocar algo de la ficha del repo, y quedan varias.
+
+Los nueve topics no son al voleo, revisé cuánto pesa cada uno antes de elegirlos. Tres grandes para
+alcance, tres medianos, tres angostos donde podemos quedar arriba de inmediato. El razonamiento
+completo está en docs/adr/0009-repository-discoverability.md.
+
+Y un dato que te va a gustar: el topic medication-adherence tiene diecinueve repos. Diecinueve. La
+página que describe exactamente lo que estamos haciendo está casi vacía, y los que están hoy son
+apps de recordatorio de pastillas, casi todas Android. Ninguna clasifica riesgo clínico ni escala a
+un equipo de salud. Osea que el día que pongas el topic quedamos arriba en esa cancha.
+
+Lo de que seríamos la primera herramienta chilena en ese tag es corazonada mía, no dato. No lo
+pongas en el pitch hasta que alguno se lea los diecinueve. Son diecinueve, se hace en cinco minutos.
+
+Felipe
