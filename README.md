@@ -13,14 +13,25 @@ de salud solo cuando hay una señal real de alarma.
 
 ## El problema
 
-En Chile alrededor de 2,4 millones de personas esperan en listas del sistema público. El promedio
-supera los 400 días para una consulta de especialidad y los 500 para cirugía, y el peso cae sobre
-personas de menores ingresos, adultos mayores y habitantes de regiones.
+Más de dos millones de personas esperan una primera consulta de especialidad en el sistema público:
+2.088.245 al 31 de marzo de 2026, con una mediana de 236 días. Para un adulto mayor que ya está en
+control, el problema no es la fila.
 
-Para un adulto mayor polimedicado con hipertensión, diabetes tipo 2 o insuficiencia cardíaca, el
-seguimiento entre un control y el siguiente depende hoy de dos cosas frágiles: su memoria, y un
-control cada 3 a 6 meses. En el intervalo no hay nadie mirando. Una descompensación que empezó a
-insinuarse tres semanas antes llega a urgencias como si hubiera aparecido de golpe.
+El Programa de Salud Cardiovascular tiene bajo control a 2,3 millones de personas, y el 65% de ellas
+vive con más de una enfermedad crónica. Las garantías GES cubren la entrada: 45 días para confirmar
+una hipertensión, 24 horas para iniciar el tratamiento. Ninguna cubre el intervalo. Una vez
+compensado el paciente, el programa sugiere un control cada 3 meses si el riesgo cardiovascular es
+alto, cada 6 si es moderado, cada 6 a 12 si es bajo. La insuficiencia cardíaca no es siquiera un
+problema GES: no tiene plazo garantizado de ninguna clase.
+
+En ese intervalo sí hay alguien mirando, y ahí está el costo. Los equipos municipales de atención
+primaria están obligados a rescatar a quien falta a su control, con al menos tres intentos
+documentados antes de poder darlo de baja. Nueve de cada diez de los 2.027 establecimientos que
+hacen ese trabajo dependen de un municipio. Aun así, una descompensación que empezó a insinuarse
+tres semanas antes llega a urgencias como si hubiera aparecido de golpe.
+
+Cifras: Glosa 06 del Minsal (I trimestre 2026), Orientación Técnica del PSCV y evaluación DIPRES del
+Fondo de Farmacia. Fuentes y método en [docs/research/](docs/research/).
 
 ## Qué hace
 
