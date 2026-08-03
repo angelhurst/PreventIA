@@ -1,0 +1,17 @@
+.env
+.env.local
+
+agent_sessions/
+*.db
+*.sqlite
+*.sqlite3
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+.DS_Store
+Thumbs.db

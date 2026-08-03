@@ -225,6 +225,10 @@ diverging.
   what it depends on, in one sentence each.
 - **Tests before implementation for `clinical/`.** The rest of the codebase can move fast; the
   clinical layer cannot.
+- **Commit AND push as you go.** Every logical chunk of work gets a conventional commit and is
+  pushed to `origin` in the same breath. A commit sitting unpushed on one laptop does not exist for
+  the other person, and this is a two-person repo working against a two-day deadline. Never batch
+  up commits to push later.
 - **Commit directly to the working branch. Do not open a pull request** unless someone explicitly
   asks for one in that moment.
 - **If a file changed and you did not change it, Felipe or Angel did.** This is a two-person repo on
