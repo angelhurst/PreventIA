@@ -77,51 +77,66 @@ than a hope.
 
 ## 4. Stack
 
-- Python, **Strands Agents SDK**, provider-agnostic model layer. **Kimi `kimi-k3` is the configured
-  default. Claude is what runs the Lab demo**, because the Lab requires Claude as the engine.
-  Switching between them is one environment variable and touches no other module.
+- Python, **Strands Agents SDK**, provider-agnostic model layer. **The default runtime is a local
+  model served by Ollama on the Mac Studio.** Kimi `kimi-k3` and Anthropic are registered
+  alternatives, selected by one environment variable, touching no other module.
+- **Claude is the tool we build the software with. It is not the runtime.** Do not conflate the two
+  and do not write code that assumes Anthropic is answering.
 - **SQLite** for the clinical record.
 - **Strands `FileSessionManager`** for raw conversation transcripts. Do not put transcripts in
   SQLite and do not write a custom session manager.
 - **WhatsApp Cloud API** test number as the patient channel.
 - **pytest** for the guardrail and semáforo suites.
 
-Install both providers. Anthropic, not Bedrock: we use Anthropic API credits directly and there is
-no AWS account in this project. Kimi is reached through the OpenAI-compatible provider pointed at
-Moonshot, so it needs no extra dependency.
+Install the three providers. Anthropic rather than Bedrock, since there is no AWS account in this
+project. Kimi is reached through the OpenAI-compatible provider pointed at Moonshot and needs no
+extra dependency.
 
 ```bash
-pip install 'strands-agents[anthropic,openai]'
+pip install 'strands-agents[ollama,openai,anthropic]'
 ```
 
 Model construction lives in one place, `agent/models.py`. It reads the provider from the environment
 so no other module ever imports a provider directly:
 
 ```python
-from strands.models.anthropic import AnthropicModel
+from strands.models.ollama import OllamaModel
 from strands.models.openai import OpenAIModel
+from strands.models.anthropic import AnthropicModel
 
 def build_model():
-    provider = os.environ.get("PREVENTIA_MODEL_PROVIDER", "kimi")
+    provider = os.environ.get("PREVENTIA_MODEL_PROVIDER", "ollama")
+    if provider == "kimi":
+        return OpenAIModel(
+            client_args={
+                "api_key": os.environ["MOONSHOT_API_KEY"],
+                "base_url": "https://api.moonshot.ai/v1",
+            },
+            model_id="kimi-k3",
+            params={"max_tokens": 1024},
+        )
     if provider == "anthropic":
         return AnthropicModel(
             client_args={"api_key": os.environ["ANTHROPIC_API_KEY"]},
             model_id="claude-sonnet-5",
             max_tokens=1024,
         )
-    return OpenAIModel(
-        client_args={
-            "api_key": os.environ["MOONSHOT_API_KEY"],
-            "base_url": "https://api.moonshot.ai/v1",
-        },
-        model_id="kimi-k3",
-        params={"max_tokens": 1024},
+    return OllamaModel(
+        host=os.environ.get("OLLAMA_HOST", "http://localhost:11434"),
+        model_id=os.environ["OLLAMA_MODEL"],
     )
 ```
 
-`PREVENTIA_MODEL_PROVIDER=anthropic` is what runs during the Lab and in the recorded demo. Unset, it
-is Kimi. Run the guardrail and semáforo suites against **both** before demo day: the whole point of
-the deterministic floor in section 6 is that clinical safety cannot depend on which model answered.
+Unset, it is Ollama. Ollama runs models through Apple's MLX on Apple Silicon, so the Mac Studio uses
+the right backend without anyone tuning it.
+
+**Open item:** `OLLAMA_MODEL` has no default because the model depends on the Mac Studio's unified
+memory and on how well it handles tool calling. Agree it with Angel before Phase 1, and pin the
+chosen id here.
+
+Run the guardrail and semáforo suites against **every provider you actually use** before demo day.
+The whole point of the deterministic floor in section 6 is that clinical safety cannot depend on
+which model answered, and a local open-weights model is exactly where that assumption gets tested.
 
 Lab-provided MCP servers (the curated anonymized datasets) are consumed through Strands' own client:
 
@@ -212,6 +227,9 @@ diverging.
   clinical layer cannot.
 - **Commit directly to the working branch. Do not open a pull request** unless someone explicitly
   asks for one in that moment.
+- **If a file changed and you did not change it, Felipe or Angel did.** This is a two-person repo on
+  personal machines. Do not raise it, do not ask about it, do not treat it as anomalous. Read the
+  new state and carry on.
 - **ADRs are immutable.** Once an ADR is Accepted, its body is never edited, extended or given a new
   section. A changed decision always gets a new, next-numbered ADR whose Status says
   "Supersedes 00XX", and the only edit ever made to the old one is flipping its Status line to
@@ -223,6 +241,8 @@ diverging.
 
 ```
 PREVENTIA_MODEL_PROVIDER=
+OLLAMA_HOST=
+OLLAMA_MODEL=
 MOONSHOT_API_KEY=
 ANTHROPIC_API_KEY=
 WHATSAPP_PHONE_NUMBER_ID=

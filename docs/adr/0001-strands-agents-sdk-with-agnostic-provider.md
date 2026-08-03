@@ -1,6 +1,6 @@
 # 0001 — Strands Agents SDK with a provider-agnostic model layer
 
-**Status:** Accepted
+**Status:** Superseded by 0008
 **Date:** 2026-08-03
 **Deciders:** Felipe Carvajal Brown
 
