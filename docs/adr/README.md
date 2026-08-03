@@ -15,5 +15,6 @@ is flipping its Status line to "Superseded by 00YY".
 | [0005](0005-three-layer-clinical-guardrail.md) | Three-layer clinical guardrail with an adversarial test suite | Accepted |
 | [0006](0006-clinician-triage-queue-as-escalation-surface.md) | Clinician triage queue as the escalation surface | Accepted |
 | [0007](0007-synthetic-cohort-with-caja-adapter.md) | Synthetic seed cohort with an adapter for the Caja dataset | Accepted |
-| [0008](0008-local-ollama-runtime-claude-as-build-tool.md) | Local Ollama runtime as the default, Claude as the build tool | Accepted |
+| [0008](0008-local-ollama-runtime-claude-as-build-tool.md) | Local Ollama runtime as the default, Claude as the build tool | Superseded by 0010 |
 | [0009](0009-repository-discoverability.md) | Repository description and topics | Accepted |
+| [0010](0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) | Claude as the Lab runtime, Ollama as the deployment path | Accepted |

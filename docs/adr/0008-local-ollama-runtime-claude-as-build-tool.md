@@ -1,6 +1,6 @@
 # 0008 — Local Ollama runtime as the default, Claude as the build tool
 
-**Status:** Accepted. Supersedes 0001
+**Status:** Superseded by 0010. Supersedes 0001
 **Date:** 2026-08-03
 **Deciders:** Felipe Carvajal Brown
 
