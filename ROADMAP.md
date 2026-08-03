@@ -35,7 +35,9 @@ prototype is not complete until a healthcare professional writes the real table.
 **Status:** Not Started
 **Target:** day 1 morning
 
-- Strands agent assembled, provider-agnostic model layer, Claude configured as default.
+- Strands agent assembled, provider-agnostic model layer defaulting to local Ollama.
+- `OLLAMA_MODEL` agreed with Angel and pinned, sized to the Mac Studio and to tool-calling
+  reliability. Blocks this phase.
 - System prompt carrying the clinical boundary.
 - Structured extraction of adherence and symptoms from natural conversation.
 - Deterministic rule engine setting the color floor.
