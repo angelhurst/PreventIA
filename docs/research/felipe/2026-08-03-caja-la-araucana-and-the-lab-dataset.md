@@ -14,6 +14,11 @@ contain. Section 6 is that list and is the deliverable. Everything before it exi
 Where I am reasoning rather than reporting, it says so. Section 7 collects every guess in one place
 so nobody has to hunt for them.
 
+**Sections 5.1 to 5.3 were added after the rest**, once Felipe pointed at the Lab's *Wiki de Datos —
+Salud*. That page is the closest thing to an authoritative statement of the Lab's rules that exists,
+it closes one question I had left open, it corrects one reading of mine that was wrong, and it
+produced the finding that led to ADR-0010. If you read only one part of this document, read 5.1.
+
 ## Headline
 
 Three findings, in order of how much they should change what we do.
@@ -181,23 +186,99 @@ On La Araucana's role, verbatim:
 > Aporta el problema-país, los datos de salud anonimizados, el venue y la red institucional.
 
 On the curated public sources, the site names **Minsal, Fonasa, DEIS and BCN** — which are the sources
-workstreams 2 and 3 have already worked through directly. If the "curated datasets" are these, we are
-not waiting on anything.
+workstreams 2 and 3 have already worked through directly.
 
-**And one ambiguity that matters, which I could not resolve.** The site lists "Datasets curados" among
-the benefits under a heading reading **"Acceso post-Lab"**, while simultaneously describing La
-Araucana as contributing anonymized health data and listing "datos públicos disponibles" per challenge
-line. Read one way, the curated datasets arrive during the two days. Read the other, they are part of
-the post-Lab adoption pathway for winning teams, and nothing from La Araucana is in our hands on 5
-August at all.
+### 5.1 The Lab's data wiki, which answers most of this
 
-**Unverified, and it is the single question whose answer most changes Phase 0.** What would verify it:
-one message to the organisers. If the second reading is right, `data/caja_adapter.py` cannot be
-exercised during the Lab, ADR-0007's premise that the data is "available when the Lab starts" is
-wrong, and the adapter becomes a documented intention rather than a working component — which is
-still worth building, but should be described honestly in the pitch as untested against real data.
+Added after the rest of this document was written. Felipe pointed at
+https://longevidad.benditaia.cl/es/wiki-legal, the Lab's *Wiki de Datos — Salud*, which is the only
+authoritative statement of the Lab's data rules available to us and which the organisers are not
+reachable to supplement. Archived as `lab-2026-wiki-datos-salud.txt` because it is a live page.
 
-**Ask before day one.** It costs a message and it changes what Phase 3 has to deliver.
+**Correction to what I wrote above.** I read the main site's "Acceso post-Lab" label as possibly
+meaning the curated datasets reach only winning teams after the event. The wiki says otherwise:
+curated datasets are "**Anonimizados y agregados — se publican al abrir la convocatoria**", and
+"Los datasets curados y sus convenios se anuncian al abrir la convocatoria". The convocatoria has
+opened. My reading was wrong and the question is closed.
+
+**What our challenge line actually gets.** The wiki maps data to each line:
+
+| Line | Data named |
+|---|---|
+| Prevención | DEIS, encuestas públicas, datasets curados del Lab |
+| Descompresión | Listas de espera anonimizadas y agregadas |
+| **Continuidad** (ours) | **Egresos hospitalarios, datos agregados de crónicos** |
+
+That is the direct answer to this workstream's question, and it **confirms the schema-risk table in
+section 6 almost row for row**. Hospital discharges and aggregated chronic-patient data. No
+per-patient medication list, no per-patient diagnosis, no contact history, no phone number. Nothing
+that would populate a `patients` table with people.
+
+Note also that waiting lists are **Descompresión's** dataset, not ours. PRD section 1 currently leads
+with a waiting-list statistic, which is the other line's problem framing. That is a second,
+independent reason for the P2 pivot to the interval-between-controls argument.
+
+**The named sources are all public and all reachable now.** DEIS (egresos hospitalarios, defunciones,
+dotación), datos.gob.cl, Fonasa estadísticas, BCN Ley Fácil — plus the Lab's curated datasets and,
+notably, "**Prospección sintética** — Datos sintéticos provistos por el Lab para casos que lo
+requieran". The Lab supplies synthetic data itself. ADR-0007's synthetic cohort is not a workaround
+around the rules; it is one of the three data modes the Lab explicitly sanctions.
+
+### 5.2 The Lab's AI rules match CLAUDE.md section 2 almost exactly
+
+Quoted verbatim from the wiki, under "IA en salud, con responsabilidad":
+
+> - Asistencia, no diagnóstico — Tu solución apoya decisiones clínicas; no entrega diagnóstico ni
+>   indicación médica autónoma
+> - Humano en el circuito — Las decisiones clínicas las toma un profesional de salud
+> - Cita tu evidencia — Toda afirmación clínica debe tener fuente verificable — o decir "no sé"
+> - Guardrails clínicos — System prompts con límites explícitos sobre lo que el agente no debe
+>   responder
+> - Claude como motor principal — Sin llamadas reales a la API de Claude → descalificado
+> - Criterio clínico en el equipo — Todo equipo incluye al menos un profesional de salud
+
+The first four restate the clinical non-negotiables in `CLAUDE.md` section 2 and ADR-0005, written
+before this page was read. That is worth saying in the pitch: the boundary is not our house style,
+it is the Lab's rule, and the guardrail suite is the evidence we complied with it in code rather than
+in a prompt. "Cita tu evidencia" in particular is why workstream 1 attaches a MINSAL source to every
+candidate signal instead of proposing thresholds.
+
+Two of the six are not style, they are conditions.
+
+**"Criterio clínico en el equipo" is an eligibility requirement**, not a recommendation. ROADMAP
+already lists Phase 0 as blocked on the clinical teammate for the flag table. It is also blocking on
+entry.
+
+**"Claude como motor principal" contradicted ADR-0008**, which had made a local Ollama model the
+default runtime on the stated basis that the Lab's requirement "does not dictate what the deployed
+agent runs on". That is now resolved by **ADR-0010**, which makes Claude the runtime for the build,
+demo and pitch and keeps Ollama as the documented deployment path. The finding is recorded here
+because this document is where it surfaced.
+
+### 5.3 The Lab's return thesis runs through medical leave, not through pensioners
+
+The wiki's institutional map, verbatim:
+
+> La veta del retorno: COMPIN valida las licencias médicas → las Cajas de Compensación (como La
+> Araucana) pagan el subsidio → SUSESO supervigila. Menos listas de espera → menos licencias → menos
+> gasto → más productividad país.
+
+and, on CCAF:
+
+> Pagan los subsidios de incapacidad laboral (La Araucana paga del orden de mil millones CLP/año)
+
+**This confirms section 1's structural finding from the Lab's own side.** The money La Araucana has in
+health is in *subsidio por incapacidad laboral*, which is a worker benefit. The Lab's stated
+return-on-investment chain does not pass through pensioners at all, and PreventIA's population is
+pensioners.
+
+Felipe's decision on how the pitch handles this, taken 3 August 2026: **keep older adults as the
+target population, and name the licencias chain as the scale-up path.** The prototype does not
+change. The pitch says plainly that the same architecture applied to working-age chronic patients —
+who are the majority of the PSCV's 2,3 million, since the programme covers people from 15 up — lands
+directly on the COMPIN–CCAF–SUSESO chain the Lab describes, and on the order of a billion pesos a
+year that La Araucana pays into it. That costs no scope and answers the management-criteria judge
+before the question is asked.
 
 ## 6. Schema assumptions at risk
 
@@ -237,17 +318,21 @@ so if this is adopted it needs a new ADR that supersedes it.
 
 Collected here so it is impossible to miss.
 
-1. **What the Lab dataset contains.** Nobody outside the organisers knows. Every row of the section 6
-   table is reasoning from what the institution's statutory function and published services imply,
-   not from having seen the data.
-2. **That "agregado" means no person-level rows.** It is what the word means, and the Lab's own rule
-   uses it. But the Lab may use "anonimizado/agregado" loosely to mean de-identified, which is a
-   different thing and would change section 6 substantially.
+1. **What the Lab dataset contains in detail.** The wiki names the category for our line — egresos
+   hospitalarios and datos agregados de crónicos (5.1) — but not the fields. Every row of the section
+   6 table is still reasoning from what the institution's statutory function and published services
+   imply, not from having seen the data. The wiki narrows the guess considerably and does not remove
+   it.
+2. **That "agregado" means no person-level rows.** It is what the word means, and the Lab uses it in
+   its own non-negotiable rule. But the Lab may use "anonimizado/agregado" loosely to mean
+   de-identified, which is a different thing and would change section 6 substantially.
 3. **The age distribution of La Araucana's 233 thousand pensioners.** Unknown.
-4. **Whether the chronic-accompaniment service generates the dataset.** Purely an inference from it
-   being the only pensioner-facing longitudinal service in the published catalogue.
-5. **When the data arrives.** See 5. Genuinely ambiguous on the public site.
-6. **Whether any of this survives contact with what the organisers actually hand over on 5 August.**
+4. **Whether the chronic-accompaniment service generates any of the dataset.** An inference from it
+   being the only pensioner-facing longitudinal service in the published catalogue. The wiki does not
+   mention the service at all, which weakens the inference rather than supporting it.
+5. ~~When the data arrives.~~ **Closed by 5.1.** Curated datasets publish at the opening of the
+   convocatoria. My earlier reading of "Acceso post-Lab" was wrong.
+6. **Whether any of this survives contact with what is actually handed over on 5 August.**
 
 ## 8. A legal point that is not legal advice
 
@@ -288,13 +373,28 @@ Published 13 December 2024, so the twenty-fourth month after publication is Dece
 takes effect on **1 December 2026** — four months after the Lab, and before any pilot in an AI Health
 Sandbox could plausibly run. That derived date is arithmetic on the quoted text, not a quote.
 
-Three things worth carrying:
+**The Lab reaches the same conclusion independently**, which is worth knowing because it means this
+is not an idiosyncratic reading. Its wiki states "La Ley 21.719 (nueva protección de datos) entra en
+plena vigencia el 1 de diciembre de 2026 — pocos meses después del Lab. Diseña pensando en ella: tu
+solución debe cumplirla antes de pasar a producción", and lists "Anonimización efectiva — El dato
+anonimizado y agregado deja de ser identificable — por eso el Lab trabaja solo con esa capa".
+
+**One statute the wiki names that this research had missed: Ley N° 20.584**, derechos y deberes del
+paciente, described there as protecting the ficha clínica and regulating who may access it, alongside
+informed consent. It was not read for this document. **Unverified** what it requires of a system that
+holds extracted clinical facts about a patient outside a formal ficha clínica, which is exactly what
+PreventIA's SQLite tables are. What would verify it: reading Ley 20.584 on BCN, and a lawyer.
+Relevant to Phase 5, not to the two days.
+
+Four things worth carrying:
 
 - **"Anonymized" is a strong word in Chile from December 2026.** Data that can be re-identified is
   pseudonymised and remains personal data with all obligations attached. If the Lab's dataset is
   de-identified rather than irreversibly anonymised, the correct word for it is "seudonimizado", and
   a judge from the health administration may well know the difference.
 - **Health data is explicitly sensitive**, which is the strictest category in the new regime.
+- **Ley 20.584 is an open question for anything that persists clinical facts about a named patient.**
+  See above.
 - **Nothing in this changes what we do at the Lab**, because the repository already holds no real
   patient data of any kind. It changes what Phase 5 would have to answer, and it is a good answer to
   have ready: the architecture was built to a rule stricter than the law before the law arrived.
@@ -303,35 +403,63 @@ Three things worth carrying:
 
 Not this workstream's question, but it answers its open question 1 and should not be lost.
 
-Workstream 2 could not establish where PRD section 1's "2,4 millones" came from and offered three
-hypotheses. **It came from the Lab's own framing.** The Lab site states, verbatim:
+Workstream 2 could not establish where PRD section 1's figures came from and offered three
+hypotheses. **All of them came from the Lab's own briefing, and the wiki gives them verbatim.**
 
-> 2,4 millones esperan una consulta, un procedimiento o una cirugía. Algunos llevan más de dos años
+Under "Listas de espera — el problema-país", the wiki lists, as "las cifras sobre las que van a
+construir los equipos":
 
-and press coverage of the Lab's launch repeats it without attributing it to a source.
+> ~2,4 millones de personas — En listas de espera del sistema público
+> 330.000–350.000 — Esperando una cirugía
+> 400+ días promedio — En consulta de especialidad
+> 500+ días promedio — En cirugía — con casos de 3 y 4 años
 
-The phrasing is the tell: "una consulta, un procedimiento **o una cirugía**" is the sum of the two
-waiting lists. At 31 March 2026 that is 2.088.245 people waiting for a specialty consultation plus
-398.496 waiting for surgery, which is 2.486.741 — and the Glosa 06 report warns explicitly that these
-must not be added, because a person on both lists is counted twice. **The construction is an
-inference of mine from the wording; the two component figures are verified.**
+and attributes them on the same panel to **"Ministerio de Salud"** and **"DEIS — Estadísticas de
+salud"**.
 
-This matters exactly as workstream 2 said it would. The figure in PRD section 1 is the Lab's figure.
-Correcting it on stage is contradicting the host, which may still be the right call — a panel of
-government and health-management judges will know the Glosa 06 numbers — but it is now a deliberate
-choice rather than an accident. Carried into `docs/research/README.md`.
+Against MINSAL's Glosa 06 for Q1 2026, cut-off 31 March 2026, every one of the four is out of date:
+
+| Wiki figure | Glosa 06, Q1 2026 |
+|---|---|
+| ~2,4 millones en listas | 2.088.245 people waiting for a specialty consultation |
+| 330.000–350.000 esperando cirugía | **398.496** people |
+| 400+ días promedio, consulta de especialidad | Mean **329**, median 236 |
+| 500+ días promedio, cirugía | Mean **383**, median 259 |
+
+Two things follow, and both are good for us.
+
+**PRD section 1 is not sloppy. It copied the brief faithfully.** The figures are the Lab's, and the
+Lab's are stale.
+
+**And the correction is diplomatic rather than confrontational**, because the wiki names MINSAL as
+its own source. Glosa 06 is MINSAL — the quarterly report MINSAL is legally obliged to send to
+Congress. So the pitch is not contradicting the host; it is citing the host's own source at its most
+recent cut. That is the line to use: "las cifras del Lab vienen del Minsal; estas son las del último
+informe trimestral del Minsal al Congreso, al 31 de marzo de 2026."
+
+Carried into `docs/research/README.md`, P1.
 
 ## 10. Open questions
 
-1. **When does the Caja dataset arrive, and to whom?** (5.) One message to the organisers. **Highest
-   value, and it should be sent before Phase 0 closes.**
-2. **What is "Acompañamiento paciente crónico" and does the dataset come from it?** (3.) Same message.
-3. What is the age distribution of La Araucana's 233.332 pensioners? (2.)
-4. Does the Lab mean "aggregated" strictly, or loosely for de-identified? (7.2.) Decides section 6.
+The organisers are not reachable — Felipe's assessment on 3 August 2026 is that they are dealing with
+enough disorganisation that a clarification request will not be answered in time. So these are
+questions to be settled by reading, by decision, or on the day, not by asking.
+
+1. ~~When does the Caja dataset arrive, and to whom?~~ **Closed by the wiki** (5.1). At the opening
+   of the convocatoria.
+2. **What is "Acompañamiento paciente crónico"?** Still open, and now less likely to matter: the
+   wiki does not mention the service among the data sources, so it probably is not the dataset. Worth
+   knowing anyway before the pitch, because a La Araucana judge will know it exists.
+3. What is the age distribution of La Araucana's 233.332 pensioners? (2.) Not published.
+4. Does the Lab mean "aggregated" strictly, or loosely for de-identified? (7.2.) Decides section 6,
+   and is answerable on day one by looking at the data.
 5. Should the adapter calibrate the synthetic cohort rather than populate it? (6.) A decision for
-   Felipe, and a new ADR if adopted.
-6. Should the pitch use the Lab's 2,4 million figure or the Glosa 06 figures? (9.) A decision for
-   Felipe.
+   Felipe, and a new ADR if adopted. The wiki's naming of our line's data as "egresos hospitalarios,
+   datos agregados de crónicos" (5.1) makes this more clearly the right shape, not less.
+6. Should the pitch use the Lab's figures or the Glosa 06 figures? (9.) A decision for Felipe, and
+   9 now offers a framing that avoids having to choose confrontationally.
+7. What does Ley 20.584 require of a system that persists clinical facts outside a ficha clínica?
+   (8.) Not read. Phase 5 question, and one for a lawyer.
 
 ## Sources
 
@@ -362,8 +490,16 @@ All consulted 3 August 2026.
 
 5. Bendita IA and Anthropic. *Claude Impact Lab · Longevidad — Santiago 2026*.
    https://longevidad.benditaia.cl/es
-   Web page, not archived. Source of every quotation in sections 5 and 9. **The "Acceso post-Lab"
-   ambiguity described in section 5 is my reading of the page's structure and may be wrong.**
+   Web page, not archived. Source of the quotations at the head of section 5. **The "Acceso post-Lab"
+   ambiguity I read into this page was wrong; see source 9 and section 5.1.**
+
+9. Bendita IA and Caja La Araucana. *Wiki de Datos — Salud*, Claude Impact Lab · Longevidad.
+   https://longevidad.benditaia.cl/es/wiki-legal
+   Archived as `lab-2026-wiki-datos-salud.txt`, a flattened text snapshot of the page as retrieved,
+   because it is a live page with no version marker and it is now the authority for several decisions
+   in this repository. Source of every quotation in 5.1, 5.2, 5.3, 8 and 9. **The single most useful
+   document found in this workstream**, and it was pointed out by Felipe rather than found by
+   searching — none of the searches run on 3 August 2026 surfaced it.
 
 6. Diario Sustentable. *Chile tiene 2,4 millones de personas en lista de espera y una población que
    envejece más rápido que su sistema de salud. Ahora quiere resolverlo con IA*. 24 July 2026.
@@ -399,8 +535,16 @@ All consulted 3 August 2026.
 | Lab data rule: "Solo datos anonimizados/agregados [...] Nunca PII de pacientes ni re-identificación" | Verified, quoted from source 5 |
 | La Araucana "aporta [...] los datos de salud anonimizados, el venue y la red institucional" | Verified, quoted from source 5 |
 | Curated public sources are Minsal, Fonasa, DEIS, BCN | Verified from source 5 |
-| Whether the Caja dataset is available during the Lab or post-Lab to winners | **Unverified and genuinely ambiguous.** See 5 |
-| Every row of the section 6 schema-risk table | **Reasoning, not observation.** See 7 |
+| Curated datasets publish at the opening of the convocatoria | Verified, quoted from source 9. **Corrects my earlier reading of source 5** |
+| Continuidad's data is "egresos hospitalarios, datos agregados de crónicos" | Verified, quoted from source 9 |
+| Waiting lists are Descompresión's dataset, not ours | Verified from source 9's per-line mapping |
+| The Lab supplies synthetic data itself | Verified, quoted from source 9 |
+| The six "IA en salud" rules, including "Claude como motor principal" and the clinical-professional requirement | Verified, quoted from source 9 |
+| "Motor principal" means the runtime rather than any API use at all | **My reading, and deliberately not relied on.** ADR-0010 takes the safe side of the ambiguity |
+| The COMPIN → CCAF → SUSESO return chain, and La Araucana paying ~1.000 millones CLP/year in SIL | Verified, quoted from source 9. The peso figure is the Lab's, not independently checked |
+| All four PRD waiting-list figures appear verbatim in the Lab wiki, attributed to Minsal/DEIS | Verified, quoted from source 9 |
+| Ley 20.584 protects the ficha clínica and regulates access | Stated by source 9. **The law itself was not read** |
+| Every row of the section 6 schema-risk table | **Reasoning, not observation**, narrowed but not removed by 5.1. See 7 |
 | Ley 21.719 dates, sensitive-data definition, anonymisation definition, transitional article | Verified, quoted from the official text, source 7 |
 | Entry into force on 1 December 2026 | **Derived** by arithmetic from the quoted transitional article |
 | Health data is a dato personal sensible | Verified, quoted |

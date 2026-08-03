@@ -1,0 +1,153 @@
+Snapshot of https://longevidad.benditaia.cl/es/wiki-legal
+Retrieved 3 August 2026. Text extracted from the page HTML; layout flattened.
+Archived because it is the only authoritative statement of the Lab's data and AI rules
+we have, and a live page can change without notice.
+
+
+Wiki de Datos de Salud — Claude Impact Lab | Claude Impact Lab
+← Volver al Impact Lab
+Bendita IA × Caja La Araucana
+Wiki de Datos — Salud
+El sistema y sus datos, traducidos para ti.
+Antes de construir, necesitas entender el terreno: cómo funciona el sistema de salud chileno, qué dice la ley sobre los datos de salud y con qué fuentes vas a trabajar. Sin lenguaje de abogado ni jerga clínica — en el idioma de quienes construyen.
+Contexto asociado por línea
+Prevención
+Screening, detección temprana, alfabetización en salud
+DEIS, encuestas públicas, datasets curados del Lab
+Descompresión
+Triage por riesgo, match demanda/capacidad
+Listas de espera anonimizadas y agregadas
+Continuidad
+Seguimiento crónico, medicina de precisión, autonomía
+Egresos hospitalarios, datos agregados de crónicos
+Listas de espera — el problema-país
+Las cifras que este Lab quiere mover
+El sistema chileno está diseñado para atender enfermos, no para producir longevidad. La lista de espera no es un bug: es una brecha sistémica. Estas son las cifras sobre las que van a construir los equipos.
+La espera golpea más fuerte a quienes tienen menores ingresos, a los adultos mayores y a las regiones. No es solo un problema de gestión — es una inequidad estructural.
+~2,4 millones de personas
+En listas de espera del sistema público
+330.000–350.000
+Esperando una cirugía
+400+ días promedio
+En consulta de especialidad
+500+ días promedio
+En cirugía — con casos de 3 y 4 años
+Cáncer
+La espera convierte etapas tratables en metastásicas
+Crónicos
+Cardiovascular, oftalmología y traumatología: la espera produce discapacidad evitable
+Ministerio de Salud
+DEIS — Estadísticas de salud
+Incluso quien logra ser atendido no siempre entiende que el objetivo no es solo curarse: es vivir más años con autonomía. Falta el paradigma de la longevidad.
+El mapa institucional de la salud chilena
+Quién hace qué — y dónde está el retorno medible
+Para que tu solución sea adoptable necesitas saber quién administra qué. El sistema mezcla actores públicos y privados, y hay una cadena de valor concreta donde cada día de espera evitado se traduce en ahorro medible.
+La veta del retorno: COMPIN valida las licencias médicas → las Cajas de Compensación (como La Araucana) pagan el subsidio → SUSESO supervigila. Menos listas de espera → menos licencias → menos gasto → más productividad país.
+Minsal
+Rector del sistema: políticas, programas y priorización sanitaria
+Fonasa
+Asegurador público — cubre a la gran mayoría de la población
+Servicios de Salud y hospitales
+La red asistencial que administra las listas de espera
+COMPIN
+Valida las licencias médicas
+CCAF — Cajas de Compensación
+Pagan los subsidios de incapacidad laboral (La Araucana paga del orden de mil millones CLP/año)
+SUSESO
+Supervigila la seguridad social, incluidas licencias y CCAF
+Fonasa
+SUSESO
+Ministerio de Salud
+Cada día de espera evitado es retorno directo y medible — para el paciente, para las instituciones y para el país.
+Datos de salud: el marco legal
+El dato de salud es dato sensible — la ley lo trata distinto
+En Chile, los datos de salud son datos sensibles: la categoría con más protección legal. Tu solución debe nacer cumpliendo este marco — no adaptarse después.
+La Ley 21.719 (nueva protección de datos) entra en plena vigencia el 1 de diciembre de 2026 — pocos meses después del Lab. Diseña pensando en ella: tu solución debe cumplirla antes de pasar a producción.
+Dato sensible
+El estado de salud está en la categoría de máxima protección
+Consentimiento
+El tratamiento de datos de salud identificables requiere autorización expresa
+Ficha clínica reservada
+La Ley 20.584 protege la información del paciente y regula quién accede
+Anonimización efectiva
+El dato anonimizado y agregado deja de ser identificable — por eso el Lab trabaja solo con esa capa
+Derechos ARCO+
+Acceso, rectificación, cancelación, oposición + portabilidad (Ley 21.719)
+Notificación de brechas
+Obligatoria desde el 1 dic 2026 (Ley 21.719)
+Norma
+Tema
+Relevancia
+Ley 19.628
+Protección de la vida privada
+Marco vigente de datos personales hasta dic 2026
+Ley 21.719
+Nueva protección de datos
+Vigencia 1 dic 2026 — Agencia de Protección de Datos + sanciones reales
+Ley 20.584
+Derechos y deberes del paciente
+Ficha clínica reservada, consentimiento informado
+Código Sanitario
+Marco sanitario general
+Regula el ejercicio de las profesiones y acciones de salud
+Ley 19.628 — texto completo (BCN)
+Ley 21.719 — Nueva Ley de Datos (BCN)
+Ley 20.584 — Derechos del paciente (BCN)
+BCN Ley Fácil
+Privacy by design desde el prototipo: si tu demo necesita datos identificables de pacientes para funcionar, está mal diseñada.
+Datos responsables en el Lab
+Las reglas del juego — no negociables
+El Lab trabaja exclusivamente con datos anonimizados y agregados, fuentes públicas curadas o prospección sintética. La gobernanza del dato se define desde el día uno: quién es dueño, quién autoriza, quién administra.
+Solo anonimizado y agregado
+Nunca datos identificables de pacientes
+Prospección sintética
+Datos generados que replican patrones reales sin exponer personas
+Fuentes públicas curadas
+Datasets seleccionados y validados por el equipo organizador
+Prohibido re-identificar
+Intentar re-identificar un dataset es causal de descalificación inmediata
+Cero PII de pacientes
+Ni en el dataset, ni en el prompt, ni en la demo
+Gobernanza desde el día uno
+Convenios específicos definen dueño, autorización y administración del dato
+Partir con datos anonimizados y agregados no es una limitación: es la condición para que tu solución pueda escalar al sistema real.
+IA en salud, con responsabilidad
+Asistir al profesional — nunca reemplazarlo
+Las soluciones del Lab amplían el alcance del profesional de salud: le permiten llegar a más personas sin perder calidad. Lo que no hacen — y no pueden hacer — es diagnosticar ni indicar tratamientos de forma autónoma.
+Asistencia, no diagnóstico
+Tu solución apoya decisiones clínicas; no entrega diagnóstico ni indicación médica autónoma
+Humano en el circuito
+Las decisiones clínicas las toma un profesional de salud
+Cita tu evidencia
+Toda afirmación clínica debe tener fuente verificable — o decir "no sé"
+Guardrails clínicos
+System prompts con límites explícitos sobre lo que el agente no debe responder
+Claude como motor principal
+Sin llamadas reales a la API de Claude → descalificado
+Criterio clínico en el equipo
+Todo equipo incluye al menos un profesional de salud
+Anthropic — Claude
+Documentación API de Claude
+No construyes un médico artificial: construyes el puente para que un médico, una matrona o un kinesiólogo lleguen a 10 veces más personas.
+Datasets y fuentes disponibles
+Con qué vas a construir
+Fuentes públicas del sistema de salud chileno, listas para conectar con MCPs de Claude, más los datasets curados del Lab — anonimizados y agregados — que se publican al abrir la convocatoria.
+DEIS — Minsal
+Estadísticas oficiales: egresos hospitalarios, defunciones, dotación ✅
+datos.gob.cl
+Portal de datos abiertos del Estado — categoría salud ✅
+Fonasa — Estadísticas
+Beneficiarios, prestaciones y gasto agregado ✅
+BCN — Ley Fácil
+Explicaciones ciudadanas de leyes vigentes ✅
+Datasets curados del Lab
+Anonimizados y agregados — se publican al abrir la convocatoria
+Prospección sintética
+Datos sintéticos provistos por el Lab para casos que lo requieran
+DEIS — Minsal
+datos.gob.cl
+Fonasa
+BCN — Ley Fácil
+Créditos de API de Claude por participante, Claude Code, Agent SDK y MCP incluidos. Los datasets curados y sus convenios se anuncian al abrir la convocatoria.
+Bendita IA × Caja La Araucana — Claude Impact Lab · Longevidad 2026
+← Volver al Impact Lab
