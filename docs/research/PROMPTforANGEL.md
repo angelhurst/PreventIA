@@ -2,7 +2,11 @@
 
 Paste the block below into a fresh session opened in the repository root. It is a research task, not
 a build task: its output is evidence that shapes a future revision of `PRD.md`. Phase 1 does not
-start until the flag table exists and `OLLAMA_MODEL` is pinned.
+start until the flag table exists.
+
+**Superseded in part.** All six workstreams below are complete; see `docs/research/README.md` for the
+index and the resulting proposals. The original header also made Phase 1 wait on `OLLAMA_MODEL` being
+pinned, which ADR-0010 removed when it moved the Lab runtime to Claude.
 
 ```
 Research task for PreventIA. Read CLAUDE.md, PRD.md, ROADMAP.md and docs/adr/ first.

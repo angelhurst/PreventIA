@@ -374,23 +374,26 @@ arrives.
 This sits alongside P6, not instead of it. The municipal burden argument is the one that stands
 without any evidence we lack; the licencias chain is the one the host recognises as money.
 
-### P13. Not a PRD change — a repository inconsistency that will mislead Angel
+### P13. Not a PRD change — the ADR-0010 sync. **Done.**
 
-**Severity: high, and it is mechanical.** Flagged here because it is the last loose end from
-ADR-0010.
+**Severity was high and mechanical.** Recorded here for the trail rather than as a pending item.
 
-`CLAUDE.md` section 4 currently states "**The default runtime is a local model served by Ollama on the
-Mac Studio**" and "**Claude is the tool we build the software with. It is not the runtime.** Do not
-conflate the two and do not write code that assumes Anthropic is answering."
+ADR-0008's decision was mirrored in four files outside `docs/adr/`. All four were brought into line
+on 3 August 2026, on Felipe's instruction:
 
-Those two sentences mirror ADR-0008, which ADR-0010 has now superseded. The Lab's published rule is
-"Claude como motor principal — Sin llamadas reales a la API de Claude → descalificado". `CLAUDE.md`
-is the contract between the two developers and it is the first thing Angel reads, so leaving it as is
-means he builds against Ollama and against an accepted ADR.
+| File | What changed |
+|---|---|
+| `CLAUDE.md` section 4 | Claude is the Lab runtime; Ollama named as the documented deployment path; the `OLLAMA_MODEL` open item demoted from a Phase 1 blocker to Phase 4 or later; the suite-per-provider rule made explicit about which provider must pass before demo day |
+| `ROADMAP.md` Phase 1 | Provider line updated, the `OLLAMA_MODEL` blocker removed, shaped-by list corrected to ADR-0010 |
+| `README.md` stack table | "Modelo: Local vía Ollama por defecto" was the most dangerous instance — it is the Lab-facing document, and it advertised the exact configuration the Lab's rule penalises |
+| `docs/research/PROMPTforANGEL.md` | Header no longer makes Phase 1 wait on `OLLAMA_MODEL` |
 
-The third sentence stays true and should not be touched: no code should assume Anthropic is
-answering, because the provider seam is what makes both runtimes possible. Only the default and the
-"it is not the runtime" claim need to change.
+One sentence in `CLAUDE.md` was deliberately kept: **do not write code that assumes Anthropic is
+answering.** The provider seam is what makes both runtimes possible and it is what makes the
+deployment story true, so it survives the change of default intact.
+
+**Angel needs telling**, because ADR-0008 put his Mac Studio on the critical path and ADR-0010 takes
+it off.
 
 ---
 

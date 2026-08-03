@@ -77,11 +77,21 @@ than a hope.
 
 ## 4. Stack
 
-- Python, **Strands Agents SDK**, provider-agnostic model layer. **The default runtime is a local
-  model served by Ollama on the Mac Studio.** Kimi `kimi-k3` and Anthropic are registered
-  alternatives, selected by one environment variable, touching no other module.
-- **Claude is the tool we build the software with. It is not the runtime.** Do not conflate the two
-  and do not write code that assumes Anthropic is answering.
+- Python, **Strands Agents SDK**, provider-agnostic model layer. **The runtime for the Lab build, the
+  recorded demo and the pitch is Claude**, `PREVENTIA_MODEL_PROVIDER=anthropic`. Ollama on the Mac
+  Studio and Kimi `kimi-k3` are registered alternatives, selected by one environment variable,
+  touching no other module.
+- **Claude is also the tool we build the software with**, and those are still two different things.
+  **Do not write code that assumes Anthropic is answering** — the provider seam is what keeps both
+  runtimes possible, and it is what makes the deployment story below true.
+- **Ollama on the Mac Studio is the documented deployment path**, for a health institution that needs
+  patient conversations to stay on hardware it controls. It is a first-class provider and it is what
+  the pitch offers as the production option. It is not what the prototype runs on.
+
+  The reason is ADR-0010. The Lab's data wiki states "Claude como motor principal — Sin llamadas
+  reales a la API de Claude → descalificado", and the organisers are not reachable to disambiguate
+  "motor principal". Running the demo on Claude costs one environment variable; not running it on
+  Claude risks the entry.
 - **SQLite** for the clinical record.
 - **Strands `FileSessionManager`** for raw conversation transcripts. Do not put transcripts in
   SQLite and do not write a custom session manager.
@@ -127,16 +137,21 @@ def build_model():
     )
 ```
 
-Unset, it is Ollama. Ollama runs models through Apple's MLX on Apple Silicon, so the Mac Studio uses
-the right backend without anyone tuning it.
+Unset, the function still falls through to Ollama, which is why `.env` sets
+`PREVENTIA_MODEL_PROVIDER=anthropic` explicitly for the Lab. Ollama runs models through Apple's MLX
+on Apple Silicon, so when the deployment path is exercised the Mac Studio uses the right backend
+without anyone tuning it.
 
-**Open item:** `OLLAMA_MODEL` has no default because the model depends on the Mac Studio's unified
-memory and on how well it handles tool calling. Agree it with Angel before Phase 1, and pin the
-chosen id here.
+**Open item, no longer blocking:** `OLLAMA_MODEL` has no default because the model depends on the Mac
+Studio's unified memory and on how well it handles tool calling. Agree it with Angel and pin the
+chosen id here **in Phase 4 or after the Lab**. Nothing in Phases 1 to 3 depends on it, per ADR-0010.
 
 Run the guardrail and semáforo suites against **every provider you actually use** before demo day.
-The whole point of the deterministic floor in section 6 is that clinical safety cannot depend on
-which model answered, and a local open-weights model is exactly where that assumption gets tested.
+That means Claude, without exception, because it is what answers during the demo. Run them against
+Ollama too once a model is pinned: the whole point of the deterministic floor in section 6 is that
+clinical safety cannot depend on which model answered, and a local open-weights model is where that
+assumption actually gets tested. Say in the pitch which providers the suites have been run against,
+rather than implying both.
 
 Lab-provided MCP servers (the curated anonymized datasets) are consumed through Strands' own client:
 

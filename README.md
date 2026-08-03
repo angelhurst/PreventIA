@@ -87,8 +87,8 @@ pregunte.
 
 | Pieza | Elección | ADR |
 |-------|----------|-----|
-| Agente | Strands Agents SDK, capa de modelo agnóstica | [0001](docs/adr/0001-strands-agents-sdk-with-agnostic-provider.md), [0008](docs/adr/0008-local-ollama-runtime-claude-as-build-tool.md) |
-| Modelo | Local vía Ollama por defecto | [0008](docs/adr/0008-local-ollama-runtime-claude-as-build-tool.md) |
+| Agente | Strands Agents SDK, capa de modelo agnóstica | [0001](docs/adr/0001-strands-agents-sdk-with-agnostic-provider.md), [0010](docs/adr/0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) |
+| Modelo | Claude en el Lab; Ollama local como vía de despliegue | [0010](docs/adr/0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) |
 | Registro clínico | SQLite | [0002](docs/adr/0002-sqlite-clinical-record-file-sessions.md) |
 | Canal | WhatsApp Cloud API detrás de un adaptador | [0003](docs/adr/0003-whatsapp-cloud-api-behind-channel-adapter.md) |
 | Clasificación | Piso determinista, escalamiento por modelo | [0004](docs/adr/0004-deterministic-floor-for-the-semaforo.md) |

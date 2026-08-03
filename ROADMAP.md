@@ -35,16 +35,18 @@ prototype is not complete until a healthcare professional writes the real table.
 **Status:** Not Started
 **Target:** day 1 morning
 
-- Strands agent assembled, provider-agnostic model layer defaulting to local Ollama.
-- `OLLAMA_MODEL` agreed with Angel and pinned, sized to the Mac Studio and to tool-calling
-  reliability. Blocks this phase.
+- Strands agent assembled, provider-agnostic model layer, `PREVENTIA_MODEL_PROVIDER=anthropic` for
+  the Lab. Ollama and Kimi stay registered behind the same seam.
 - System prompt carrying the clinical boundary.
 - Structured extraction of adherence and symptoms from natural conversation.
 - Deterministic rule engine setting the color floor.
 - Model escalation path, with de-escalation impossible by construction.
 - `tests/test_semaforo.py` and `tests/test_extraction.py` green.
 
-Shaped by ADR-0001, ADR-0004, ADR-0005.
+Shaped by ADR-0004, ADR-0005, ADR-0010.
+
+**No longer blocked on `OLLAMA_MODEL`.** ADR-0010 moved the runtime to Claude for the Lab, so pinning
+the local model is a Phase 4 or post-Lab task and Angel's Mac Studio is off the critical path.
 
 ## Phase 2 — Clinical record and triage queue
 
