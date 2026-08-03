@@ -16,3 +16,4 @@ is flipping its Status line to "Superseded by 00YY".
 | [0006](0006-clinician-triage-queue-as-escalation-surface.md) | Clinician triage queue as the escalation surface | Accepted |
 | [0007](0007-synthetic-cohort-with-caja-adapter.md) | Synthetic seed cohort with an adapter for the Caja dataset | Accepted |
 | [0008](0008-local-ollama-runtime-claude-as-build-tool.md) | Local Ollama runtime as the default, Claude as the build tool | Accepted |
+| [0009](0009-repository-discoverability.md) | Repository description and topics | Accepted |
