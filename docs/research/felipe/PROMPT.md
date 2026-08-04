@@ -6,7 +6,7 @@ anything needing a clinician's sign-off is marked REQUIRES CLINICAL REVIEW rathe
 
 Workstreams 1 to 6 are complete and indexed in `docs/research/README.md`. These continue the
 numbering. Both come out of the pilot flow drawn in
-`docs/diagramas/2026-08-03-flujo-piloto-quinta-normal.excalidraw`, which is v0.0.1 and shows both of
+`docs/diagrams/2026-08-03-flujo-piloto-quinta-normal.excalidraw`, which is v0.0.1 and shows both of
 these as undefined.
 
 ```
