@@ -275,12 +275,11 @@ consola local que implementa la misma interfaz sin telefonía alguna.
 
 **El motor.** PreventIA no está atado a un proveedor de modelo. La construcción del modelo vive en un
 solo archivo, `agent/models.py`, y ningún otro módulo sabe quién contestó. Cambiar de proveedor es
-una variable de entorno, no una reescritura. En el Lab corre sobre Claude. La vía de despliegue
-ofrecida para producción es un modelo abierto servido por Ollama, y esa vía existe justamente para
-que un servicio de salud pueda decidir por su cuenta dónde ocurren las conversaciones con sus
-pacientes. No está ejercitada: el prototipo del Lab corre sobre Claude, el modelo local todavía no
-está fijado y ninguna suite se ha corrido contra él. Es lo que la arquitectura permite, no algo que
-ya esté funcionando. Tampoco hay un framework de agentes de
+una variable de entorno, no una reescritura. La vía ofrecida para producción es un modelo abierto
+servido por Ollama, y existe justamente para que un servicio de salud pueda decidir por su cuenta
+dónde ocurren las conversaciones con sus pacientes. No está ejercitada: el prototipo del Lab corre
+sobre Claude, el modelo local todavía no está fijado y ninguna suite se ha corrido contra él. Es lo
+que la arquitectura permite, no algo que ya esté funcionando. Tampoco hay un framework de agentes de
 por medio: el orquestador es código propio, y por eso el semáforo, el filtro de salida y el registro
 clínico no dependen del comportamiento de la librería de un tercero (ADR-0010 y ADR-0012).
 
