@@ -19,3 +19,4 @@ is flipping its Status line to "Superseded by 00YY".
 | [0009](0009-repository-discoverability.md) | Repository description and topics | Accepted |
 | [0010](0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) | Claude as the Lab runtime, Ollama as the deployment path | Accepted |
 | [0011](0011-kit-digital-tokens-for-the-clinician-dashboard.md) | Kit Digital design tokens for the clinician dashboard | Accepted |
+| [0012](0012-append-only-audit-log-as-queue-state.md) | The append-only audit log is the queue's state | Accepted |
