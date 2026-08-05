@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}{{ T.queue_title }} - PreventIA{% endblock %}
+
+{% block content %}
+<div class="encabezado">
+  <h1>{{ T.queue_title }}</h1>
+  <p class="encabezado__sub">{{ T.queue_subtitle }}</p>
+
+  <nav class="filtros" aria-label="Filtrar la cola">
+    <a href="/cola?filtro=abiertos" {% if filtro == 'abiertos' %}aria-current="page"{% endif %}>{{ T.filter_open }}</a>
+    <a href="/cola?filtro=todos" {% if filtro == 'todos' %}aria-current="page"{% endif %}>{{ T.filter_all }}</a>
+  </nav>
+</div>
+
+{% if rows %}
+<ol class="cola">
+  {% for row in rows %}
+  <li class="caso caso--{{ row.color }} estado--{{ row.state }}">
+    <p class="caso__color">
+      <span class="caso__marca" aria-hidden="true"></span>
+      <span class="caso__color-texto">{{ row.color|color_label }}</span>
+    </p>
+
+    <h2 class="caso__nombre">
+      <a href="/cola/{{ row.code }}">{{ row.display_name }}</a>,
+      <span class="caso__edad">{{ row.age }} años</span>
+    </h2>
+
+    <p class="caso__contexto">
+      {{ row.comuna }}<span class="sep" aria-hidden="true"> · </span>{% for condition in row.conditions %}{{ condition|condition_label }}{% if not loop.last %}, {% endif %}{% endfor %}
+    </p>
+
+    <p class="caso__resumen">{{ row.summary_line }}</p>
+
+    {% set al_pasar = row.symptoms | selectattr('mentioned_in_passing') | list %}
+    {% if al_pasar %}
+    <p class="caso__alpaso">
+      <span class="marca-alpaso">{{ T.mentioned_in_passing }}</span>
+      {% for symptom in al_pasar %}<q>{{ symptom.verbatim }}</q>{% if not loop.last %} {% endif %}{% endfor %}
+    </p>
+    {% endif %}
+
+    {% if row.model_raised %}
+    <p class="caso__subida">{{ T.model_raised }}: {{ row.rules_color|color_label }} → {{ row.color|color_label }}</p>
+    {% endif %}
+
+    <p class="caso__datos">
+      {% if row.adherence_percent is not none %}
+      <span class="dato"><span class="dato__etiqueta">{{ T.adherence }}</span> {{ row.doses_taken }} de {{ row.doses_expected }} dosis <span class="dato__nota">({{ T.adherence_window }})</span></span>
+      {% endif %}
+      <span class="dato"><span class="dato__etiqueta">{{ T.last_contact }}</span> {{ row.last_contact_at|when }}</span>
+    </p>
+
+    <p class="caso__estado">
+      <span class="pastilla pastilla--{{ row.state }}">{{ row.state|state_label }}</span>
+      {% if row.changed_by %}
+      <span class="caso__firma">{{ row.changed_by }}<span class="sep" aria-hidden="true"> · </span>{{ row.changed_at|when }}</span>
+      {% else %}
+      <span class="caso__firma">{{ T.state_never_changed }}</span>
+      {% endif %}
+    </p>
+
+    <p class="caso__acciones">
+      <a class="boton boton--secundario" href="/cola/{{ row.code }}">{{ T.open_record }}</a>
+      {% set siguiente = NEXT_STATE[row.state] %}
+      {% if siguiente and actor %}
+      <form method="post" action="/cola/{{ row.code }}/estado" class="accion-rapida">
+        <input type="hidden" name="to_state" value="{{ siguiente }}">
+        <input type="hidden" name="actor_code" value="{{ actor.code }}">
+        <button class="boton" type="submit">{{ labels.STATE_ACTIONS[siguiente] }}</button>
+      </form>
+      {% endif %}
+    </p>
+  </li>
+  {% endfor %}
+</ol>
+{% else %}
+<p class="vacio">{{ T.empty_queue }}</p>
+{% endif %}
+{% endblock %}

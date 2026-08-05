@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}{{ patient.display_name }} - PreventIA{% endblock %}
+
+{% block content %}
+<p class="volver"><a href="/cola">{{ T.back_to_queue }}</a></p>
+
+{% if error %}
+<p class="aviso aviso--error" role="alert">{{ T.state_change_failed }}</p>
+{% endif %}
+
+<div class="ficha__encabezado">
+  <h1>{{ patient.display_name }}</h1>
+  <p class="ficha__identidad">
+    {{ patient.age }} años<span class="sep" aria-hidden="true"> · </span>{{ patient.comuna }}<span class="sep" aria-hidden="true"> · </span>{% for condition in patient.conditions %}{{ condition|condition_label }}{% if not loop.last %}, {% endif %}{% endfor %}
+  </p>
+  <p class="ficha__identidad">
+    En seguimiento desde el {{ patient.enrolled_on|day }}<span class="sep" aria-hidden="true"> · </span>a cargo de {{ patient.clinician_name }}
+  </p>
+  <p class="ficha__estado"><span class="pastilla pastilla--{{ patient.state }}">{{ patient.state|state_label }}</span></p>
+</div>
+
+<section class="tarjeta" aria-labelledby="titulo-estado">
+  <h2 id="titulo-estado">{{ T.change_state }}</h2>
+  <form method="post" action="/cola/{{ patient.code }}/estado" class="formulario-estado">
+    <p class="campo">
+      <label for="to_state">{{ T.state }}</label>
+      <select id="to_state" name="to_state">
+        {% for state in states %}
+        <option value="{{ state }}" {% if state == patient.state %}disabled{% endif %}>{{ state|state_label }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p class="campo">
+      <label for="actor_code">{{ T.audit_actor_label }}</label>
+      <select id="actor_code" name="actor_code">
+        {% for persona in roster %}
+        <option value="{{ persona.code }}" {% if actor and persona.code == actor.code %}selected{% endif %}>{{ persona.display_name }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p class="campo campo--ancho">
+      <label for="note">{{ T.audit_note_label }}</label>
+      <input type="text" id="note" name="note" maxlength="200" autocomplete="off">
+    </p>
+    <p class="campo campo--accion">
+      <button class="boton" type="submit">Registrar el cambio</button>
+    </p>
+  </form>
+</section>
+
+<section class="tarjeta" aria-labelledby="titulo-auditoria">
+  <h2 id="titulo-auditoria">{{ T.audit_title }}</h2>
+  {% if patient.audit %}
+  <ol class="auditoria">
+    {% for entry in patient.audit %}
+    <li>
+      <p class="auditoria__cambio">
+        {% if entry.from_state %}{{ entry.from_state|state_label }} → {% endif %}<strong>{{ entry.to_state|state_label }}</strong>
+      </p>
+      <p class="auditoria__firma">{{ entry.actor_name }}<span class="sep" aria-hidden="true"> · </span>{{ entry.occurred_at|when }}</p>
+      {% if entry.note %}<p class="auditoria__nota">{{ entry.note }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="vacio">{{ T.audit_empty }}</p>
+  {% endif %}
+</section>
+
+<section class="tarjeta" aria-labelledby="titulo-medicamentos">
+  <h2 id="titulo-medicamentos">{{ T.medications_title }}</h2>
+  <ul class="medicamentos">
+    {% for medication in patient.medications %}
+    <li><strong>{{ medication.name }} {{ medication.dose }}</strong> <span class="medicamento__pauta">{{ medication.schedule_text }}</span></li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="tarjeta" aria-labelledby="titulo-historial">
+  <h2 id="titulo-historial">{{ T.history_title }}</h2>
+  <ol class="historial">
+    {% for check_in in patient.check_ins %}
+    <li class="contacto contacto--{{ check_in.final_color }}">
+      <p class="contacto__cabecera">
+        <span class="contacto__color">{{ check_in.final_color|color_label }}</span>
+        <span class="contacto__fecha">{{ check_in.occurred_at|when }}</span>
+        <span class="contacto__dosis">{{ check_in.doses_reported_taken }} de {{ check_in.doses_expected }} dosis</span>
+      </p>
+      <p class="contacto__resumen">{{ check_in.summary_line }}</p>
+      <p class="contacto__dicho"><q>{{ check_in.patient_message }}</q></p>
+      {% if check_in.symptoms %}
+      <ul class="sintomas">
+        {% for symptom in check_in.symptoms %}
+        <li>
+          {{ symptom.term|symptom_label }}
+          {% if symptom.mentioned_in_passing %}<span class="marca-alpaso">{{ T.mentioned_in_passing }}</span>{% endif %}
+          <q>{{ symptom.verbatim }}</q>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <p class="contacto__semaforo">
+        <span class="dato__etiqueta">{{ T.rules_floor }}</span> {{ check_in.rules_color|color_label }}<span class="sep" aria-hidden="true"> · </span>{{ check_in.rules_reason }}
+      </p>
+      {% if check_in.model_color != check_in.rules_color %}
+      <p class="contacto__semaforo">
+        <span class="dato__etiqueta">{{ T.model_raised }}</span> {{ check_in.model_color|color_label }}<span class="sep" aria-hidden="true"> · </span>{{ check_in.model_reason }}
+      </p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endblock %}
