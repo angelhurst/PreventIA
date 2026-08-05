@@ -87,6 +87,10 @@ TEXT = {
     "skip_to_queue": "Saltar a la cola",
     "state_change_failed": "El cambio de estado no se registró. El caso sigue como estaba.",
     "acting_as": "Registrando como",
+    "setup_title": "Falta la ficha clínica",
+    "setup_body": "El tablero no encontró la base de datos del registro clínico, así que no hay nada que mostrar todavía. Ejecute esto en la carpeta del proyecto y vuelva a cargar la página.",
+    "setup_command": "python -m preventia.data.seed_cohort",
+    "setup_path_label": "Ruta que se buscó",
     "not_a_diagnosis": "PreventIA no diagnostica ni indica tratamientos. Este resumen es apoyo al seguimiento entre controles.",
 }
 

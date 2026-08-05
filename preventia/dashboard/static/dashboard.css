@@ -60,6 +60,19 @@ q {
   color: var(--ink-faint);
 }
 
+code {
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-2);
+  color: var(--ink);
+  background: var(--surface-sunken);
+  border: var(--rule-width) solid var(--line);
+}
+
+.setup__comando {
+  margin-top: var(--space-3);
+}
+
 .salto {
   position: absolute;
   left: var(--space-3);

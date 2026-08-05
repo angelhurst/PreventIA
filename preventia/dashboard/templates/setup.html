@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ T.setup_title }} - PreventIA{% endblock %}
+
+{% block content %}
+<div class="encabezado">
+  <h1>{{ T.setup_title }}</h1>
+</div>
+
+<section class="tarjeta" aria-labelledby="titulo-setup">
+  <h2 id="titulo-setup">{{ T.setup_command }}</h2>
+  <p>{{ T.setup_body }}</p>
+  <p class="setup__comando"><code>{{ T.setup_command }}</code></p>
+  <p class="ficha__identidad">{{ T.setup_path_label }}: <code>{{ db }}</code></p>
+</section>
+{% endblock %}

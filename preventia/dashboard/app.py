@@ -42,6 +42,20 @@ def open_connection():
     return repository.connect(db_path())
 
 
+def setup_response(request):
+    return templates.TemplateResponse(
+        request,
+        "setup.html",
+        {
+            "db": str(db_path()),
+            "roster": [],
+            "actor": None,
+            "view": view_settings(request),
+        },
+        status_code=503,
+    )
+
+
 def view_settings(request):
     contrast = request.cookies.get(CONTRAST_COOKIE, "standard")
     font = request.cookies.get(FONT_COOKIE, "0")
@@ -78,7 +92,10 @@ async def root():
 
 @app.get("/cola")
 async def queue(request: Request, filtro: str = "abiertos"):
-    conn = open_connection()
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
     try:
         only_open = filtro != "todos"
         rows = repository.queue_rows(conn, only_open=only_open)
@@ -101,7 +118,10 @@ async def queue(request: Request, filtro: str = "abiertos"):
 
 @app.get("/cola/{code}")
 async def patient(request: Request, code: str, error: str = ""):
-    conn = open_connection()
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
     try:
         detail = repository.patient_detail(conn, code)
         roster = repository.clinicians(conn)
@@ -133,7 +153,10 @@ async def change_state(
     actor_code: str = Form(...),
     note: str = Form(""),
 ):
-    conn = open_connection()
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
     try:
         audit.record_transition(conn, code, to_state, actor_code, note)
         target = back_to(request, f"/cola/{code}")
