@@ -87,7 +87,7 @@ pregunte.
 
 | Pieza | Elección | ADR |
 |-------|----------|-----|
-| Agente | Strands Agents SDK, capa de modelo agnóstica | [0001](docs/adr/0001-strands-agents-sdk-with-agnostic-provider.md), [0010](docs/adr/0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) |
+| Agente | Sin framework de agentes: orquestador propio y capa de modelo agnóstica | [0012](docs/adr/0012-hand-rolled-agent-core-without-strands.md), [0010](docs/adr/0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) |
 | Modelo | Claude en el Lab; Ollama local como vía de despliegue | [0010](docs/adr/0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) |
 | Registro clínico | SQLite | [0002](docs/adr/0002-sqlite-clinical-record-file-sessions.md) |
 | Canal | WhatsApp Cloud API detrás de un adaptador | [0003](docs/adr/0003-whatsapp-cloud-api-behind-channel-adapter.md) |
