@@ -12,3 +12,6 @@
 *.pdf binary
 *.db binary
 *.sqlite3 binary
+
+*.ico binary
+*.webmanifest text eol=lf

@@ -102,14 +102,31 @@ code {
 }
 
 .marca {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  column-gap: var(--space-2);
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
+.marca__escala {
+  grid-row: 1 / span 2;
+  width: 2em;
+  height: 2em;
+}
+
+.marca__nombre {
+  grid-column: 2;
+  grid-row: 1;
+}
+
 .marca__sub {
-  display: block;
+  grid-column: 2;
+  grid-row: 2;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 400;

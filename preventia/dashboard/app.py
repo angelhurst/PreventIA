@@ -10,6 +10,7 @@ from . import audit, labels, repository
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DB = BASE_DIR.parent / "data" / "preventia.db"
+ASSETS_DIR = BASE_DIR.parent.parent / "assets"
 
 CONTRAST_COOKIE = "preventia_contrast"
 FONT_COOKIE = "preventia_font"
@@ -21,6 +22,7 @@ COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
 app = FastAPI(title="PreventIA")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 templates.env.globals["labels"] = labels
