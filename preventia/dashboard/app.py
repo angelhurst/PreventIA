@@ -31,6 +31,8 @@ templates.env.filters["state_label"] = labels.state_label
 templates.env.filters["condition_label"] = labels.condition_label
 templates.env.filters["symptom_label"] = labels.symptom_label
 templates.env.filters["when"] = labels.when
+templates.env.filters["error_message"] = labels.error_message
+templates.env.globals["DOCTOR_ROLE"] = audit.DOCTOR_ROLE
 templates.env.filters["day"] = labels.day
 
 
@@ -161,6 +163,34 @@ async def change_state(
         audit.record_transition(conn, code, to_state, actor_code, note)
         target = back_to(request, f"/cola/{code}")
     except (audit.UnknownState, audit.UnknownActor, ValueError):
+        target = f"/cola/{code}?error=estado"
+    finally:
+        conn.close()
+
+    response = RedirectResponse(target, status_code=303)
+    response.set_cookie(ACTOR_COOKIE, actor_code, max_age=COOKIE_MAX_AGE, samesite="lax")
+    return response
+
+
+@app.post("/cola/{code}/contacto")
+async def record_contact(
+    request: Request,
+    code: str,
+    actor_code: str = Form(...),
+    note: str = Form(""),
+):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+    try:
+        audit.record_doctor_contact(conn, code, actor_code, note)
+        target = f"/cola/{code}"
+    except audit.NotADoctor:
+        target = f"/cola/{code}?error=solo_medico"
+    except audit.MissingContactNote:
+        target = f"/cola/{code}?error=falta_nota"
+    except (audit.UnknownActor, ValueError):
         target = f"/cola/{code}?error=estado"
     finally:
         conn.close()
