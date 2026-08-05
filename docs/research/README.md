@@ -19,8 +19,10 @@ is shared.
 | 4. Adherence and remote follow-up evidence | [2026-08-03-adherence-and-remote-followup-evidence.md](felipe/2026-08-03-adherence-and-remote-followup-evidence.md) | What instrument the PSCV already mandates and what it costs to use, the ceiling on any self-report measure, and the outcome evidence PRD section 10 depends on, including the null results. |
 | 5. WhatsApp use among Chilean older adults | [2026-08-03-whatsapp-use-chilean-older-adults.md](felipe/2026-08-03-whatsapp-use-chilean-older-adults.md) | What this population has, what it does with it, and how far apart voice and text are by age. Sets out what each modality would demand without resolving the scope question. |
 | 6. Caja La Araucana and the Lab dataset | [2026-08-03-caja-la-araucana-and-the-lab-dataset.md](felipe/2026-08-03-caja-la-araucana-and-the-lab-dataset.md) | What the host institution is and is not, what it already runs for chronic pensioners, and a list of SQLite schema assumptions at risk against data nobody has seen. |
+| 9. Clinical dashboard UI, configs and stacks in Chile | [2026-08-05-clinical-dashboard-ui-and-stacks-chile.md](felipe/2026-08-05-clinical-dashboard-ui-and-stacks-chile.md) | What Chilean clinics and hospitals actually run, the seven distinct UI types in the field, the Kit Digital design system and what it is not, and the regulation that binds a clinical web system. Establishes that the triage queue has a named Chilean precedent in SIGTE, and that the binding constraints are legal rather than visual. |
 
-All six workstreams in the brief (`PROMPTforANGEL.md`) are complete.
+All six workstreams in the brief (`PROMPTforANGEL.md`) are complete. Workstream 9 is additional, and
+was not part of it.
 
 ### angel/
 

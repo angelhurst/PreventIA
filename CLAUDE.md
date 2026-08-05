@@ -253,6 +253,19 @@ diverging.
   section. A changed decision always gets a new, next-numbered ADR whose Status says
   "Supersedes 00XX", and the only edit ever made to the old one is flipping its Status line to
   "Superseded by 00YY". See `docs/adr/README.md` for the index.
+- **The product document is dynamic, and says so on its face.** `PRD.md` and `docs/prd-annex.md`
+  each carry a version and a date at the top, an `**Estado:**` line under every section heading, and
+  a `Historial de cambios` table at the end recording what changed and what drove it. The four states
+  are `Decidido`, `En revisión`, `Bloqueado en clínico` and `Sin definir`. `PRD.md` holds what is
+  settled; the annex holds what is still moving, so the stable document does not get rewritten every
+  time a pending question moves. Changing a section's state is itself a changelog row. Unlike an ADR,
+  both files are meant to be edited.
+- **One topic per reply in the terminal.** When there is a lot to report, bring it one topic at a
+  time and stop, rather than delivering everything at once. The terminal is a narrow, unscrollable
+  surface under time pressure, and a reply covering four subjects forces the reader to hold four
+  things at once and act on none of them properly. This governs how findings, readouts, agent
+  results and options are surfaced. It does not license leaving work unfinished: finish the work,
+  then report it a topic at a time.
 
 ## 10. Secrets
 
