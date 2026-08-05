@@ -252,21 +252,24 @@ h1 {
 }
 
 .caso--red {
-  --rail: var(--sem-red);
+  --rail: var(--sem-red-edge);
   --chip: var(--sem-red-bg);
   --chip-ink: var(--sem-red-ink);
+  --chip-edge: var(--sem-red-edge);
 }
 
 .caso--yellow {
-  --rail: var(--sem-yellow);
+  --rail: var(--sem-yellow-edge);
   --chip: var(--sem-yellow-bg);
   --chip-ink: var(--sem-yellow-ink);
+  --chip-edge: var(--sem-yellow-edge);
 }
 
 .caso--green {
-  --rail: var(--sem-green);
+  --rail: var(--sem-green-edge);
   --chip: var(--sem-green-bg);
   --chip-ink: var(--sem-green-ink);
+  --chip-edge: var(--sem-green-edge);
 }
 
 .caso.estado--closed {
@@ -281,6 +284,7 @@ h1 {
   margin-bottom: var(--space-2);
   background: var(--chip);
   color: var(--chip-ink);
+  border: var(--rule-width) solid var(--chip-edge);
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   font-weight: 700;
@@ -456,7 +460,7 @@ h1 {
 .aviso--error {
   background: var(--sem-red-bg);
   color: var(--sem-red-ink);
-  border: var(--rule-width) solid var(--sem-red);
+  border: var(--rule-width) solid var(--sem-red-edge);
 }
 
 .ficha__encabezado {
@@ -588,15 +592,15 @@ h1 {
 }
 
 .contacto--red {
-  --rail: var(--sem-red);
+  --rail: var(--sem-red-edge);
 }
 
 .contacto--yellow {
-  --rail: var(--sem-yellow);
+  --rail: var(--sem-yellow-edge);
 }
 
 .contacto--green {
-  --rail: var(--sem-green);
+  --rail: var(--sem-green-edge);
 }
 
 .contacto__cabecera {

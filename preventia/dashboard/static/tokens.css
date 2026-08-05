@@ -50,12 +50,15 @@
 
   --sem-red: #fe6565;
   --sem-red-bg: #fe6565;
+  --sem-red-edge: #fe3e3e;
   --sem-red-ink: #212529;
   --sem-yellow: #f2c728;
   --sem-yellow-bg: #f2c728;
+  --sem-yellow-edge: #a6850a;
   --sem-yellow-ink: #212529;
   --sem-green: #2d717c;
   --sem-green-bg: #2d717c;
+  --sem-green-edge: #2d717c;
   --sem-green-ink: #ffffff;
 
   --accent-bg: #0a132d;
@@ -109,12 +112,15 @@ html.contrast-high {
 
   --sem-red: #019a9a;
   --sem-red-bg: #019a9a;
+  --sem-red-edge: #019a9a;
   --sem-red-ink: #111111;
   --sem-yellow: #0d38d7;
   --sem-yellow-bg: #0d38d7;
+  --sem-yellow-edge: #496df4;
   --sem-yellow-ink: #eeeeee;
   --sem-green: #d28e83;
   --sem-green-bg: #d28e83;
+  --sem-green-edge: #d28e83;
   --sem-green-ink: #111111;
 
   --accent-bg: #f5ecd2;
