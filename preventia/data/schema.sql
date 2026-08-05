@@ -83,13 +83,13 @@ CREATE TABLE escalation_audit (
 CREATE TRIGGER escalation_audit_is_append_only_on_update
 BEFORE UPDATE ON escalation_audit
 BEGIN
-    SELECT RAISE(ABORT, 'escalation_audit is append-only, see ADR-0012');
+    SELECT RAISE(ABORT, 'escalation_audit is append-only, see ADR-0014');
 END;
 
 CREATE TRIGGER escalation_audit_is_append_only_on_delete
 BEFORE DELETE ON escalation_audit
 BEGIN
-    SELECT RAISE(ABORT, 'escalation_audit is append-only, see ADR-0012');
+    SELECT RAISE(ABORT, 'escalation_audit is append-only, see ADR-0014');
 END;
 
 CREATE INDEX idx_check_ins_patient ON check_ins(patient_code, occurred_at DESC, id DESC);

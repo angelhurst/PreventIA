@@ -1,4 +1,4 @@
-# 0012 — The append-only audit log is the queue's state
+# 0014 — The append-only audit log is the queue's state
 
 **Status:** Accepted
 **Date:** 2026-08-05
