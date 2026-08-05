@@ -2,6 +2,7 @@
 .env.local
 
 agent_sessions/
+assets-staging/
 *.db
 *.sqlite
 *.sqlite3
