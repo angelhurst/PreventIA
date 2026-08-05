@@ -240,6 +240,22 @@ diverging.
   what it depends on, in one sentence each.
 - **Tests before implementation for `clinical/`.** The rest of the codebase can move fast; the
   clinical layer cannot.
+- **Three methods, each scoped to exactly where it pays for itself. Nowhere else.** Adopting any of
+  them wholesale costs more than two days have. Adopting the one useful piece of each costs nothing.
+  - **Test-driven development, in `clinical/` only.** Failing test first, then the code that passes
+    it. It earns its cost here and only here, because the adversarial guardrail suite is item 5 of
+    the definition of done: it is the pitch, not documentation of the pitch. Everywhere else in the
+    codebase, write the code.
+  - **Domain-driven design: the ubiquitous language, and nothing else.** Bounded contexts,
+    aggregates and repositories are overhead we cannot afford. The vocabulary is not. `semáforo`,
+    `check-in`, `escalación`, `rescate`, `guardián` mean exactly one thing each, and that meaning is
+    identical in the code, in `PRD.md` and in the clinical teammate's mouth. A developer inventing a
+    private synonym for a clinical term is how the two halves of this team stop understanding each
+    other.
+  - **Type-driven design, applied to exactly one type.** The semáforo colour is an ordered enum and
+    the only operation that changes it raises it. De-escalation stops being a bug that can be
+    written rather than a bug that gets caught. `tests/test_semaforo.py` still proves it, because a
+    judge can run a test and cannot read a type signature.
 - **Commit AND push as you go.** Every logical chunk of work gets a conventional commit and is
   pushed to `origin` in the same breath. A commit sitting unpushed on one laptop does not exist for
   the other person, and this is a two-person repo working against a two-day deadline. Never batch
