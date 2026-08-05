@@ -1,0 +1,130 @@
+:root {
+  --font-body: Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Roboto Slab", Georgia, "Times New Roman", serif;
+
+  --font-scale: 1;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.9rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.4375rem;
+  --text-2xl: 2.4rem;
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.3;
+  --leading-normal: 1.375;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 3rem;
+
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-pill: 0;
+
+  --rule-width: 1px;
+  --rail-width: 0.5rem;
+  --target-min: 2.75rem;
+
+  --measure-page: 71.25rem;
+  --measure-text: 68ch;
+
+  --surface: #ffffff;
+  --surface-sunken: #e9ecef;
+  --ink: #212529;
+  --ink-muted: #4a4a4a;
+  --ink-faint: #6c757d;
+  --link: #006fb3;
+
+  --line: #ced4da;
+  --line-strong: #6c757d;
+
+  --brand: #006fb3;
+  --brand-strong: #0a132d;
+  --brand-edge: #0a132d;
+  --brand-ink: #ffffff;
+  --brand-ink-muted: #e9ecef;
+
+  --sem-red: #fe6565;
+  --sem-red-bg: #fe6565;
+  --sem-red-ink: #212529;
+  --sem-yellow: #f2c728;
+  --sem-yellow-bg: #f2c728;
+  --sem-yellow-ink: #212529;
+  --sem-green: #2d717c;
+  --sem-green-bg: #2d717c;
+  --sem-green-ink: #ffffff;
+
+  --accent-bg: #0a132d;
+  --accent-ink: #ffffff;
+
+  --state-pending-bg: #ffffff;
+  --state-review-bg: #e9ecef;
+  --state-contacted-bg: #dee2e6;
+  --state-closed-bg: #f8f9fa;
+
+  --focus: #212529;
+  --focus-halo: #ffffff;
+  --focus-width: 3px;
+  --focus-offset: 2px;
+}
+
+html.letra-0 {
+  --font-scale: 1;
+}
+
+html.letra-1 {
+  --font-scale: 1.25;
+}
+
+html.letra-2 {
+  --font-scale: 1.5;
+}
+
+html.letra-2 .marca__sub,
+html.letra-2 .dato__nota,
+html.letra-2 .encabezado__sub {
+  display: none;
+}
+
+html.contrast-high {
+  --surface: #212529;
+  --surface-sunken: #111111;
+  --ink: #dedad6;
+  --ink-muted: #b5b5b5;
+  --ink-faint: #938a82;
+  --link: #ff904c;
+
+  --line: #312b25;
+  --line-strong: #938a82;
+
+  --brand: #ff904c;
+  --brand-strong: #f5ecd2;
+  --brand-edge: #f5ecd2;
+  --brand-ink: #111111;
+  --brand-ink-muted: #211d19;
+
+  --sem-red: #019a9a;
+  --sem-red-bg: #019a9a;
+  --sem-red-ink: #111111;
+  --sem-yellow: #0d38d7;
+  --sem-yellow-bg: #0d38d7;
+  --sem-yellow-ink: #eeeeee;
+  --sem-green: #d28e83;
+  --sem-green-bg: #d28e83;
+  --sem-green-ink: #111111;
+
+  --accent-bg: #f5ecd2;
+  --accent-ink: #111111;
+
+  --state-pending-bg: #212529;
+  --state-review-bg: #161310;
+  --state-contacted-bg: #211d19;
+  --state-closed-bg: #070605;
+
+  --focus: #eeeeee;
+  --focus-halo: #111111;
+}
