@@ -7,6 +7,8 @@ DELIVERY_FAILED_NOTICE = (
     "No pude enviarle mi respuesta. Voy a intentarlo de nuevo en un momento."
 )
 
+RECEIPT_ACKNOWLEDGEMENT = "Gracias, recibí su mensaje."
+
 CONSOLE_GREETING = "Escriba su respuesta y presione Enter. Para salir, escriba: salir"
 
 CONSOLE_FAREWELL = "Conversación cerrada."
