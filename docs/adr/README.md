@@ -18,3 +18,4 @@ is flipping its Status line to "Superseded by 00YY".
 | [0008](0008-local-ollama-runtime-claude-as-build-tool.md) | Local Ollama runtime as the default, Claude as the build tool | Superseded by 0010 |
 | [0009](0009-repository-discoverability.md) | Repository description and topics | Accepted |
 | [0010](0010-claude-as-the-lab-runtime-ollama-as-the-deployment-path.md) | Claude as the Lab runtime, Ollama as the deployment path | Accepted |
+| [0011](0011-kit-digital-tokens-for-the-clinician-dashboard.md) | Kit Digital design tokens for the clinician dashboard | Accepted |
