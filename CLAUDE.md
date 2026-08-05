@@ -55,7 +55,7 @@ patient phone
      |
   channel adapter          channels/  WhatsApp Cloud API, local console
      |
-  agent core               agent/     Strands agent, prompts, tools
+  agent core               agent/     orchestrator, bounded tool loop, prompts
      |
   extraction               clinical/  structured symptoms + adherence facts
      |
@@ -69,7 +69,8 @@ patient phone
 ```
 
 The one boundary that matters: **nothing below `channels/` knows what WhatsApp is.** The agent core
-receives a message and a patient id, and returns a message. If you find yourself importing a
+receives a message and a patient id. It answers either by returning a message or by calling the
+`send_message` tool, and that tool reaches the channel adapter, never a WhatsApp client. If you find yourself importing a
 WhatsApp client from `clinical/` or `agent/`, stop and put it behind the adapter instead. That seam
 is what lets the whole system run on a local console when the venue network fails, and it is what
 makes "this could run on SMS, on voice, on a clinic portal" a true statement in the pitch rather
@@ -77,7 +78,7 @@ than a hope.
 
 ## 4. Stack
 
-- Python, **Strands Agents SDK**, provider-agnostic model layer. **The runtime for the Lab build, the
+- Python, no agent framework. A hand-rolled provider-agnostic model layer, per ADR-0012. **The runtime for the Lab build, the
   recorded demo and the pitch is Claude**, `PREVENTIA_MODEL_PROVIDER=anthropic`. Ollama on the Mac
   Studio and Kimi `kimi-k3` are registered alternatives, selected by one environment variable,
   touching no other module.
@@ -93,8 +94,8 @@ than a hope.
   "motor principal". Running the demo on Claude costs one environment variable; not running it on
   Claude risks the entry.
 - **SQLite** for the clinical record.
-- **Strands `FileSessionManager`** for raw conversation transcripts. Do not put transcripts in
-  SQLite and do not write a custom session manager.
+- **`agent/sessions.py`** for raw conversation transcripts, one append-only JSONL per patient. Do
+  not put transcripts in SQLite.
 - **WhatsApp Cloud API** test number as the patient channel.
 - **pytest** for the guardrail and semáforo suites.
 
@@ -103,39 +104,43 @@ project. Kimi is reached through the OpenAI-compatible provider pointed at Moons
 extra dependency.
 
 ```bash
-pip install 'strands-agents[ollama,openai,anthropic]'
+pip install anthropic ollama openai
 ```
 
 Model construction lives in one place, `agent/models.py`. It reads the provider from the environment
 so no other module ever imports a provider directly:
 
 ```python
-from strands.models.ollama import OllamaModel
-from strands.models.openai import OpenAIModel
-from strands.models.anthropic import AnthropicModel
+import anthropic
+import ollama
+import openai
 
 def build_model():
     provider = os.environ.get("PREVENTIA_MODEL_PROVIDER", "ollama")
     if provider == "kimi":
-        return OpenAIModel(
-            client_args={
-                "api_key": os.environ["MOONSHOT_API_KEY"],
-                "base_url": "https://api.moonshot.ai/v1",
-            },
+        return OpenAIChat(
+            openai.OpenAI(
+                api_key=os.environ["MOONSHOT_API_KEY"],
+                base_url="https://api.moonshot.ai/v1",
+            ),
             model_id="kimi-k3",
-            params={"max_tokens": 1024},
+            max_tokens=1024,
         )
     if provider == "anthropic":
-        return AnthropicModel(
-            client_args={"api_key": os.environ["ANTHROPIC_API_KEY"]},
+        return AnthropicChat(
+            anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"]),
             model_id="claude-sonnet-5",
             max_tokens=1024,
         )
-    return OllamaModel(
-        host=os.environ.get("OLLAMA_HOST", "http://localhost:11434"),
+    return OllamaChat(
+        ollama.Client(host=os.environ.get("OLLAMA_HOST", "http://localhost:11434")),
         model_id=os.environ["OLLAMA_MODEL"],
     )
 ```
+
+The three wrappers expose one method, `send(messages, tools)`, returning a reply with `text` and
+`tool_calls`. That signature is the seam. Nothing outside `agent/models.py` knows which provider
+answered.
 
 Unset, the function still falls through to Ollama, which is why `.env` sets
 `PREVENTIA_MODEL_PROVIDER=anthropic` explicitly for the Lab. Ollama runs models through Apple's MLX
@@ -153,20 +158,16 @@ clinical safety cannot depend on which model answered, and a local open-weights 
 assumption actually gets tested. Say in the pitch which providers the suites have been run against,
 rather than implying both.
 
-Lab-provided MCP servers (the curated anonymized datasets) are consumed through Strands' own client:
-
-```python
-from strands.tools.mcp.mcp_client import MCPClient
-
-with mcp_client:
-    tools = mcp_client.list_tools_sync()
-```
+Lab-provided MCP servers are not consumed at runtime. The curated anonymized datasets are ingested
+offline through `data/caja_adapter.py`, per ADR-0007. If a Lab server turns out to expose something
+a live patient conversation needs, add the standalone `mcp` package then and register its tools in
+the same bounded loop, per ADR-0012.
 
 ## 5. Layout
 
 ```
 preventia/
-  agent/        models.py, prompts/, tools.py, core.py
+  agent/        models.py, core.py, sessions.py, tools.py, prompts/
   channels/     base.py, whatsapp_cloud.py, local_console.py
   clinical/     extraction.py, semaforo.py, guardrails.py, rules/
   data/         schema.sql, seed_cohort.py, caja_adapter.py
