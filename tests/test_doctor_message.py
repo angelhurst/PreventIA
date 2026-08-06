@@ -25,7 +25,7 @@ class StubChannel:
 
 @pytest.fixture
 def conn(monkeypatch):
-    monkeypatch.setenv("PREVENTIA_DEMO_RECIPIENT", "+56911112222")
+    monkeypatch.setenv("PREVENTIA_PATIENT_DIRECTORY", "56911112222=PV-001")
     connection = sqlite3.connect(":memory:")
     connection.row_factory = sqlite3.Row
     connection.executescript(SCHEMA.read_text(encoding="utf-8"))
@@ -49,7 +49,7 @@ def test_a_doctor_can_send_a_message(conn):
     channel = StubChannel()
     receipt = messaging.send_doctor_message(conn, "PV-001", "CL-02", "Hola, la espero mañana.", channel)
     assert receipt.delivered
-    assert channel.sent == [("+56911112222", "Hola, la espero mañana.")]
+    assert channel.sent == [("56911112222", "Hola, la espero mañana.")]
 
 
 def test_a_nurse_cannot_send_a_message(conn):
@@ -87,26 +87,39 @@ def test_a_failed_send_still_leaves_a_record(conn):
     assert len(messaging.messages_for(conn, "PV-001")) == 1
 
 
-def test_without_a_number_anywhere_the_send_is_refused(conn, monkeypatch):
-    monkeypatch.delenv("PREVENTIA_DEMO_RECIPIENT", raising=False)
+def test_a_patient_outside_the_channel_directory_cannot_be_written_to(conn):
+    channel = StubChannel()
+    with pytest.raises(messaging.MissingRecipient):
+        messaging.send_doctor_message(conn, "PV-003", "CL-02", "Hola.", channel)
+    assert channel.sent == []
+
+
+def test_without_a_directory_the_send_is_refused(conn, monkeypatch):
+    monkeypatch.delenv("PREVENTIA_PATIENT_DIRECTORY", raising=False)
     with pytest.raises(messaging.MissingRecipient):
         messaging.send_doctor_message(conn, "PV-001", "CL-02", "Hola.", StubChannel())
 
 
-def test_a_stored_patient_number_beats_the_demo_fallback(conn):
+def test_the_destination_comes_from_the_channel_directory(conn):
+    assert messaging.recipient_for("PV-001") == "56911112222"
+    assert messaging.reachable("PV-001")
+    assert not messaging.reachable("PV-003")
+
+
+def test_the_clinical_record_never_stores_a_phone_number(conn):
     messaging.ensure_schema(conn)
-    conn.execute("UPDATE patients SET phone = '+56999998888' WHERE code = 'PV-001'")
-    conn.commit()
-    channel = StubChannel()
-    messaging.send_doctor_message(conn, "PV-001", "CL-02", "Hola.", channel)
-    assert channel.sent[0][0] == "+56999998888"
+    columns = {row["name"] for row in conn.execute("PRAGMA table_info(patients)").fetchall()}
+    assert "phone" not in columns
 
 
 def test_the_schema_migration_is_idempotent(conn):
     messaging.ensure_schema(conn)
     messaging.ensure_schema(conn)
-    columns = {row["name"] for row in conn.execute("PRAGMA table_info(patients)").fetchall()}
-    assert "phone" in columns
+    tables = {
+        row["name"]
+        for row in conn.execute("SELECT name FROM sqlite_master WHERE type = 'table'").fetchall()
+    }
+    assert "doctor_messages" in tables
 
 
 @pytest.mark.parametrize(

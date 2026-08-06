@@ -1,7 +1,6 @@
-import os
 from datetime import datetime
 
-from ..channels import build_channel
+from ..channels import build_channel, has_recipient, recipient_for_patient
 from ..channels.base import ChannelError
 from .audit import DOCTOR_ROLE, NotADoctor, UnknownActor
 
@@ -33,25 +32,17 @@ CREATE TABLE IF NOT EXISTS doctor_messages (
 
 def ensure_schema(conn):
     conn.execute(SCHEMA)
-    columns = {row["name"] for row in conn.execute("PRAGMA table_info(patients)").fetchall()}
-    if "phone" not in columns:
-        conn.execute("ALTER TABLE patients ADD COLUMN phone TEXT")
     conn.commit()
 
 
-def recipient_for(conn, patient_code):
-    ensure_schema(conn)
-    row = conn.execute(
-        "SELECT phone FROM patients WHERE code = ?", (patient_code,)
-    ).fetchone()
-    stored = (row["phone"] if row and row["phone"] else "") or ""
-    fallback = os.environ.get("PREVENTIA_DEMO_RECIPIENT", "")
-    recipient = stored.strip() or fallback.strip()
-    if not recipient:
-        raise MissingRecipient(
-            "esta persona no tiene telefono registrado y no hay PREVENTIA_DEMO_RECIPIENT en .env"
-        )
-    return recipient
+def reachable(patient_code):
+    return has_recipient(patient_code)
+
+
+def recipient_for(patient_code):
+    if not has_recipient(patient_code):
+        raise MissingRecipient(patient_code)
+    return recipient_for_patient(patient_code)
 
 
 def _assert_doctor(conn, actor_code):
@@ -73,7 +64,7 @@ def send_doctor_message(conn, patient_code, actor_code, body, channel=None):
         raise EmptyMessage(patient_code)
     text = text[:MAX_BODY]
 
-    recipient = recipient_for(conn, patient_code)
+    recipient = recipient_for(patient_code)
     transport = channel or build_channel()
 
     try:
