@@ -79,6 +79,40 @@
     </p>
   </form>
 </section>
+
+<section class="tarjeta tarjeta--medico" aria-labelledby="titulo-color">
+  <h2 id="titulo-color">
+    {{ T.override_title }}
+    <span class="marca-medico">{{ T.override_badge }}</span>
+  </h2>
+  <p class="contacto-medico__ayuda">{{ T.override_help }}</p>
+  <form method="post" action="/cola/{{ patient.code }}/color" class="formulario-estado">
+    <input type="hidden" name="actor_code" value="{{ actor.code }}">
+    <p class="campo">
+      <label for="color_semaforo">{{ T.override_color_label }}</label>
+      <select id="color_semaforo" name="color">
+        {% for value in labels.COLOR_LABELS %}
+        <option value="{{ value }}">{{ value|color_label }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    <p class="campo campo--ancho">
+      <label for="razon_color">{{ T.override_reason_label }}</label>
+      <input type="text" id="razon_color" name="reason" maxlength="200" required
+             autocomplete="off" aria-describedby="ayuda_razon_color">
+      <span class="campo__ayuda" id="ayuda_razon_color">{{ T.override_reason_hint }}</span>
+    </p>
+    <p class="campo">
+      <label for="codigo_color">{{ T.confirm_label }}</label>
+      <input type="password" id="codigo_color" name="confirm_code" inputmode="numeric"
+             maxlength="4" required autocomplete="off" aria-describedby="ayuda_codigo_color">
+      <span class="campo__ayuda" id="ayuda_codigo_color">{{ T.confirm_hint }}</span>
+    </p>
+    <p class="campo campo--accion">
+      <button class="boton" type="submit">{{ T.override_submit }}</button>
+    </p>
+  </form>
+</section>
 {% endif %}
 
 <section class="tarjeta" aria-labelledby="titulo-hilo">
@@ -142,17 +176,28 @@
 
 <section class="tarjeta" aria-labelledby="titulo-auditoria">
   <h2 id="titulo-auditoria">{{ T.audit_title }}</h2>
-  {% if patient.audit %}
+  {% set eventos = (patient.audit + patient.overrides) | sort(attribute='occurred_at', reverse=True) %}
+  {% if eventos %}
   <ol class="auditoria">
-    {% for entry in patient.audit %}
-    <li>
+    {% for entry in eventos %}
+    <li class="auditoria__evento auditoria__evento--{{ entry.kind }}">
+      {% if entry.kind == 'color' %}
+      <p class="auditoria__cambio">
+        {{ T.override_history_change }}<span class="sep" aria-hidden="true"> · </span><strong>{{ entry.color|color_label }}</strong>
+      </p>
+      {% else %}
       <p class="auditoria__cambio">
         {% if entry.from_state %}{{ entry.from_state|state_label }} → {% endif %}<strong>{{ entry.to_state|state_label }}</strong>
       </p>
+      {% endif %}
       <p class="auditoria__firma">
         {{ entry.actor_name }}<span class="sep" aria-hidden="true"> · </span>{{ entry.occurred_at|when }}{% if entry.confirmed_by %}<span class="sep" aria-hidden="true"> · </span><span class="marca-confirmado">{{ T.audit_confirmed }}</span>{% endif %}
       </p>
-      {% if entry.note %}<p class="auditoria__nota">{{ entry.note }}</p>{% endif %}
+      {% if entry.kind == 'color' %}
+      <p class="auditoria__nota">{{ entry.reason }}</p>
+      {% elif entry.note %}
+      <p class="auditoria__nota">{{ entry.note }}</p>
+      {% endif %}
     </li>
     {% endfor %}
   </ol>

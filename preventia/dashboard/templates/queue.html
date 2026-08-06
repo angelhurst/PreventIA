@@ -57,6 +57,14 @@
     </p>
     {% endif %}
 
+    {% if row.color_set_by_clinician %}
+    <p class="caso__override">
+      <span class="marca-override">{{ T.override_on_card }}</span>
+      {{ row.override_by }}<span class="sep" aria-hidden="true"> · </span>{{ row.override_at|when }}
+    </p>
+    <p class="caso__override-razon">{{ row.override_reason }}</p>
+    {% endif %}
+
     {% if row.model_raised %}
     <p class="caso__subida">{{ T.model_raised }}: {{ row.rules_color|color_label }} → {{ row.color|color_label }}</p>
     {% endif %}

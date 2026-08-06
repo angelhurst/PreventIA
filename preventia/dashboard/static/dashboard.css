@@ -328,11 +328,36 @@ h1 {
 }
 
 .caso__alpaso,
+.caso__override,
+.caso__override-razon,
 .caso__subida {
   margin-top: var(--space-2);
   font-size: var(--text-sm);
   color: var(--ink-muted);
   max-width: var(--measure-text);
+}
+
+.caso__override-razon {
+  margin-top: var(--space-1);
+  color: var(--ink);
+}
+
+.marca-override {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  margin-right: var(--space-2);
+  background: var(--accent-bg);
+  color: var(--accent-ink);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.auditoria__evento--color {
+  border-left: var(--rail-width) solid var(--brand);
+  padding-left: var(--space-3);
 }
 
 .marca-alpaso {

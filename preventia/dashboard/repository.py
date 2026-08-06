@@ -1,7 +1,9 @@
 import sqlite3
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 
+from . import overrides as clinical_overrides
 from .audit import ensure_confirmation_column
 
 ADHERENCE_WINDOW = 7
@@ -51,6 +53,18 @@ class AuditEntry:
     occurred_at: str
     note: str
     confirmed_by: str = ""
+    kind: str = "state"
+
+
+@dataclass
+class OverrideEntry:
+    color: str
+    reason: str
+    actor_code: str
+    actor_name: str
+    occurred_at: str
+    confirmed_by: str = ""
+    kind: str = "color"
 
 
 @dataclass
@@ -71,6 +85,11 @@ class QueueRow:
     symptoms: list
     rules_color: str
     model_color: str
+    color_set_by_clinician: bool = False
+    override_color: str = ""
+    override_reason: str = ""
+    override_by: str = ""
+    override_at: str = ""
 
     @property
     def model_raised(self):
@@ -97,6 +116,7 @@ class PatientDetail:
     check_ins: list
     state: str
     audit: list
+    overrides: list = field(default_factory=list)
 
 
 class MissingClinicalRecord(RuntimeError):
@@ -186,6 +206,50 @@ def _unreviewed_color_by_patient(conn):
     return highest
 
 
+def _more_severe(first, second):
+    return first if COLOR_RANK[first] <= COLOR_RANK[second] else second
+
+
+def _instant(value):
+    moment = datetime.fromisoformat(value)
+    if moment.tzinfo is None:
+        return moment.replace(tzinfo=timezone.utc)
+    return moment.astimezone(timezone.utc)
+
+
+def _highest_color_after_each_override(conn, decided):
+    if not decided:
+        return {}
+
+    rows = conn.execute(
+        """
+        SELECT ci.patient_code AS code, ci.occurred_at AS occurred_at, re.final_color AS final_color
+        FROM check_ins ci
+        JOIN risk_events re ON re.check_in_id = ci.id
+        """
+    ).fetchall()
+
+    highest = {}
+    for row in rows:
+        override = decided.get(row["code"])
+        if override is None:
+            continue
+        if _instant(row["occurred_at"]) <= _instant(override["occurred_at"]):
+            continue
+        colour = row["final_color"] or "green"
+        highest[row["code"]] = _more_severe(colour, highest.get(row["code"], "green"))
+    return highest
+
+
+def _resolve_color(base, override, escalated_since):
+    if override is None:
+        return base, False
+    decided = override["color"]
+    if escalated_since and COLOR_RANK[escalated_since] < COLOR_RANK[decided]:
+        return escalated_since, False
+    return decided, True
+
+
 def queue_rows(conn, only_open=False):
     rows = conn.execute(
         """
@@ -213,6 +277,8 @@ def queue_rows(conn, only_open=False):
     conditions = _conditions_by_patient(conn)
     adherence = _adherence_by_patient(conn)
     unreviewed = _unreviewed_color_by_patient(conn)
+    decided = clinical_overrides.latest_by_patient(conn)
+    escalated_since = _highest_color_after_each_override(conn, decided)
     symptoms = _symptoms_by_check_in(conn, [r["check_in_id"] for r in rows if r["check_in_id"]])
 
     queue = []
@@ -220,6 +286,12 @@ def queue_rows(conn, only_open=False):
         if only_open and row["state"] not in OPEN_STATES:
             continue
         taken, expected = adherence.get(row["code"], (0, 0))
+        override = decided.get(row["code"])
+        color, held_by_clinician = _resolve_color(
+            unreviewed.get(row["code"], row["final_color"] or "green"),
+            override,
+            escalated_since.get(row["code"]),
+        )
         queue.append(
             QueueRow(
                 code=row["code"],
@@ -227,7 +299,7 @@ def queue_rows(conn, only_open=False):
                 age=row["age"],
                 comuna=row["comuna"],
                 conditions=conditions.get(row["code"], []),
-                color=unreviewed.get(row["code"], row["final_color"] or "green"),
+                color=color,
                 summary_line=row["summary_line"] or "",
                 last_contact_at=row["last_contact_at"],
                 doses_taken=taken,
@@ -238,6 +310,11 @@ def queue_rows(conn, only_open=False):
                 symptoms=symptoms.get(row["check_in_id"], []),
                 rules_color=row["rules_color"] or "green",
                 model_color=row["model_color"] or "green",
+                color_set_by_clinician=held_by_clinician,
+                override_color=override["color"] if override else "",
+                override_reason=override["reason"] if held_by_clinician else "",
+                override_by=override["actor_name"] if held_by_clinician else "",
+                override_at=override["occurred_at"] if held_by_clinician else "",
             )
         )
 
@@ -351,6 +428,17 @@ def patient_detail(conn, code):
         check_ins=check_ins,
         state=state,
         audit=audit,
+        overrides=[
+            OverrideEntry(
+                color=item["color"],
+                reason=item["reason"],
+                actor_code=item["actor_code"],
+                actor_name=item["actor_name"],
+                occurred_at=item["occurred_at"],
+                confirmed_by=item["confirmed_by"],
+            )
+            for item in clinical_overrides.for_patient(conn, code)
+        ],
     )
 
 

@@ -129,6 +129,18 @@ TEXT = {
     "message_no_recipient": "Esta persona no tiene teléfono registrado, así que no hay a dónde enviar.",
     "message_delivered_label": "Entregado",
     "message_failed_label": "No salió",
+    "override_title": "Cambiar el color del semáforo",
+    "override_badge": "Solo médico",
+    "override_help": "Use esto cuando la situación clínica ya no es la que muestra el semáforo, por ejemplo si usted evaluó a la persona y descartó la urgencia. El color queda a su nombre y con el motivo escrito. Un contacto posterior con un color más alto vuelve a subir el caso.",
+    "override_color_label": "Color que corresponde ahora",
+    "override_reason_label": "Motivo clínico",
+    "override_reason_hint": "Escriba por qué cambia el color. Sin motivo no se guarda.",
+    "override_submit": "Registrar el color",
+    "override_only_doctor": "Solo un médico puede cambiar el color. No se cambió nada.",
+    "override_needs_reason": "Escriba el motivo clínico. Un cambio de color sin motivo no se guarda.",
+    "override_unknown_color": "Ese color no existe en el semáforo. No se cambió nada.",
+    "override_on_card": "Este color lo puso el equipo, no las reglas",
+    "override_history_change": "Cambio de color",
     "confirm_label": "Confirme con su código",
     "confirm_short_label": "Código",
     "confirm_hint": "El mismo código con el que entró. Sin él no se guarda el cambio.",
@@ -161,6 +173,9 @@ ERRORS = {
     "mensaje_vacio": "message_needs_body",
     "mensaje_sin_numero": "message_no_recipient",
     "confirmacion": "confirm_failed",
+    "color_solo_medico": "override_only_doctor",
+    "color_sin_razon": "override_needs_reason",
+    "color_desconocido": "override_unknown_color",
 }
 
 

@@ -6,7 +6,7 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from . import audit, auth, intake, labels, messaging, repository
+from . import audit, auth, intake, labels, messaging, overrides, repository
 from .. import channels
 from ..agent import models
 from ..agent.core import run_check_in
@@ -297,6 +297,41 @@ async def record_contact(
         target = f"/cola/{code}?error=solo_medico"
     except audit.MissingContactNote:
         target = f"/cola/{code}?error=falta_nota"
+    except (audit.UnknownActor, ValueError):
+        target = f"/cola/{code}?error=estado"
+    finally:
+        conn.close()
+
+    response = RedirectResponse(target, status_code=303)
+    response.set_cookie(ACTOR_COOKIE, actor_code, max_age=COOKIE_MAX_AGE, samesite="lax")
+    return response
+
+
+@app.post("/cola/{code}/color")
+async def change_color(
+    request: Request,
+    code: str,
+    color: str = Form(...),
+    actor_code: str = Form(...),
+    reason: str = Form(""),
+    confirm_code: str = Form(""),
+):
+    if not auth.confirms(confirm_code):
+        return RedirectResponse(f"/cola/{code}?error=confirmacion", status_code=303)
+
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+    try:
+        overrides.record_override(conn, code, color, actor_code, reason, confirmed_by=actor_code)
+        target = f"/cola/{code}"
+    except audit.NotADoctor:
+        target = f"/cola/{code}?error=color_solo_medico"
+    except overrides.MissingReason:
+        target = f"/cola/{code}?error=color_sin_razon"
+    except overrides.UnknownColor:
+        target = f"/cola/{code}?error=color_desconocido"
     except (audit.UnknownActor, ValueError):
         target = f"/cola/{code}?error=estado"
     finally:

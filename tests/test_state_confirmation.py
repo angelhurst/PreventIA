@@ -170,7 +170,7 @@ def test_the_record_asks_for_the_code_in_every_form_that_writes(client):
     page = client.get("/cola/PV-001")
 
     assert page.status_code == 200
-    assert page.text.count('name="confirm_code"') == 3
+    assert page.text.count('name="confirm_code"') == 4
 
 
 def test_a_wrong_code_is_explained_on_the_record(client):
