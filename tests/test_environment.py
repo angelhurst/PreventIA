@@ -46,6 +46,7 @@ def test_the_webhook_and_the_dashboard_share_one_loader():
 def run_dashboard_import(env_path, extra=None):
     environment = dict(os.environ)
     environment.pop("PREVENTIA_CHANNEL", None)
+    environment.pop("PREVENTIA_DB", None)
     environment["PREVENTIA_ENV_FILE"] = str(env_path)
     environment.update(extra or {})
     script = (
