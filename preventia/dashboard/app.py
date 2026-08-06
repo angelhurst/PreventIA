@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
@@ -92,6 +92,11 @@ def back_to(request, fallback="/cola"):
 @app.get("/")
 async def root():
     return RedirectResponse("/cola", status_code=303)
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse(ASSETS_DIR / "favicon.ico", media_type="image/x-icon")
 
 
 @app.get("/cola")
