@@ -72,6 +72,66 @@ consulta diaria valer como señal, y de qué color?
 Una dosis olvidada y cuatro dosis no tomadas producen el mismo color. ¿Corresponde un umbral, y en qué
 punto?
 
+## Segunda parte: lo que la paciente lee
+
+Todo lo que PreventIA le dice a una paciente está en un solo archivo, para que ustedes puedan
+revisarlo sin leer código. Nunca ha sido revisado por una médica. Son seis frases.
+
+**1. Presentación, primer contacto**
+
+> Le escribe PreventIA, un asistente virtual del consultorio. No soy una persona ni un profesional de
+> la salud, y no reemplazo sus controles. Cada día le voy a preguntar si tomó sus remedios y cómo se
+> ha sentido. Lo que usted me cuente queda anotado para su equipo de salud.
+
+**2. Cuando la paciente pregunta algo que el agente no puede responder**
+
+> Prefiero no responderle eso, porque no soy médico. Estoy dejando su mensaje anotado para el equipo
+> del consultorio, que se va a comunicar con usted.
+
+**3. Cuando una bandera clínica marca rojo** (única frase que menciona urgencia)
+
+> Por lo que me cuenta, le pido que se comunique hoy con su consultorio. Si se siente peor, llame al
+> 131 o vaya al servicio de urgencia más cercano. Ya avisé a su equipo de salud.
+
+**4. Cuando el modelo sube el color a rojo pero ninguna regla clínica se activó**
+
+> Ya avisé a su equipo de salud para que se comunique con usted.
+
+**5. Cuando se detecta una señal de crisis de salud mental**
+
+> Gracias por contarme algo así de difícil. Usted no tiene que pasar por esto sin apoyo. Estoy
+> avisando ahora mismo a su equipo de salud para que se comuniquen con usted lo antes posible. Por
+> favor manténgase acompañado y deje su teléfono cerca.
+
+**6. Cuando llega una nota de voz** (la transcripción está fuera de alcance por ahora)
+
+> Recibí su mensaje, pero por ahora solo puedo leer texto. ¿Me lo puede escribir, por favor?
+
+**Pregunta 4.** ¿Alguna de estas frases dice de más, dice de menos, o suena mal para una persona de 71
+años? La frase 5 es la que más nos preocupa: se envía sola, sin que alcance a intervenir una persona.
+
+**Nota técnica que ustedes deben saber:** el resto de las respuestas las redacta el modelo en el
+momento, no salen de esta lista. Hoy se le escapa el tuteo — hemos visto "me alegra saber que te
+sientes bien" cuando la regla del proyecto es usted siempre. Eso lo corregimos nosotros, pero si ven
+otra cosa en el tono, díganlo.
+
+## Tercera parte: las palabras que gatillan el protocolo de crisis
+
+Si un mensaje contiene una de estas frases, PreventIA deja de hacer triaje de hipertensión o diabetes
+y deriva de inmediato a contacto humano. La lista la escribió el equipo de desarrollo.
+
+`quiero morirme` · `me quiero morir` · `quisiera morirme` · `quitarme la vida` · `acabar con mi vida` ·
+`terminar con mi vida` · `terminar con todo` · `acabar con todo` · `matarme` · `no quiero vivir` ·
+`no quiero seguir viviendo` · `no vale la pena vivir` · `para qué sigo viviendo` · `estaría mejor
+muerta` · `mejor no despertar` · `hacerme daño` · `cortarme`
+
+Hay excepciones para los usos idiomáticos: "morirme de risa", "morirme de hambre", "cortarme el pelo"
+y similares no gatillan nada.
+
+**Pregunta 5.** ¿Falta alguna forma de decirlo que ustedes escuchan en consulta y que aquí no está?
+Una mujer de 71 años en Chile probablemente no dice "quiero suicidarme"; dice otra cosa. Esa otra cosa
+es la que necesitamos.
+
 ## Lo que ocurre después
 
 Su revisión se registra como decisión clínica: la tabla queda con autor, y la ADR correspondiente lleva
