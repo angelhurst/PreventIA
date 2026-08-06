@@ -91,8 +91,8 @@ def normalise(text):
     return "".join(char for char in decomposed if not unicodedata.combining(char))
 
 
-def inspect(message, rules_color):
-    if not isinstance(rules_color, Color):
+def inspect(message, rules_color=None):
+    if rules_color is not None and not isinstance(rules_color, Color):
         raise TypeError(f"rules_color must be a Color, got {type(rules_color).__name__}")
 
     text = normalise(message)

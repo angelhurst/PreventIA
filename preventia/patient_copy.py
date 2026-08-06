@@ -10,3 +10,14 @@ SAFE_REDIRECT = (
     "Estoy dejando su mensaje anotado para el equipo del consultorio, "
     "que se va a comunicar con usted."
 )
+
+URGENCY_REDIRECT = (
+    "Por lo que me cuenta, le pido que se comunique hoy con su consultorio. "
+    "Si se siente peor, llame al 131 o vaya al servicio de urgencia más cercano. "
+    "Ya avisé a su equipo de salud."
+)
+
+FALLBACK_ACKNOWLEDGEMENT = (
+    "Gracias por contarme cómo se ha sentido. "
+    "Dejé anotado su mensaje para el equipo del consultorio."
+)

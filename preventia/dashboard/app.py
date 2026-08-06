@@ -6,7 +6,10 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from . import audit, labels, repository
+from . import audit, intake, labels, repository
+from ..agent import models
+from ..agent.core import run_check_in
+from ..clinical.extraction import ExtractionFailed
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DB = BASE_DIR.parent / "data" / "preventia.db"
@@ -205,6 +208,78 @@ async def record_contact(
     response = RedirectResponse(target, status_code=303)
     response.set_cookie(ACTOR_COOKIE, actor_code, max_age=COOKIE_MAX_AGE, samesite="lax")
     return response
+
+
+def consulta_response(request, conn, result=None, error="", message="", selected=""):
+    return templates.TemplateResponse(
+        request,
+        "consulta.html",
+        {
+            "roster": intake.roster_for_intake(conn),
+            "runtime": models.describe_runtime(),
+            "result": result,
+            "error": error,
+            "message": message,
+            "selected": selected,
+            "actor": None,
+            "view": view_settings(request),
+        },
+    )
+
+
+@app.get("/consulta")
+async def consulta(request: Request):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+    try:
+        return consulta_response(request, conn)
+    finally:
+        conn.close()
+
+
+@app.post("/consulta")
+async def run_consulta(
+    request: Request,
+    patient_code: str = Form(...),
+    message: str = Form(...),
+):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+
+    try:
+        patient = intake.patient_for_agent(conn, patient_code)
+        if patient is None:
+            return consulta_response(
+                request, conn, error="No encontramos a esa persona en la ficha."
+            )
+
+        try:
+            result = run_check_in(patient, message.strip())
+        except models.MissingModelToken as exc:
+            return consulta_response(
+                request, conn, error=str(exc), message=message, selected=patient_code
+            )
+        except models.ModelUnavailable as exc:
+            return consulta_response(
+                request,
+                conn,
+                error=f"El modelo no respondio: {exc}",
+                message=message,
+                selected=patient_code,
+            )
+        except ExtractionFailed as exc:
+            return consulta_response(
+                request, conn, error=str(exc), message=message, selected=patient_code
+            )
+
+        intake.persist(conn, result)
+        return consulta_response(request, conn, result=result, selected=patient_code)
+    finally:
+        conn.close()
 
 
 @app.post("/preferencias/contraste")

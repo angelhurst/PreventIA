@@ -30,7 +30,18 @@ def test_the_disclosure_uses_usted_rather_than_tu():
     assert " tu " not in normalise(patient_copy.ASSISTANT_DISCLOSURE)
 
 
+RED_ONLY = {"URGENCY_REDIRECT"}
+
+
 @pytest.mark.parametrize("name,value", public_copy(), ids=lambda value: str(value)[:32])
 def test_every_patient_facing_string_passes_the_guardrail(name, value):
-    result = inspect(value, rules_color=Color.GREEN)
+    floor = Color.RED if name in RED_ONLY else Color.GREEN
+    result = inspect(value, rules_color=floor)
     assert result.allowed, f"{name} blocked for {result.violations}"
+
+
+@pytest.mark.parametrize("name", sorted(RED_ONLY))
+@pytest.mark.parametrize("floor", [Color.GREEN, Color.YELLOW])
+def test_red_only_copy_is_blocked_below_a_rules_red(name, floor):
+    result = inspect(getattr(patient_copy, name), rules_color=floor)
+    assert not result.allowed
