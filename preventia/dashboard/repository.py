@@ -164,6 +164,25 @@ def _adherence_by_patient(conn):
     return {row["patient_code"]: (row["taken"] or 0, row["expected"] or 0) for row in rows}
 
 
+def _unreviewed_color_by_patient(conn):
+    rows = conn.execute(
+        """
+        SELECT ci.patient_code AS code, re.final_color AS final_color
+        FROM check_ins ci
+        JOIN risk_events re ON re.check_in_id = ci.id
+        JOIN current_queue_state q ON q.patient_code = ci.patient_code
+        WHERE ci.occurred_at >= q.changed_at
+        """
+    ).fetchall()
+
+    highest = {}
+    for row in rows:
+        colour = row["final_color"] or "green"
+        current = highest.get(row["code"], "green")
+        highest[row["code"]] = colour if COLOR_RANK[colour] < COLOR_RANK[current] else current
+    return highest
+
+
 def queue_rows(conn, only_open=False):
     rows = conn.execute(
         """
@@ -190,6 +209,7 @@ def queue_rows(conn, only_open=False):
 
     conditions = _conditions_by_patient(conn)
     adherence = _adherence_by_patient(conn)
+    unreviewed = _unreviewed_color_by_patient(conn)
     symptoms = _symptoms_by_check_in(conn, [r["check_in_id"] for r in rows if r["check_in_id"]])
 
     queue = []
@@ -204,7 +224,7 @@ def queue_rows(conn, only_open=False):
                 age=row["age"],
                 comuna=row["comuna"],
                 conditions=conditions.get(row["code"], []),
-                color=row["final_color"] or "green",
+                color=unreviewed.get(row["code"], row["final_color"] or "green"),
                 summary_line=row["summary_line"] or "",
                 last_contact_at=row["last_contact_at"],
                 doses_taken=taken,
