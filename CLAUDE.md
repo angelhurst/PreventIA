@@ -357,3 +357,46 @@ The video and the pitch must show, in this order:
 
 If something on this list is not working by the afternoon of day 2, cut scope elsewhere. This list
 is the pitch.
+
+## 13. The server
+
+Both the clinician dashboard and the WhatsApp webhook run on an IONOS VPS, Debian 12, reached over
+SSH with `~/.ssh/nasavdp_vps` as root. There is no tunnel and no laptop in the path. **Do not point
+Meta at a laptop tunnel again** — the callback URL is registered once and never changed.
+
+| | |
+|---|---|
+| Public URL | `https://preventia.copiapolabs.cl` |
+| Webhook | `https://preventia.copiapolabs.cl/webhook/whatsapp` |
+| Checkout | `/opt/preventia`, tracking `main` |
+| Services | `preventia-dashboard` (127.0.0.1:8001), `preventia-webhook` (127.0.0.1:8080) |
+| TLS | Caddy on 443, certificate issued over TLS-ALPN |
+| Secrets | `/opt/preventia/.env`, mode 600, never in git |
+| Database | `/opt/preventia/preventia/data/preventia.db` |
+
+**Deploying is a git pull.** The repository is public, so the box needs no credentials:
+
+```bash
+ssh -i ~/.ssh/nasavdp_vps root@74.208.35.90 \
+  'cd /opt/preventia && git pull -q origin main && systemctl restart preventia-dashboard preventia-webhook'
+```
+
+Restart only the service you changed. Verify from outside afterwards, never from the box itself —
+that mistake has cost hours on this machine before. A bare GET on the webhook path returns 403,
+because it only answers Meta's signed handshake; a browser seeing 403 there is the system working.
+
+Read `journalctl -u preventia-webhook -n 50` for inbound traffic. Meta arrives from `2a03:2880::/32`
+or `69.171.230.0/24`; anything else is one of us.
+
+Three things that will bite whoever comes next:
+
+- **Caddy must not touch port 80.** The box already serves something else there. The Caddyfile pins
+  Caddy's HTTP listener to 8880 and disables the HTTP-01 challenge, so certificates are issued over
+  TLS-ALPN on 443. Do not "fix" this by freeing port 80.
+- **The app must be subscribed to the WhatsApp Business Account**, which is a different thing from
+  ticking `messages` in the webhook fields. Without it the handshake verifies and no message is ever
+  delivered — the WABA routes events to Meta's own DevX app instead. Check with
+  `GET /{WHATSAPP_BUSINESS_ACCOUNT_ID}/subscribed_apps`; `preventaia` must be in the list.
+- **If the laptop fallback is ever needed**, `cloudflared tunnel --url http://localhost:8080` fails
+  silently on Windows because `localhost` resolves to `::1` while uvicorn binds IPv4. Use
+  `http://127.0.0.1:8080`.
