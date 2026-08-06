@@ -1,11 +1,12 @@
 # PreventIA
 
-**Acompañante geriátrico de adherencia.** Seguimiento diario por WhatsApp a adultos mayores
-polimedicados: verifica la toma de medicamentos, detecta descompensación temprana y escala al equipo
-de salud solo cuando hay una señal real de alarma.
+**Acompañante geriátrico de adherencia.** Seguimiento diario por WhatsApp a personas de 65 a 75 años
+polimedicadas, con hipertensión y/o diabetes tipo 2 confirmada: verifica la toma de medicamentos,
+detecta descompensación temprana y escala al equipo de salud solo cuando hay una señal real de
+alarma.
 
 [![Estado](https://img.shields.io/badge/estado-prototipo-orange)](ROADMAP.md)
-[![Fase](https://img.shields.io/badge/fase-0%20pre--lab-blue)](ROADMAP.md)
+[![Fase](https://img.shields.io/badge/fase-lab%205%20y%206%20de%20agosto-blue)](ROADMAP.md)
 [![Línea](https://img.shields.io/badge/línea-continuidad%20y%20medicina%20de%20precisión-1f6feb)](PRD.md)
 [![Documentación](https://img.shields.io/badge/docs-ADR%20%2B%20PRD-green)](docs/adr/README.md)
 
@@ -21,8 +22,8 @@ El Programa de Salud Cardiovascular tiene bajo control a 2,3 millones de persona
 vive con más de una enfermedad crónica. Las garantías GES cubren la entrada: 45 días para confirmar
 una hipertensión, 24 horas para iniciar el tratamiento. Ninguna cubre el intervalo. Una vez
 compensado el paciente, el programa sugiere un control cada 3 meses si el riesgo cardiovascular es
-alto, cada 6 si es moderado, cada 6 a 12 si es bajo. La insuficiencia cardíaca no es siquiera un
-problema GES: no tiene plazo garantizado de ninguna clase.
+alto, cada 6 si es moderado, cada 6 a 12 si es bajo. Entre un control y el siguiente pueden pasar
+meses sin que nadie sepa cómo le fue.
 
 En ese intervalo sí hay alguien mirando, y ahí está el costo. Los equipos municipales de atención
 primaria están obligados a rescatar a quien falta a su control, con al menos tres intentos
@@ -108,11 +109,12 @@ pregunte.
 
 ## Estado
 
-Fase 0, trabajo previo al lab. Ver [ROADMAP.md](ROADMAP.md) para lo que está hecho y lo que
-bloquea cada fase.
+Prototipo funcionando. El núcleo del agente, la capa clínica, el canal y el tablero del equipo de
+salud están implementados, con 384 pruebas automatizadas en verde. La tabla de banderas clínicas
+está en `preventia/clinical/rules/flags.py`, con cada bandera referida a una guía Minsal por nombre.
 
-Dos cosas están abiertas y son requisito, no detalle: la tabla de banderas clínicas por condición,
-que la escribe un profesional de salud y no un desarrollador, y el modelo local que se va a servir.
+Sigue abierto, y es requisito, no detalle: la revisión clínica de las frases del protocolo de crisis,
+que hoy no tienen autor clínico, y el modelo local que se va a servir.
 
 ## Contexto
 
