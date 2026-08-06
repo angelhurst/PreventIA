@@ -2,6 +2,8 @@ import sqlite3
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from .audit import ensure_confirmation_column
+
 ADHERENCE_WINDOW = 7
 
 COLOR_RANK = {"red": 0, "yellow": 1, "green": 2}
@@ -48,6 +50,7 @@ class AuditEntry:
     actor_name: str
     occurred_at: str
     note: str
+    confirmed_by: str = ""
 
 
 @dataclass
@@ -300,6 +303,7 @@ def patient_detail(conn, code):
         for row in check_in_rows
     ]
 
+    ensure_confirmation_column(conn)
     audit = [
         AuditEntry(
             from_state=row["from_state"],
@@ -308,6 +312,7 @@ def patient_detail(conn, code):
             actor_name=row["actor_name"],
             occurred_at=row["occurred_at"],
             note=row["note"],
+            confirmed_by=row["confirmed_by"],
         )
         for row in conn.execute(
             """

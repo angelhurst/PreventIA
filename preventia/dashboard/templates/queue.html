@@ -84,6 +84,11 @@
       <form method="post" action="/cola/{{ row.code }}/estado" class="accion-rapida">
         <input type="hidden" name="to_state" value="{{ siguiente }}">
         <input type="hidden" name="actor_code" value="{{ actor.code }}">
+        <label class="confirmacion" for="codigo-{{ row.code }}">
+          <span class="confirmacion__texto">{{ T.confirm_short_label }}</span>
+          <input class="confirmacion__campo" id="codigo-{{ row.code }}" type="password"
+                 name="confirm_code" inputmode="numeric" maxlength="4" required autocomplete="off">
+        </label>
         <button class="boton" type="submit">{{ labels.STATE_ACTIONS[siguiente] }}</button>
       </form>
       {% endif %}

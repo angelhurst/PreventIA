@@ -35,6 +35,14 @@ def verify(code):
     return session_token()
 
 
+def confirms(code):
+    try:
+        verify(code)
+    except BadCode:
+        return False
+    return True
+
+
 def is_open_path(path):
     return any(path == item or path.startswith(f"{item}/") for item in OPEN_PATHS)
 

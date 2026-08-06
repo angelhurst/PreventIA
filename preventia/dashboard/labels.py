@@ -129,6 +129,11 @@ TEXT = {
     "message_no_recipient": "Esta persona no tiene teléfono registrado, así que no hay a dónde enviar.",
     "message_delivered_label": "Entregado",
     "message_failed_label": "No salió",
+    "confirm_label": "Confirme con su código",
+    "confirm_short_label": "Código",
+    "confirm_hint": "El mismo código con el que entró. Sin él no se guarda el cambio.",
+    "confirm_failed": "El código no coincide. No se cambió nada en la ficha.",
+    "audit_confirmed": "Confirmado con código",
 }
 
 
@@ -155,6 +160,7 @@ ERRORS = {
     "mensaje_solo_medico": "message_only_doctor",
     "mensaje_vacio": "message_needs_body",
     "mensaje_sin_numero": "message_no_recipient",
+    "confirmacion": "confirm_failed",
 }
 
 

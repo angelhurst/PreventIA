@@ -34,6 +34,12 @@
              autocomplete="off" aria-describedby="ayuda_contacto">
       <span class="campo__ayuda" id="ayuda_contacto">{{ T.contact_note_hint }}</span>
     </p>
+    <p class="campo">
+      <label for="codigo_contacto">{{ T.confirm_label }}</label>
+      <input type="password" id="codigo_contacto" name="confirm_code" inputmode="numeric"
+             maxlength="4" required autocomplete="off" aria-describedby="ayuda_codigo_contacto">
+      <span class="campo__ayuda" id="ayuda_codigo_contacto">{{ T.confirm_hint }}</span>
+    </p>
     <p class="campo campo--accion">
       <button class="boton" type="submit">{{ T.contact_submit }}</button>
     </p>
@@ -61,6 +67,12 @@
       <textarea id="cuerpo_mensaje" name="body" rows="3" maxlength="900" required
                 aria-describedby="ayuda_mensaje"></textarea>
       <span class="campo__ayuda" id="ayuda_mensaje">{{ T.message_hint }}</span>
+    </p>
+    <p class="campo">
+      <label for="codigo_mensaje">{{ T.confirm_label }}</label>
+      <input type="password" id="codigo_mensaje" name="confirm_code" inputmode="numeric"
+             maxlength="4" required autocomplete="off" aria-describedby="ayuda_codigo_mensaje">
+      <span class="campo__ayuda" id="ayuda_codigo_mensaje">{{ T.confirm_hint }}</span>
     </p>
     <p class="campo campo--accion">
       <button class="boton" type="submit">{{ T.message_submit }}</button>
@@ -116,6 +128,12 @@
       <label for="note">{{ T.audit_note_label }}</label>
       <input type="text" id="note" name="note" maxlength="200" autocomplete="off">
     </p>
+    <p class="campo">
+      <label for="codigo_estado">{{ T.confirm_label }}</label>
+      <input type="password" id="codigo_estado" name="confirm_code" inputmode="numeric"
+             maxlength="4" required autocomplete="off" aria-describedby="ayuda_codigo_estado">
+      <span class="campo__ayuda" id="ayuda_codigo_estado">{{ T.confirm_hint }}</span>
+    </p>
     <p class="campo campo--accion">
       <button class="boton" type="submit">Registrar el cambio</button>
     </p>
@@ -131,7 +149,9 @@
       <p class="auditoria__cambio">
         {% if entry.from_state %}{{ entry.from_state|state_label }} → {% endif %}<strong>{{ entry.to_state|state_label }}</strong>
       </p>
-      <p class="auditoria__firma">{{ entry.actor_name }}<span class="sep" aria-hidden="true"> · </span>{{ entry.occurred_at|when }}</p>
+      <p class="auditoria__firma">
+        {{ entry.actor_name }}<span class="sep" aria-hidden="true"> · </span>{{ entry.occurred_at|when }}{% if entry.confirmed_by %}<span class="sep" aria-hidden="true"> · </span><span class="marca-confirmado">{{ T.audit_confirmed }}</span>{% endif %}
+      </p>
       {% if entry.note %}<p class="auditoria__nota">{{ entry.note }}</p>{% endif %}
     </li>
     {% endfor %}

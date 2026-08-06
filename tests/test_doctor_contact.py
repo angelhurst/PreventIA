@@ -107,16 +107,17 @@ def test_the_route_refuses_a_nurse_end_to_end(tmp_path, monkeypatch):
 
     client = TestClient(app)
     client.cookies.set(auth.SESSION_COOKIE, auth.session_token())
+    code = auth.expected_code()
     refused = client.post(
         "/cola/PV-001/contacto",
-        data={"actor_code": "CL-01", "note": "Llamado"},
+        data={"actor_code": "CL-01", "note": "Llamado", "confirm_code": code},
         follow_redirects=False,
     )
     assert refused.headers["location"] == "/cola/PV-001?error=solo_medico"
 
     allowed = client.post(
         "/cola/PV-001/contacto",
-        data={"actor_code": "CL-02", "note": "Llamado"},
+        data={"actor_code": "CL-02", "note": "Llamado", "confirm_code": code},
         follow_redirects=False,
     )
     assert allowed.headers["location"] == "/cola/PV-001"

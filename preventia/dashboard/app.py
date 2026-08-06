@@ -217,7 +217,11 @@ async def send_message(
     code: str,
     actor_code: str = Form(...),
     body: str = Form(""),
+    confirm_code: str = Form(""),
 ):
+    if not auth.confirms(confirm_code):
+        return RedirectResponse(f"/cola/{code}?error=confirmacion", status_code=303)
+
     try:
         conn = open_connection()
     except repository.MissingClinicalRecord:
@@ -249,13 +253,17 @@ async def change_state(
     to_state: str = Form(...),
     actor_code: str = Form(...),
     note: str = Form(""),
+    confirm_code: str = Form(""),
 ):
+    if not auth.confirms(confirm_code):
+        return RedirectResponse(f"/cola/{code}?error=confirmacion", status_code=303)
+
     try:
         conn = open_connection()
     except repository.MissingClinicalRecord:
         return setup_response(request)
     try:
-        audit.record_transition(conn, code, to_state, actor_code, note)
+        audit.record_transition(conn, code, to_state, actor_code, note, confirmed_by=actor_code)
         target = back_to(request, f"/cola/{code}")
     except (audit.UnknownState, audit.UnknownActor, ValueError):
         target = f"/cola/{code}?error=estado"
@@ -273,13 +281,17 @@ async def record_contact(
     code: str,
     actor_code: str = Form(...),
     note: str = Form(""),
+    confirm_code: str = Form(""),
 ):
+    if not auth.confirms(confirm_code):
+        return RedirectResponse(f"/cola/{code}?error=confirmacion", status_code=303)
+
     try:
         conn = open_connection()
     except repository.MissingClinicalRecord:
         return setup_response(request)
     try:
-        audit.record_doctor_contact(conn, code, actor_code, note)
+        audit.record_doctor_contact(conn, code, actor_code, note, confirmed_by=actor_code)
         target = f"/cola/{code}"
     except audit.NotADoctor:
         target = f"/cola/{code}?error=solo_medico"
