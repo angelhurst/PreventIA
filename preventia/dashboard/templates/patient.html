@@ -39,7 +39,59 @@
     </p>
   </form>
 </section>
+
+<section class="tarjeta tarjeta--medico" aria-labelledby="titulo-mensaje">
+  <h2 id="titulo-mensaje">
+    {{ T.message_title }}
+    <span class="marca-medico">{{ T.message_badge }}</span>
+  </h2>
+  <p class="contacto-medico__ayuda">{{ T.message_help }}</p>
+  <p class="canal">Canal: <strong>{{ channel.name }}</strong>{% if not channel.configured %} <em>(sin credenciales)</em>{% endif %}</p>
+
+  {% if sent == '1' %}
+  <p class="aviso aviso--ok" role="status">{{ T.message_sent }}</p>
+  {% elif sent == '0' %}
+  <p class="aviso aviso--error" role="alert">{{ T.message_failed }}</p>
+  {% endif %}
+
+  <form method="post" action="/cola/{{ patient.code }}/mensaje" class="formulario-estado">
+    <input type="hidden" name="actor_code" value="{{ actor.code }}">
+    <p class="campo campo--ancho">
+      <label for="cuerpo_mensaje">{{ T.message_label }}</label>
+      <textarea id="cuerpo_mensaje" name="body" rows="3" maxlength="900" required
+                aria-describedby="ayuda_mensaje"></textarea>
+      <span class="campo__ayuda" id="ayuda_mensaje">{{ T.message_hint }}</span>
+    </p>
+    <p class="campo campo--accion">
+      <button class="boton" type="submit">{{ T.message_submit }}</button>
+    </p>
+  </form>
+</section>
 {% endif %}
+
+<section class="tarjeta" aria-labelledby="titulo-hilo">
+  <h2 id="titulo-hilo">{{ T.message_thread_title }}</h2>
+  {% if messages %}
+  <ol class="hilo">
+    {% for item in messages %}
+    <li class="hilo__mensaje hilo__mensaje--{{ 'ok' if item.delivered else 'falla' }}">
+      <p class="hilo__cabecera">
+        <span class="hilo__quien">{{ item.actor_name }}</span>
+        <span class="hilo__fecha">{{ item.occurred_at|when }}</span>
+        <span class="hilo__estado">
+          {{ T.message_delivered_label if item.delivered else T.message_failed_label }}
+          · {{ item.channel }}
+        </span>
+      </p>
+      <p class="hilo__cuerpo">{{ item.body }}</p>
+      {% if item.detail %}<p class="hilo__detalle">{{ item.detail }}</p>{% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="vacio">{{ T.message_empty }}</p>
+  {% endif %}
+</section>
 
 <section class="tarjeta" aria-labelledby="titulo-estado">
   <h2 id="titulo-estado">{{ T.change_state }}</h2>

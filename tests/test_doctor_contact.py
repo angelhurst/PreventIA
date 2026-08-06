@@ -103,7 +103,10 @@ def test_the_route_refuses_a_nurse_end_to_end(tmp_path, monkeypatch):
     monkeypatch.setenv("PREVENTIA_DB", str(db))
     from preventia.dashboard.app import app
 
+    from preventia.dashboard import auth
+
     client = TestClient(app)
+    client.cookies.set(auth.SESSION_COOKIE, auth.session_token())
     refused = client.post(
         "/cola/PV-001/contacto",
         data={"actor_code": "CL-01", "note": "Llamado"},

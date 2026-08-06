@@ -6,7 +6,8 @@ from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from . import audit, intake, labels, repository
+from . import audit, auth, intake, labels, messaging, repository
+from .. import channels
 from ..agent import models
 from ..agent.core import run_check_in
 from ..clinical.extraction import ExtractionFailed
@@ -92,6 +93,50 @@ def back_to(request, fallback="/cola"):
     return target
 
 
+@app.middleware("http")
+async def require_code(request: Request, call_next):
+    if auth.is_open_path(request.url.path) or auth.is_authenticated(request):
+        return await call_next(request)
+    return RedirectResponse("/entrar", status_code=303)
+
+
+@app.get("/entrar")
+async def login_form(request: Request, error: str = ""):
+    if auth.is_authenticated(request):
+        return RedirectResponse("/cola", status_code=303)
+    return templates.TemplateResponse(
+        request,
+        "entrar.html",
+        {
+            "error": labels.TEXT["login_bad_code"] if error else "",
+            "actor": None,
+            "roster": [],
+            "view": view_settings(request),
+        },
+    )
+
+
+@app.post("/entrar")
+async def login(request: Request, code: str = Form("")):
+    try:
+        token = auth.verify(code)
+    except auth.BadCode:
+        return RedirectResponse("/entrar?error=1", status_code=303)
+
+    response = RedirectResponse("/cola", status_code=303)
+    response.set_cookie(
+        auth.SESSION_COOKIE, token, max_age=COOKIE_MAX_AGE, samesite="lax", httponly=True
+    )
+    return response
+
+
+@app.get("/salir")
+async def logout():
+    response = RedirectResponse("/entrar", status_code=303)
+    response.delete_cookie(auth.SESSION_COOKIE)
+    return response
+
+
 @app.get("/")
 async def root():
     return RedirectResponse("/cola", status_code=303)
@@ -131,7 +176,7 @@ async def queue(request: Request, filtro: str = "abiertos"):
 
 
 @app.get("/cola/{code}")
-async def patient(request: Request, code: str, error: str = ""):
+async def patient(request: Request, code: str, error: str = "", sent: str = ""):
     try:
         conn = open_connection()
     except repository.MissingClinicalRecord:
@@ -139,6 +184,7 @@ async def patient(request: Request, code: str, error: str = ""):
     try:
         detail = repository.patient_detail(conn, code)
         roster = repository.clinicians(conn)
+        thread = messaging.messages_for(conn, code) if detail else []
     finally:
         conn.close()
 
@@ -155,8 +201,42 @@ async def patient(request: Request, code: str, error: str = ""):
             "view": view_settings(request),
             "states": audit.STATES,
             "error": error,
+            "messages": thread,
+            "channel": channels.describe_channel(),
+            "sent": sent,
         },
     )
+
+
+@app.post("/cola/{code}/mensaje")
+async def send_message(
+    request: Request,
+    code: str,
+    actor_code: str = Form(...),
+    body: str = Form(""),
+):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+
+    try:
+        receipt = messaging.send_doctor_message(conn, code, actor_code, body)
+        target = f"/cola/{code}?sent={'1' if receipt.delivered else '0'}"
+    except audit.NotADoctor:
+        target = f"/cola/{code}?error=mensaje_solo_medico"
+    except messaging.EmptyMessage:
+        target = f"/cola/{code}?error=mensaje_vacio"
+    except messaging.MissingRecipient:
+        target = f"/cola/{code}?error=mensaje_sin_numero"
+    except (audit.UnknownActor, ValueError):
+        target = f"/cola/{code}?error=estado"
+    finally:
+        conn.close()
+
+    response = RedirectResponse(target, status_code=303)
+    response.set_cookie(ACTOR_COOKIE, actor_code, max_age=COOKIE_MAX_AGE, samesite="lax")
+    return response
 
 
 @app.post("/cola/{code}/estado")
