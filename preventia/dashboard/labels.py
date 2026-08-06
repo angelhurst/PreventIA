@@ -54,6 +54,8 @@ SYMPTOM_LABELS = {
     "aumento_de_peso": "aumento de peso",
     "tos_nocturna": "tos en la noche",
     "caida": "caída",
+    "cefalea_occipital_matinal": "dolor de cabeza en la nuca en la mañana",
+    "deficit_neurologico_transitorio": "adormecimiento de un lado y dificultad para hablar",
 }
 
 TEXT = {
