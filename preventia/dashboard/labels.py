@@ -59,6 +59,11 @@ SYMPTOM_LABELS = {
 }
 
 TEXT = {
+    "crisis_title": "Contacto humano inmediato",
+    "crisis_subtitle": "Fuera del semáforo. Estos casos no son de seguimiento cardiovascular y no se ordenan por color.",
+    "crisis_words": "Lo que escribió la persona",
+    "crisis_detected": "Detectado",
+    "crisis_replied": "Lo que se le respondió",
     "queue_title": "Cola de seguimiento",
     "queue_subtitle": "Ordenada por riesgo. Los casos rojos van primero.",
     "empty_queue": "No hay casos en esta vista.",
@@ -102,6 +107,28 @@ TEXT = {
     "setup_command": "python -m preventia.data.seed_cohort",
     "setup_path_label": "Ruta que se buscó",
     "not_a_diagnosis": "PreventIA no diagnostica ni indica tratamientos. Este resumen es apoyo al seguimiento entre controles.",
+    "login_title": "Entrar al tablero",
+    "login_help": "Este tablero muestra información clínica. Escriba su código de acceso para continuar.",
+    "login_code_label": "Código de 4 números",
+    "login_code_hint": "Se lo entrega el encargado del consultorio.",
+    "login_submit": "Entrar",
+    "login_bad_code": "El código no es correcto. Intente de nuevo.",
+    "logout": "Salir",
+    "message_title": "Escribirle a la persona",
+    "message_badge": "Solo médico",
+    "message_help": "Este mensaje sí se envía a la persona por WhatsApp, firmado por usted. El filtro clínico no se aplica aquí: usted es el profesional tratante y puede indicar lo que corresponda.",
+    "message_label": "Mensaje",
+    "message_hint": "Escriba de usted, en frases cortas. La persona lo lee en el teléfono.",
+    "message_submit": "Enviar mensaje",
+    "message_thread_title": "Mensajes enviados por el equipo",
+    "message_empty": "Todavía no se le ha enviado ningún mensaje desde el tablero.",
+    "message_sent": "Mensaje enviado.",
+    "message_failed": "El mensaje no salió.",
+    "message_only_doctor": "Solo un médico puede escribirle a la persona. No se envió nada.",
+    "message_needs_body": "Escriba el mensaje antes de enviarlo.",
+    "message_no_recipient": "Esta persona no tiene teléfono registrado, así que no hay a dónde enviar.",
+    "message_delivered_label": "Entregado",
+    "message_failed_label": "No salió",
 }
 
 
@@ -125,6 +152,9 @@ ERRORS = {
     "estado": "state_change_failed",
     "solo_medico": "contact_only_doctor",
     "falta_nota": "contact_needs_note",
+    "mensaje_solo_medico": "message_only_doctor",
+    "mensaje_vacio": "message_needs_body",
+    "mensaje_sin_numero": "message_no_recipient",
 }
 
 

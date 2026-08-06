@@ -12,6 +12,23 @@
   </nav>
 </div>
 
+{% if crises %}
+<section class="crisis" aria-labelledby="crisis-titulo">
+  <h2 class="crisis__titulo" id="crisis-titulo">{{ T.crisis_title }}</h2>
+  <p class="crisis__sub">{{ T.crisis_subtitle }}</p>
+  <ol class="crisis__lista">
+    {% for aviso in crises %}
+    <li class="crisis__caso">
+      <h3 class="crisis__nombre"><a href="/cola/{{ aviso.patient_code }}">{{ aviso.display_name }}</a></h3>
+      <p class="crisis__dato"><span class="crisis__etiqueta">{{ T.crisis_detected }}</span> {{ aviso.occurred_at|when }}</p>
+      <p class="crisis__dato"><span class="crisis__etiqueta">{{ T.crisis_words }}</span> <q>{{ aviso.patient_message }}</q></p>
+      <p class="crisis__dato"><span class="crisis__etiqueta">{{ T.crisis_replied }}</span> {{ aviso.agent_message }}</p>
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
+
 {% if rows %}
 <ol class="cola">
   {% for row in rows %}

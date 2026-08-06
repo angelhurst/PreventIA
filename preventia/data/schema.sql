@@ -92,6 +92,29 @@ BEGIN
     SELECT RAISE(ABORT, 'escalation_audit is append-only, see ADR-0014');
 END;
 
+CREATE TABLE crisis_events (
+    id                  INTEGER PRIMARY KEY,
+    patient_code        TEXT NOT NULL REFERENCES patients(code),
+    occurred_at         TEXT NOT NULL,
+    patient_message     TEXT NOT NULL,
+    agent_message       TEXT NOT NULL,
+    matched             TEXT NOT NULL
+);
+
+CREATE TRIGGER crisis_events_is_append_only_on_update
+BEFORE UPDATE ON crisis_events
+BEGIN
+    SELECT RAISE(ABORT, 'crisis_events is append-only');
+END;
+
+CREATE TRIGGER crisis_events_is_append_only_on_delete
+BEFORE DELETE ON crisis_events
+BEGIN
+    SELECT RAISE(ABORT, 'crisis_events is append-only');
+END;
+
+CREATE INDEX idx_crisis_patient ON crisis_events(occurred_at DESC, id DESC);
+
 CREATE INDEX idx_check_ins_patient ON check_ins(patient_code, occurred_at DESC, id DESC);
 CREATE INDEX idx_symptoms_check_in ON symptoms(check_in_id);
 CREATE INDEX idx_audit_patient ON escalation_audit(patient_code, occurred_at DESC, id DESC);

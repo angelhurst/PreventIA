@@ -58,6 +58,10 @@
       <button type="submit">Cambiar</button>
     </form>
     {% endif %}
+
+    {% if request.cookies.get('preventia_sesion') %}
+    <p class="preferencia preferencia--salir"><a class="salir" href="/salir">{{ T.logout }}</a></p>
+    {% endif %}
   </div>
 </header>
 

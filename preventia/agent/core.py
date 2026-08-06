@@ -2,10 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 
 from ..clinical import guardrails
+from ..clinical.crisis import detect as detect_crisis
 from ..clinical.extraction import extract
 from ..clinical.rules import evaluate
 from ..clinical.semaforo import Color
-from ..patient_copy import TEAM_NOTIFIED, URGENCY_REDIRECT
+from ..patient_copy import CRISIS_DIVERSION, TEAM_NOTIFIED, URGENCY_REDIRECT
 from .models import build_model
 
 
@@ -39,7 +40,26 @@ class CheckInResult:
         return tuple(s for s in self.symptoms if s.get("mentioned_in_passing"))
 
 
+@dataclass(frozen=True)
+class CrisisResult:
+    patient_code: str
+    patient_message: str
+    agent_message: str
+    occurred_at: str
+    matched: tuple
+
+
 def run_check_in(patient, message, model=None):
+    crisis = detect_crisis(message)
+    if crisis.detected:
+        return CrisisResult(
+            patient_code=patient["code"],
+            patient_message=message,
+            agent_message=CRISIS_DIVERSION,
+            occurred_at=datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            matched=crisis.matched,
+        )
+
     engine = model or build_model()
     extraction = extract(engine, patient, message)
 

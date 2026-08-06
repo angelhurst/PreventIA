@@ -658,3 +658,174 @@ h1 {
     align-items: stretch;
   }
 }
+
+.crisis {
+  margin-bottom: var(--space-4);
+  border: var(--rule-width) solid var(--brand-strong);
+  border-left: var(--rail-width) solid var(--brand-strong);
+  background: var(--surface);
+}
+
+.crisis__titulo {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  background: var(--brand-strong);
+  color: var(--brand-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-tight);
+}
+
+.crisis__sub {
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  background: var(--brand-strong);
+  color: var(--brand-ink-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+}
+
+.crisis__lista {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.crisis__caso {
+  padding: var(--space-3) var(--space-4);
+  border-top: var(--rule-width) solid var(--line);
+}
+
+.crisis__nombre {
+  margin: 0 0 var(--space-2) 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-tight);
+}
+
+.crisis__dato {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--ink);
+}
+
+.crisis__etiqueta {
+  display: block;
+  color: var(--ink-faint);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.formulario-entrar {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 18rem;
+}
+
+.formulario-entrar input {
+  font-size: 2rem;
+  letter-spacing: 0.5em;
+  text-align: center;
+  padding: 0.5rem;
+  border: var(--rule-width) solid var(--line-strong);
+  border-radius: var(--radius-sm);
+}
+
+.salir {
+  color: var(--link);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.canal {
+  color: var(--ink-muted);
+  font-size: var(--text-xs);
+}
+
+.aviso {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--line-strong);
+}
+
+.aviso--ok { border-left-color: var(--sem-green); background: var(--accent-bg); }
+.aviso--error { border-left-color: var(--sem-red); background: var(--accent-bg); }
+.aviso--escala { border-left-color: var(--sem-yellow); background: var(--accent-bg); }
+.aviso--bloqueo { border-left-color: var(--sem-red); background: var(--accent-bg); }
+
+.hilo { list-style: none; padding: 0; display: grid; gap: 0.75rem; }
+
+.hilo__mensaje {
+  border-left: 4px solid var(--line-strong);
+  padding: 0.5rem 0.75rem;
+  background: var(--accent-bg);
+  border-radius: var(--radius-sm);
+}
+
+.hilo__mensaje--ok { border-left-color: var(--sem-green); }
+.hilo__mensaje--falla { border-left-color: var(--sem-red); }
+
+.hilo__cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: var(--text-xs);
+  color: var(--ink-muted);
+}
+
+.hilo__cuerpo { margin: 0.35rem 0 0; }
+.hilo__detalle { font-size: var(--text-xs); color: var(--ink-faint); margin: 0.25rem 0 0; }
+.vacio { color: var(--ink-muted); }
+
+.consulta__form { display: grid; gap: 0.5rem; max-width: var(--measure-text); }
+.consulta__form textarea, .consulta__form select {
+  width: 100%;
+  padding: 0.5rem;
+  border: var(--rule-width) solid var(--line);
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
+
+.consulta__resultado {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  margin-top: 1.5rem;
+}
+
+.consulta__panel {
+  border: var(--rule-width) solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+}
+
+.consulta__entrada, .consulta__salida {
+  border-left: 4px solid var(--brand);
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  background: var(--accent-bg);
+}
+
+.consulta__sintomas { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
+.consulta__runtime { color: var(--ink-muted); font-size: var(--text-xs); }
+.etiqueta {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent-ink);
+}
+
+.semaforo {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  display: inline-block;
+}
+
+.semaforo--red { background: var(--sem-red); color: #fff; }
+.semaforo--yellow { background: var(--sem-yellow); color: #000; }
+.semaforo--green { background: var(--sem-green); color: #fff; }

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Entrar · PreventIA{% endblock %}
+
+{% block content %}
+<section class="tarjeta tarjeta--entrar">
+  <h1>{{ T.login_title }}</h1>
+  <p>{{ T.login_help }}</p>
+
+  {% if error %}
+  <p class="aviso aviso--error" role="alert">{{ error }}</p>
+  {% endif %}
+
+  <form method="post" action="/entrar" class="formulario-entrar">
+    <label for="code">{{ T.login_code_label }}</label>
+    <input type="text" id="code" name="code" inputmode="numeric" pattern="[0-9]*"
+           maxlength="4" autocomplete="off" autofocus required
+           aria-describedby="ayuda_codigo">
+    <span class="campo__ayuda" id="ayuda_codigo">{{ T.login_code_hint }}</span>
+    <button class="boton" type="submit">{{ T.login_submit }}</button>
+  </form>
+</section>
+{% endblock %}
