@@ -90,9 +90,25 @@ Dos advertencias sobre este cuadro, para que nadie las descubra por nosotros.
 **Los dos campos que puntúa "Problema y población" no están en este archivo.** Viven en
 `docs/entregable-tecnico.md`. Si el formulario se llena desde aquí, hay que ir a buscarlos allá.
 
-**El segundo criterio de "Construyó con Claude" tiene una respuesta honesta y una trampa.** Sin Claude
-no hay extracción: nadie convierte "ando con harta tos seca en la noche" en un hecho estructurado. Lo
-que sí sigue funcionando sin Claude es la mitad determinista, y eso es deliberado: el piso del
-semáforo, el filtro de salida y la detección de crisis son código, no modelo. Conviene decirlo en ese
-orden. Claude es el motor de la comprensión; las barreras clínicas están puestas para no depender de
-él.
+**El segundo criterio de "Construyó con Claude" hay que responderlo con lo que dice el código.**
+PreventIA es agnóstica de proveedor por decisión, según ADR-0010 y ADR-0012: `build_model()` en
+`preventia/agent/models.py` elige entre Anthropic, Kimi y Ollama con una sola variable de entorno, y
+ningún módulo fuera de ese archivo sabe cuál contestó. Sacar Claude y poner Ollama es cambiar
+`PREVENTIA_MODEL_PROVIDER`. Decir que sin Claude la solución deja de funcionar sería falso, y basta
+abrir el archivo para verlo.
+
+Lo cierto es otra cosa, y es más fuerte. Claude es el motor en ejecución del Lab, de la demo y del
+pitch, y hace el trabajo que solo un modelo puede hacer: convertir "ando con harta tos seca en la
+noche" en un hecho estructurado, con término del catálogo, la frase textual y si la persona lo
+mencionó al pasar. La costura de proveedor no es una reserva por si Claude falla: existe porque un
+servicio de salud puede necesitar que las conversaciones no salgan de su hardware, y esa es la vía de
+adopción que ofrece el pitch.
+
+La mitad determinista sigue en pie con cualquier proveedor, y también es deliberado: el piso del
+semáforo, el filtro de salida y la detección de crisis son código, no modelo. La seguridad clínica no
+depende de qué modelo contestó.
+
+Un matiz que conviene saber antes de prometer paridad: `force_tool` lo respetan Anthropic y Kimi,
+pero `OllamaChat.send` no fija ninguna elección de herramienta. Con Ollama nada obliga al modelo a
+devolver el registro estructurado, y `extract()` levanta `ExtractionFailed` cuando no llega. La
+costura es real en los tres; la garantía, en dos.
