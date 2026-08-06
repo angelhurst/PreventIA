@@ -163,10 +163,12 @@ class OpenAIChat:
 class OllamaChat:
     provider = "ollama"
 
-    def __init__(self, model_id, host):
-        import ollama
+    def __init__(self, model_id, host, client=None):
+        if client is None:
+            import ollama
 
-        self._client = ollama.Client(host=host)
+            client = ollama.Client(host=host)
+        self._client = client
         self.model_id = model_id
 
     def send(self, messages, tools=None, system=None, force_tool=None):
@@ -178,6 +180,10 @@ class OllamaChat:
         if tools:
             request["tools"] = [{"type": "function", "function": tool} for tool in tools]
 
+        forced = _forced_schema(tools, force_tool)
+        if forced:
+            request["format"] = forced
+
         try:
             response = self._client.chat(**request)
         except Exception as exc:
@@ -188,7 +194,31 @@ class OllamaChat:
             ToolCall(call["function"]["name"], _as_dict(call["function"].get("arguments")))
             for call in message.get("tool_calls", []) or []
         )
-        return Reply(text=message.get("content", "") or "", tool_calls=calls)
+        text = message.get("content", "") or ""
+
+        if not calls and forced:
+            arguments = _parse_object(text)
+            if arguments is not None:
+                calls = (ToolCall(force_tool, arguments),)
+
+        return Reply(text=text, tool_calls=calls)
+
+
+def _forced_schema(tools, force_tool):
+    if not force_tool:
+        return None
+    for tool in tools or ():
+        if tool.get("name") == force_tool:
+            return tool.get("parameters")
+    return None
+
+
+def _parse_object(text):
+    try:
+        parsed = json.loads(text)
+    except (TypeError, ValueError):
+        return None
+    return parsed if isinstance(parsed, dict) else None
 
 
 def _as_dict(arguments):
