@@ -96,4 +96,39 @@ def persist(conn, result):
     return check_in_id
 
 
-__all__ = ["connect", "patient_for_agent", "roster_for_intake", "persist"]
+def persist_crisis(conn, result):
+    cursor = conn.execute(
+        "INSERT INTO crisis_events ("
+        " patient_code, occurred_at, patient_message, agent_message, matched"
+        ") VALUES (?, ?, ?, ?, ?)",
+        (
+            result.patient_code,
+            result.occurred_at,
+            result.patient_message,
+            result.agent_message,
+            ", ".join(result.matched),
+        ),
+    )
+    conn.commit()
+    return cursor.lastrowid
+
+
+def open_crises(conn):
+    return [
+        dict(row)
+        for row in conn.execute(
+            "SELECT c.*, p.display_name FROM crisis_events c"
+            " JOIN patients p ON p.code = c.patient_code"
+            " ORDER BY c.occurred_at DESC, c.id DESC"
+        ).fetchall()
+    ]
+
+
+__all__ = [
+    "connect",
+    "patient_for_agent",
+    "roster_for_intake",
+    "persist",
+    "persist_crisis",
+    "open_crises",
+]
