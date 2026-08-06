@@ -4,9 +4,9 @@ import json
 
 from fastapi import BackgroundTasks, FastAPI, Request, Response
 
-from preventia.channels.whatsapp_cloud import (
+from preventia.channels.whatsapp_webhook import (
     VerificationRejected,
-    WhatsAppCloudChannel,
+    WhatsAppWebhookChannel,
     signature_is_valid,
     verification_challenge,
 )
@@ -15,7 +15,7 @@ SIGNATURE_HEADER = "X-Hub-Signature-256"
 WEBHOOK_PATH = "/webhook/whatsapp"
 
 
-def build_app(channel: WhatsAppCloudChannel) -> FastAPI:
+def build_app(channel: WhatsAppWebhookChannel) -> FastAPI:
     app = FastAPI(title="PreventIA channel")
 
     @app.get(WEBHOOK_PATH)

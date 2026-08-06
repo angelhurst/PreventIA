@@ -139,7 +139,7 @@ def parse_inbound(payload: dict, directory: PatientDirectory) -> list[InboundMes
     return parsed
 
 
-class WhatsAppCloudChannel(Channel):
+class WhatsAppWebhookChannel(Channel):
     def __init__(
         self,
         handler: CheckInHandler,

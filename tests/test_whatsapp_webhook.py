@@ -7,11 +7,11 @@ import httpx
 import pytest
 
 from preventia.channels.base import InboundMessage, MessageKind, OutboundMessage
-from preventia.channels.whatsapp_cloud import (
+from preventia.channels.whatsapp_webhook import (
     ServiceWindowClosed,
     StaticPatientDirectory,
     VerificationRejected,
-    WhatsAppCloudChannel,
+    WhatsAppWebhookChannel,
     WhatsAppCredentials,
     parse_inbound,
     signature_is_valid,
@@ -46,7 +46,7 @@ def channel_with(handler, status_code=200, response_payload=None, recorder=None)
         return httpx.Response(status_code, json=response_payload or {"messages": [{"id": "wamid.OUT"}]})
 
     client = httpx.AsyncClient(transport=httpx.MockTransport(respond))
-    return WhatsAppCloudChannel(handler, CREDENTIALS, DIRECTORY, client=client)
+    return WhatsAppWebhookChannel(handler, CREDENTIALS, DIRECTORY, client=client)
 
 
 async def echo(message: InboundMessage) -> OutboundMessage:

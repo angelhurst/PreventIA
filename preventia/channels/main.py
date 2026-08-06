@@ -10,9 +10,9 @@ from preventia.agent.core import run_check_in
 from preventia.agent.models import ModelUnavailable
 from preventia.channels.base import InboundMessage, OutboundMessage
 from preventia.channels.webhook import build_app
-from preventia.channels.whatsapp_cloud import (
+from preventia.channels.whatsapp_webhook import (
     StaticPatientDirectory,
-    WhatsAppCloudChannel,
+    WhatsAppWebhookChannel,
     WhatsAppCredentials,
 )
 from preventia.dashboard.intake import connect, patient_for_agent, persist
@@ -69,8 +69,8 @@ async def handle_check_in(message: InboundMessage) -> OutboundMessage:
     return OutboundMessage(text=await asyncio.to_thread(check_in, message))
 
 
-def build_channel() -> WhatsAppCloudChannel:
-    return WhatsAppCloudChannel(
+def build_channel() -> WhatsAppWebhookChannel:
+    return WhatsAppWebhookChannel(
         handle_check_in,
         WhatsAppCredentials.from_environment(),
         StaticPatientDirectory.from_environment(),

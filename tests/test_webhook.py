@@ -7,9 +7,9 @@ from fastapi.testclient import TestClient
 
 from preventia.channels.base import InboundMessage, OutboundMessage
 from preventia.channels.webhook import WEBHOOK_PATH, build_app
-from preventia.channels.whatsapp_cloud import (
+from preventia.channels.whatsapp_webhook import (
     StaticPatientDirectory,
-    WhatsAppCloudChannel,
+    WhatsAppWebhookChannel,
     WhatsAppCredentials,
 )
 
@@ -57,7 +57,7 @@ def build_client(sent):
         sent.append(json.loads(request.content))
         return httpx.Response(200, json={"messages": [{"id": "wamid.OUT"}]})
 
-    channel = WhatsAppCloudChannel(
+    channel = WhatsAppWebhookChannel(
         handler,
         CREDENTIALS,
         StaticPatientDirectory({"56912345678": "patient-001"}),
