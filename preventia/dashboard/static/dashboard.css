@@ -60,6 +60,19 @@ q {
   color: var(--ink-faint);
 }
 
+code {
+  font-family: ui-monospace, Consolas, "Courier New", monospace;
+  font-size: var(--text-sm);
+  padding: var(--space-1) var(--space-2);
+  color: var(--ink);
+  background: var(--surface-sunken);
+  border: var(--rule-width) solid var(--line);
+}
+
+.setup__comando {
+  margin-top: var(--space-3);
+}
+
 .salto {
   position: absolute;
   left: var(--space-3);
@@ -89,14 +102,31 @@ q {
 }
 
 .marca {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  align-items: center;
+  column-gap: var(--space-2);
   font-family: var(--font-display);
   font-size: var(--text-xl);
   font-weight: 700;
   letter-spacing: 0.02em;
 }
 
+.marca__escala {
+  grid-row: 1 / span 2;
+  width: 2em;
+  height: 2em;
+}
+
+.marca__nombre {
+  grid-column: 2;
+  grid-row: 1;
+}
+
 .marca__sub {
-  display: block;
+  grid-column: 2;
+  grid-row: 2;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 400;
@@ -222,21 +252,24 @@ h1 {
 }
 
 .caso--red {
-  --rail: var(--sem-red);
+  --rail: var(--sem-red-edge);
   --chip: var(--sem-red-bg);
   --chip-ink: var(--sem-red-ink);
+  --chip-edge: var(--sem-red-edge);
 }
 
 .caso--yellow {
-  --rail: var(--sem-yellow);
+  --rail: var(--sem-yellow-edge);
   --chip: var(--sem-yellow-bg);
   --chip-ink: var(--sem-yellow-ink);
+  --chip-edge: var(--sem-yellow-edge);
 }
 
 .caso--green {
-  --rail: var(--sem-green);
+  --rail: var(--sem-green-edge);
   --chip: var(--sem-green-bg);
   --chip-ink: var(--sem-green-ink);
+  --chip-edge: var(--sem-green-edge);
 }
 
 .caso.estado--closed {
@@ -251,6 +284,7 @@ h1 {
   margin-bottom: var(--space-2);
   background: var(--chip);
   color: var(--chip-ink);
+  border: var(--rule-width) solid var(--chip-edge);
   border-radius: var(--radius-sm);
   font-size: var(--text-sm);
   font-weight: 700;
@@ -426,7 +460,7 @@ h1 {
 .aviso--error {
   background: var(--sem-red-bg);
   color: var(--sem-red-ink);
-  border: var(--rule-width) solid var(--sem-red);
+  border: var(--rule-width) solid var(--sem-red-edge);
 }
 
 .ficha__encabezado {
@@ -455,6 +489,36 @@ h1 {
   font-size: var(--text-lg);
   line-height: var(--leading-tight);
   margin-bottom: var(--space-3);
+}
+
+.tarjeta--medico {
+  border-left: var(--rail-width) solid var(--brand);
+}
+
+.marca-medico {
+  display: inline-block;
+  padding: 0 var(--space-2);
+  margin-left: var(--space-2);
+  background: var(--accent-bg);
+  color: var(--accent-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.contacto-medico__ayuda {
+  margin-bottom: var(--space-3);
+  color: var(--ink-muted);
+  font-size: var(--text-sm);
+  max-width: var(--measure-text);
+}
+
+.campo__ayuda {
+  color: var(--ink-muted);
+  font-size: var(--text-xs);
 }
 
 .formulario-estado {
@@ -528,15 +592,15 @@ h1 {
 }
 
 .contacto--red {
-  --rail: var(--sem-red);
+  --rail: var(--sem-red-edge);
 }
 
 .contacto--yellow {
-  --rail: var(--sem-yellow);
+  --rail: var(--sem-yellow-edge);
 }
 
 .contacto--green {
-  --rail: var(--sem-green);
+  --rail: var(--sem-green-edge);
 }
 
 .contacto__cabecera {

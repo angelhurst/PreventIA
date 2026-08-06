@@ -2,14 +2,18 @@ import os
 from pathlib import Path
 
 from fastapi import FastAPI, Form, Request
-from fastapi.responses import RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from . import audit, labels, repository
+from . import audit, intake, labels, repository
+from ..agent import models
+from ..agent.core import run_check_in
+from ..clinical.extraction import ExtractionFailed
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DB = BASE_DIR.parent / "data" / "preventia.db"
+ASSETS_DIR = BASE_DIR.parent.parent / "assets"
 
 CONTRAST_COOKIE = "preventia_contrast"
 FONT_COOKIE = "preventia_font"
@@ -21,6 +25,7 @@ COOKIE_MAX_AGE = 60 * 60 * 24 * 365
 
 app = FastAPI(title="PreventIA")
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
+app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
 templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
 templates.env.globals["labels"] = labels
@@ -31,6 +36,8 @@ templates.env.filters["state_label"] = labels.state_label
 templates.env.filters["condition_label"] = labels.condition_label
 templates.env.filters["symptom_label"] = labels.symptom_label
 templates.env.filters["when"] = labels.when
+templates.env.filters["error_message"] = labels.error_message
+templates.env.globals["DOCTOR_ROLE"] = audit.DOCTOR_ROLE
 templates.env.filters["day"] = labels.day
 
 
@@ -40,6 +47,20 @@ def db_path():
 
 def open_connection():
     return repository.connect(db_path())
+
+
+def setup_response(request):
+    return templates.TemplateResponse(
+        request,
+        "setup.html",
+        {
+            "db": str(db_path()),
+            "roster": [],
+            "actor": None,
+            "view": view_settings(request),
+        },
+        status_code=503,
+    )
 
 
 def view_settings(request):
@@ -76,9 +97,17 @@ async def root():
     return RedirectResponse("/cola", status_code=303)
 
 
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    return FileResponse(ASSETS_DIR / "favicon.ico", media_type="image/x-icon")
+
+
 @app.get("/cola")
 async def queue(request: Request, filtro: str = "abiertos"):
-    conn = open_connection()
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
     try:
         only_open = filtro != "todos"
         rows = repository.queue_rows(conn, only_open=only_open)
@@ -101,7 +130,10 @@ async def queue(request: Request, filtro: str = "abiertos"):
 
 @app.get("/cola/{code}")
 async def patient(request: Request, code: str, error: str = ""):
-    conn = open_connection()
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
     try:
         detail = repository.patient_detail(conn, code)
         roster = repository.clinicians(conn)
@@ -133,7 +165,10 @@ async def change_state(
     actor_code: str = Form(...),
     note: str = Form(""),
 ):
-    conn = open_connection()
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
     try:
         audit.record_transition(conn, code, to_state, actor_code, note)
         target = back_to(request, f"/cola/{code}")
@@ -145,6 +180,106 @@ async def change_state(
     response = RedirectResponse(target, status_code=303)
     response.set_cookie(ACTOR_COOKIE, actor_code, max_age=COOKIE_MAX_AGE, samesite="lax")
     return response
+
+
+@app.post("/cola/{code}/contacto")
+async def record_contact(
+    request: Request,
+    code: str,
+    actor_code: str = Form(...),
+    note: str = Form(""),
+):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+    try:
+        audit.record_doctor_contact(conn, code, actor_code, note)
+        target = f"/cola/{code}"
+    except audit.NotADoctor:
+        target = f"/cola/{code}?error=solo_medico"
+    except audit.MissingContactNote:
+        target = f"/cola/{code}?error=falta_nota"
+    except (audit.UnknownActor, ValueError):
+        target = f"/cola/{code}?error=estado"
+    finally:
+        conn.close()
+
+    response = RedirectResponse(target, status_code=303)
+    response.set_cookie(ACTOR_COOKIE, actor_code, max_age=COOKIE_MAX_AGE, samesite="lax")
+    return response
+
+
+def consulta_response(request, conn, result=None, error="", message="", selected=""):
+    return templates.TemplateResponse(
+        request,
+        "consulta.html",
+        {
+            "roster": intake.roster_for_intake(conn),
+            "runtime": models.describe_runtime(),
+            "result": result,
+            "error": error,
+            "message": message,
+            "selected": selected,
+            "actor": None,
+            "view": view_settings(request),
+        },
+    )
+
+
+@app.get("/consulta")
+async def consulta(request: Request):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+    try:
+        return consulta_response(request, conn)
+    finally:
+        conn.close()
+
+
+@app.post("/consulta")
+async def run_consulta(
+    request: Request,
+    patient_code: str = Form(...),
+    message: str = Form(...),
+):
+    try:
+        conn = open_connection()
+    except repository.MissingClinicalRecord:
+        return setup_response(request)
+
+    try:
+        patient = intake.patient_for_agent(conn, patient_code)
+        if patient is None:
+            return consulta_response(
+                request, conn, error="No encontramos a esa persona en la ficha."
+            )
+
+        try:
+            result = run_check_in(patient, message.strip())
+        except models.MissingModelToken as exc:
+            return consulta_response(
+                request, conn, error=str(exc), message=message, selected=patient_code
+            )
+        except models.ModelUnavailable as exc:
+            return consulta_response(
+                request,
+                conn,
+                error=f"El modelo no respondio: {exc}",
+                message=message,
+                selected=patient_code,
+            )
+        except ExtractionFailed as exc:
+            return consulta_response(
+                request, conn, error=str(exc), message=message, selected=patient_code
+            )
+
+        intake.persist(conn, result)
+        return consulta_response(request, conn, result=result, selected=patient_code)
+    finally:
+        conn.close()
 
 
 @app.post("/preferencias/contraste")

@@ -8,12 +8,19 @@ build it where this file says it goes.
 
 ## 1. What this is
 
-PreventIA is a conversational companion that follows up daily with polymedicated older adults
-(hypertension, type 2 diabetes, heart failure) over WhatsApp. It verifies that medication was
+PreventIA is a conversational companion that follows up daily with polymedicated adults aged 65 to
+75 with confirmed hypertension and/or type 2 diabetes, over WhatsApp. It verifies that medication was
 actually taken, picks up early signals of clinical decompensation mentioned naturally in
 conversation, classifies every interaction on a green/yellow/red risk traffic light, and escalates
 to the care team only when there is a real alarm. It also keeps a longitudinal adherence and symptom
 summary the clinician can read in seconds at the next control.
+
+The inclusion and exclusion criteria come from the clinical annex, `docs/research/anexo
+PreventIA.docx`, section 3B: confirmed HTA and/or DM2, WhatsApp already in use, aged 65 to 75. The
+upper bound is the ceiling of the HEARTS-Chile pharmacological pathway. Excluded are patients aged 76
+and over, and patients carrying any pathology beyond those two. The annex's exclusion of "pacientes
+con múltiples patologías" is read as pathologies beyond HTA and DM2, since its own inclusion line
+says "y/o"; a patient with both remains in scope and is still polymedicated.
 
 It is being built for the **Claude Impact Lab Longevidad**, run by Anthropic with Bendita IA and
 Caja La Araucana, on **5-6 August 2026 at Parque La Florida, Santiago**. Roughly 50 teams compete,

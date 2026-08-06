@@ -1,6 +1,6 @@
 # PreventIA — Documento de producto
 
-**Versión 2.0 · 5 de agosto de 2026**
+**Versión 2.1 · 5 de agosto de 2026**
 
 Este es un documento vivo. Define qué es PreventIA, qué hace, qué no hace nunca, y bajo qué
 condiciones opera. Cada sección lleva su estado, porque no todas están cerradas al mismo tiempo: lo
@@ -273,6 +273,16 @@ destinatarios verificados por OTP**, que es una limitación de producción y exa
 que una demo quiere. Nada por debajo de `channels/` sabe qué es WhatsApp, y existe un canal de
 consola local que implementa la misma interfaz sin telefonía alguna.
 
+**El motor.** PreventIA no está atado a un proveedor de modelo. La construcción del modelo vive en un
+solo archivo, `agent/models.py`, y ningún otro módulo sabe quién contestó. Cambiar de proveedor es
+una variable de entorno, no una reescritura. La vía ofrecida para producción es un modelo abierto
+servido por Ollama, y existe justamente para que un servicio de salud pueda decidir por su cuenta
+dónde ocurren las conversaciones con sus pacientes. No está ejercitada: el prototipo del Lab corre
+sobre Claude, el modelo local todavía no está fijado y ninguna suite se ha corrido contra él. Es lo
+que la arquitectura permite, no algo que ya esté funcionando. Tampoco hay un framework de agentes de
+por medio: el orquestador es código propio, y por eso el semáforo, el filtro de salida y el registro
+clínico no dependen del comportamiento de la librería de un tercero (ADR-0010 y ADR-0012).
+
 **Fuera, y es una decisión, no una omisión:**
 
 - **Canal de voz.** El uso de texto cae con la edad justo donde sube la necesidad clínica, y esa
@@ -353,5 +363,6 @@ reconoce como plata.
 
 | Versión | Fecha | Qué cambió | Origen |
 |---|---|---|---|
+| 2.1 | 2026-08-05 | Sección 9 gana el párrafo "El motor": el producto no está atado a un proveedor de modelo, el cambio de proveedor es una variable de entorno, la vía local con Ollama se ofrece para producción y se declara explícitamente no ejercitada, y no hay framework de agentes entre el semáforo, el filtro de salida y el registro. La propiedad ya estaba decidida en los ADR pero no aparecía en ningún documento de producto | ADR-0010 y ADR-0012 |
 | 2.0 | 2026-08-05 | Cada sección lleva estado. Sección 1 reescrita completa: las cifras de listas de espera se corrigen contra la Glosa 06 al 31 de marzo de 2026 y se explicita que vienen del propio Minsal, y se elimina "en el intervalo no hay nadie mirando", que era falso respecto del rescate de inasistentes. Sección 4 nombra la primera cohorte y agrega el 65% de multimorbilidad del PSCV. Sección 5 pasa a describir solo el mecanismo; la tabla de banderas se mueve a `docs/prd-annex.md`. Sección 6 incorpora el tablero del ADR-0006 y marca como pendientes el guardián y las listas de contenido y exclusión. Sección 7 agrega dos reglas de copy. Sección 8 registra que un adaptador contra datos agregados calibra la cohorte en vez de poblarla, pendiente de un ADR que supersede al 0007, y nombra la calidad del dato de contacto como precondición de despliegue. Sección 9 fija el canal, el porqué de dejar la voz fuera y la respuesta a notas de voz. Sección 10 lidera con el argumento de carga, ajusta el párrafo de evidencia a lo que los estudios sostienen y nombra la cadena COMPIN–caja–SUSESO como vía de escalamiento | Workstreams 1 a 6 en `docs/research/felipe/`, propuestas P1, P2, P3, P5, P6, P7, P8, P9, P10 y P12 en `docs/research/README.md`; workstreams 7 y 8 briefeados y aún no ejecutados; ADR-0002, 0003, 0004, 0006, 0007 y 0010 |
 | 1.0 | 2026-08-03 | Versión inicial | Diseño del producto y ADR-0001 a 0009 |

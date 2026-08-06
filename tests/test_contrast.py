@@ -30,6 +30,9 @@ NON_TEXT_PAIRS = [
     ("--line-strong", "--surface"),
     ("--focus", "--surface"),
     ("--focus-halo", "--brand"),
+    ("--sem-red-edge", "--surface"),
+    ("--sem-yellow-edge", "--surface"),
+    ("--sem-green-edge", "--surface"),
 ]
 
 THEMES = ["light", "contrast"]

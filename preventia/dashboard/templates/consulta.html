@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}Check-in diario · PreventIA{% endblock %}
+
+{% block content %}
+<h1>Check-in diario</h1>
+<p class="consulta__runtime">
+  Motor: <strong>{{ runtime.provider }}</strong> · modelo <code>{{ runtime.model_id }}</code>
+  {% if not runtime.configured %}<em>(sin credencial configurada)</em>{% endif %}
+</p>
+
+{% if error %}
+<p class="aviso aviso--error" role="alert">{{ error }}</p>
+{% endif %}
+
+<form method="post" action="/consulta" class="consulta__form">
+  <label for="patient_code">Paciente</label>
+  <select id="patient_code" name="patient_code" required>
+    {% for row in roster %}
+    <option value="{{ row.code }}" {% if row.code == selected %}selected{% endif %}>
+      {{ row.display_name }} · {{ row.age }} años · {{ row.comuna }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <label for="message">Mensaje recibido por WhatsApp</label>
+  <textarea id="message" name="message" rows="4" required
+            placeholder="Buenos días, sí me tomé el remedio. Ando un poco hinchada de los pies estos días.">{{ message or "" }}</textarea>
+
+  <button type="submit">Procesar check-in</button>
+</form>
+
+{% if result %}
+<section class="consulta__resultado">
+  <div class="consulta__panel">
+    <h2>Entrada</h2>
+    <p class="consulta__quien">{{ result.patient_code }}</p>
+    <blockquote class="consulta__entrada">{{ result.patient_message }}</blockquote>
+  </div>
+
+  <div class="consulta__panel">
+    <h2>Salida del agente</h2>
+
+    <h3>Adherencia</h3>
+    <p>{{ result.doses_reported_taken }} de {{ result.doses_expected }} dosis declaradas</p>
+
+    <h3>Síntomas extraídos</h3>
+    {% if result.symptoms %}
+    <ul class="consulta__sintomas">
+      {% for s in result.symptoms %}
+      <li>
+        <strong>{{ s.term }}</strong>
+        {% if s.mentioned_in_passing %}<span class="etiqueta">mencionado al pasar</span>{% endif %}
+        <br><q>{{ s.verbatim }}</q>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p>Ninguno.</p>
+    {% endif %}
+
+    <h3>Semáforo</h3>
+    <p class="semaforo semaforo--{{ result.final_color.value }}">
+      {{ result.final_color.value | upper }}
+    </p>
+    <dl class="consulta__semaforo">
+      <dt>Piso por reglas</dt>
+      <dd>{{ result.rules_color.value }} — {{ result.rules_reason }}</dd>
+      <dt>Fuente de la regla</dt>
+      <dd>{{ result.rules_source }}</dd>
+      <dt>Lectura del modelo</dt>
+      <dd>{{ result.model_color.value }} — {{ result.model_reason }}</dd>
+      <dt>Resultado</dt>
+      <dd>
+        {% if result.model_was_raised %}
+        el modelo subió el color; las reglas nunca lo bajan
+        {% else %}
+        el piso determinista mandó
+        {% endif %}
+      </dd>
+    </dl>
+
+    <h3>Respuesta enviada al paciente</h3>
+    <blockquote class="consulta__salida">{{ result.agent_message }}</blockquote>
+    {% if result.guardrail_reason %}
+    <p class="aviso aviso--bloqueo">
+      Guardrail bloqueó la respuesta del modelo ({{ result.guardrail_reason }}) y la reemplazó por el
+      redireccionamiento seguro.
+    </p>
+    {% endif %}
+
+    <h3>Resumen para el equipo</h3>
+    <p>{{ result.summary_line }}</p>
+
+    {% if result.escalates %}
+    <p class="aviso aviso--escala">
+      Escalado a la cola de triage. <a href="/cola/{{ result.patient_code }}">Ver la ficha</a>.
+    </p>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

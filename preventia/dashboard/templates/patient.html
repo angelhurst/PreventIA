@@ -4,8 +4,8 @@
 {% block content %}
 <p class="volver"><a href="/cola">{{ T.back_to_queue }}</a></p>
 
-{% if error %}
-<p class="aviso aviso--error" role="alert">{{ T.state_change_failed }}</p>
+{% if error and error|error_message %}
+<p class="aviso aviso--error" role="alert">{{ error|error_message }}</p>
 {% endif %}
 
 <div class="ficha__encabezado">
@@ -18,6 +18,28 @@
   </p>
   <p class="ficha__estado"><span class="pastilla pastilla--{{ patient.state }}">{{ patient.state|state_label }}</span></p>
 </div>
+
+{% if actor and actor.role == DOCTOR_ROLE %}
+<section class="tarjeta tarjeta--medico" aria-labelledby="titulo-contacto">
+  <h2 id="titulo-contacto">
+    {{ T.contact_title }}
+    <span class="marca-medico">{{ T.contact_badge }}</span>
+  </h2>
+  <p class="contacto-medico__ayuda">{{ T.contact_help }}</p>
+  <form method="post" action="/cola/{{ patient.code }}/contacto" class="formulario-estado">
+    <input type="hidden" name="actor_code" value="{{ actor.code }}">
+    <p class="campo campo--ancho">
+      <label for="nota_contacto">{{ T.contact_note_label }}</label>
+      <input type="text" id="nota_contacto" name="note" maxlength="200" required
+             autocomplete="off" aria-describedby="ayuda_contacto">
+      <span class="campo__ayuda" id="ayuda_contacto">{{ T.contact_note_hint }}</span>
+    </p>
+    <p class="campo campo--accion">
+      <button class="boton" type="submit">{{ T.contact_submit }}</button>
+    </p>
+  </form>
+</section>
+{% endif %}
 
 <section class="tarjeta" aria-labelledby="titulo-estado">
   <h2 id="titulo-estado">{{ T.change_state }}</h2>

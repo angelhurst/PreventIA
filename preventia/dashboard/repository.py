@@ -1,5 +1,6 @@
 import sqlite3
 from dataclasses import dataclass, field
+from pathlib import Path
 
 ADHERENCE_WINDOW = 7
 
@@ -95,10 +96,23 @@ class PatientDetail:
     audit: list
 
 
+class MissingClinicalRecord(RuntimeError):
+    pass
+
+
 def connect(db_path):
-    conn = sqlite3.connect(str(db_path))
+    path = Path(db_path)
+    if not path.exists():
+        raise MissingClinicalRecord(str(path))
+    conn = sqlite3.connect(str(path))
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON")
+    seeded = conn.execute(
+        "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'patients'"
+    ).fetchone()
+    if seeded is None:
+        conn.close()
+        raise MissingClinicalRecord(str(path))
     return conn
 
 

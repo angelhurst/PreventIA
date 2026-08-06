@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}PreventIA{% endblock %}</title>
+<link rel="icon" href="/assets/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/assets/manifest.webmanifest">
+<meta name="theme-color" content="#0a132d">
 <link rel="stylesheet" href="/static/tokens.css">
 <link rel="stylesheet" href="/static/dashboard.css">
 </head>
@@ -11,7 +16,15 @@
 <a class="salto" href="#contenido">{{ T.skip_to_queue }}</a>
 
 <header class="barra">
-  <p class="marca">PreventIA<span class="marca__sub">seguimiento entre controles</span></p>
+  <p class="marca">
+    <svg class="marca__escala" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <rect x="4" y="18" width="8" height="8" fill="var(--sem-green)"/>
+      <rect x="12" y="12" width="8" height="14" fill="var(--sem-yellow)"/>
+      <rect x="20" y="6" width="8" height="20" fill="var(--sem-red)"/>
+    </svg>
+    <span class="marca__nombre">PreventIA</span>
+    <span class="marca__sub">seguimiento entre controles</span>
+  </p>
 
   <div class="preferencias">
     <form method="post" action="/preferencias/contraste" class="preferencia">

@@ -20,7 +20,7 @@
     {
       "code": "PV-001",
       "display_name": "Hilda Rosa Muñoz Paredes",
-      "age": 78,
+      "age": 71,
       "sex": "F",
       "comuna": "Quinta Normal",
       "conditions": [
@@ -250,344 +250,6 @@
       ]
     },
     {
-      "code": "PV-002",
-      "display_name": "Nibaldo Segundo Cárcamo Vidal",
-      "age": 81,
-      "sex": "M",
-      "comuna": "Recoleta",
-      "conditions": [
-        "insuficiencia_cardiaca",
-        "hipertension"
-      ],
-      "assigned_clinician": "CL-02",
-      "enrolled_days_ago": 30,
-      "medications": [
-        {
-          "name": "Furosemida",
-          "dose": "40 mg",
-          "schedule_text": "una tableta en la mañana",
-          "times_per_day": 1
-        },
-        {
-          "name": "Carvedilol",
-          "dose": "12,5 mg",
-          "schedule_text": "una tableta en la mañana y una al mediodía",
-          "times_per_day": 2
-        },
-        {
-          "name": "Espironolactona",
-          "dose": "25 mg",
-          "schedule_text": "una tableta en la mañana",
-          "times_per_day": 1
-        },
-        {
-          "name": "Losartán",
-          "dose": "50 mg",
-          "schedule_text": "una tableta en la noche",
-          "times_per_day": 1
-        },
-        {
-          "name": "Atorvastatina",
-          "dose": "20 mg",
-          "schedule_text": "una tableta en la noche",
-          "times_per_day": 1
-        }
-      ],
-      "check_ins": [
-        {
-          "days_ago": 20,
-          "patient_message": "Buenos días. Tomé los seis. Sin novedad.",
-          "agent_message": "Buenos días, don Nibaldo. Anoto sus seis remedios tomados. ¿Cómo ha estado respirando hoy?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "6 de 6 dosis; sin síntomas referidos."
-        },
-        {
-          "days_ago": 19,
-          "patient_message": "Todo tomado. Ando bien.",
-          "agent_message": "Gracias, don Nibaldo. Anoto sus seis remedios. ¿Ha dormido bien en la noche?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "6 de 6 dosis; refiere dormir bien."
-        },
-        {
-          "days_ago": 18,
-          "patient_message": "Se me pasó la del mediodía. Estaba en el cementerio con mi señora.",
-          "agent_message": "Gracias por contarme, don Nibaldo. Anoto cinco de sus seis remedios de hoy. ¿Cómo se ha sentido en la tarde?",
-          "doses_reported_taken": 5,
-          "doses_expected": 6,
-          "symptoms": [],
-          "rules_color": "yellow",
-          "rules_reason": "adherence gap: 1 of 6 doses missed, floor yellow",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "yellow",
-          "summary_line": "5 de 6 dosis; olvidó la dosis del mediodía fuera de casa."
-        },
-        {
-          "days_ago": 17,
-          "patient_message": "Los seis tomados. Bien.",
-          "agent_message": "Anotado, don Nibaldo. ¿Ha sentido falta de aire al caminar?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "6 de 6 dosis; sin falta de aire al caminar."
-        },
-        {
-          "days_ago": 16,
-          "patient_message": "Tomé todo. Le cuento que fui a ver a mi hermano a San Bernardo y en la vuelta el zapato me quedó apretado, será que caminé mucho. Nos tomamos un tecito y estuvo bueno el paseo.",
-          "agent_message": "Qué bueno que haya visto a su hermano, don Nibaldo. Anoto sus seis remedios. Voy a dejar anotado eso del zapato apretado para el equipo del consultorio. ¿Se le nota hinchado el tobillo?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "en la vuelta el zapato me quedó apretado",
-              "mentioned_in_passing": true
-            }
-          ],
-          "rules_color": "green",
-          "rules_reason": "no flag: garment fit is not in the flag table",
-          "model_color": "yellow",
-          "model_reason": "tight shoe described after walking, possible fluid retention",
-          "final_color": "yellow",
-          "summary_line": "6 de 6 dosis; refiere que el zapato le quedó apretado al volver."
-        },
-        {
-          "days_ago": 14,
-          "patient_message": "Se me hincharon los tobillos. Se me marca el elástico del calcetín cuando me lo saco.",
-          "agent_message": "Gracias por fijarse, don Nibaldo. Anoto sus seis remedios y lo de los tobillos. Lo estoy dejando anotado para el equipo del consultorio. ¿Ha sentido falta de aire?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "se me hincharon los tobillos, se me marca el elástico del calcetín",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "limb edema on the heart failure alarm list, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "edema now explicit, no dyspnoea reported",
-          "final_color": "yellow",
-          "summary_line": "6 de 6 dosis; tobillos hinchados con marca del calcetín."
-        },
-        {
-          "days_ago": 13,
-          "patient_message": "Los tobillos siguen hinchados. Subiendo la escalera de la casa tuve que parar en el descanso a tomar aire, antes la subía de una.",
-          "agent_message": "Gracias por contarme, don Nibaldo. Anoto sus seis remedios. Esto lo voy a pasar ahora al equipo del consultorio para que se comuniquen con usted. ¿Ha podido dormir acostado?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los tobillos siguen hinchados",
-              "mentioned_in_passing": false
-            },
-            {
-              "term": "disnea_de_esfuerzo",
-              "verbatim": "tuve que parar en el descanso a tomar aire, antes la subía de una",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "edema plus increased dyspnoea meets the contact threshold, floor red",
-          "model_color": "yellow",
-          "model_reason": "dyspnoea described as mild and only on stairs",
-          "final_color": "red",
-          "summary_line": "6 de 6 dosis; tobillos hinchados y para a tomar aire en la escalera."
-        },
-        {
-          "days_ago": 12,
-          "patient_message": "Ando cansado y dormí mal. Se me pasó la del mediodía. Los pies siguen igual de hinchados.",
-          "agent_message": "Gracias por decírmelo, don Nibaldo. Anoto cinco de sus seis remedios. El equipo del consultorio ya tiene su caso y lo van a contactar. ¿Se despertó en la noche con falta de aire?",
-          "doses_reported_taken": 5,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los pies siguen igual de hinchados",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "limb edema on the alarm list plus 1 missed dose, floor yellow",
-          "model_color": "red",
-          "model_reason": "third day of edema with tiredness and poor sleep after dyspnoea",
-          "final_color": "red",
-          "summary_line": "5 de 6 dosis; tercer día con pies hinchados, cansancio y mal dormir."
-        },
-        {
-          "days_ago": 10,
-          "patient_message": "Anoche me desperté como a las tres con falta de aire. Me tuve que sentar en la cama un rato hasta que se me pasó.",
-          "agent_message": "Gracias por contarme algo así, don Nibaldo. Anoto sus seis remedios. Esto lo estoy pasando ahora mismo al equipo del consultorio para que lo contacten hoy. ¿Cómo está respirando en este momento?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "ortopnea",
-              "verbatim": "me desperté como a las tres con falta de aire, me tuve que sentar en la cama",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "nocturnal dyspnoea on the alarm list, floor red",
-          "model_color": "red",
-          "model_reason": "night waking with breathlessness after three days of edema",
-          "final_color": "red",
-          "summary_line": "6 de 6 dosis; despertó de noche con falta de aire y debió sentarse."
-        },
-        {
-          "days_ago": 9,
-          "patient_message": "Dormí con dos almohadas para no ahogarme. Tomé los seis igual.",
-          "agent_message": "Anoto sus seis remedios, don Nibaldo. Lo de las almohadas ya está con el equipo del consultorio. ¿Alcanzó a descansar algo?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "ortopnea",
-              "verbatim": "dormí con dos almohadas para no ahogarme",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "orthopnoea on the alarm list, floor red",
-          "model_color": "red",
-          "model_reason": "second night needing to sleep propped up",
-          "final_color": "red",
-          "summary_line": "6 de 6 dosis; segunda noche durmiendo con dos almohadas."
-        },
-        {
-          "days_ago": 7,
-          "patient_message": "Fui al consultorio, me vio la enfermera. Tomé los seis. Los pies andan un poco mejor.",
-          "agent_message": "Gracias por avisarme que fue, don Nibaldo. Anoto sus seis remedios. ¿Cómo ha estado durmiendo estas noches?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los pies andan un poco mejor",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "limb edema still present, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "edema improving after clinical contact",
-          "final_color": "yellow",
-          "summary_line": "6 de 6 dosis; pies algo mejor tras el control en el consultorio."
-        },
-        {
-          "days_ago": 4,
-          "patient_message": "Estoy durmiendo mejor, con una almohada no más. Los seis tomados.",
-          "agent_message": "Me alegro, don Nibaldo. Anoto sus seis remedios. ¿Ha tenido que parar al subir la escalera?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "yellow",
-          "model_reason": "orthopnoea five days ago, keep the case in review",
-          "final_color": "yellow",
-          "summary_line": "6 de 6 dosis; duerme con una almohada, sin despertares."
-        },
-        {
-          "days_ago": 2,
-          "patient_message": "Los tobillos me volvieron a hinchar un poco en la tarde. Tomé todo.",
-          "agent_message": "Gracias por fijarse, don Nibaldo. Anoto sus seis remedios y lo de los tobillos para el equipo. ¿Ha sentido falta de aire en la noche?",
-          "doses_reported_taken": 6,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los tobillos me volvieron a hinchar un poco en la tarde",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "limb edema on the alarm list, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "edema returning, no nocturnal symptoms reported",
-          "final_color": "yellow",
-          "summary_line": "6 de 6 dosis; vuelve la hinchazón de tobillos en la tarde."
-        },
-        {
-          "days_ago": 0,
-          "patient_message": "Anoche me volví a despertar ahogado y tengo los pies muy hinchados. No alcancé a tomar la del mediodía.",
-          "agent_message": "Gracias por avisarme al tiro, don Nibaldo. Anoto cinco de sus seis remedios. Estoy pasando esto ahora mismo al equipo del consultorio para que lo contacten hoy. Si se siente peor mientras tanto, vaya al servicio de urgencia o llame al 131.",
-          "doses_reported_taken": 5,
-          "doses_expected": 6,
-          "symptoms": [
-            {
-              "term": "ortopnea",
-              "verbatim": "anoche me volví a despertar ahogado",
-              "mentioned_in_passing": false
-            },
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "tengo los pies muy hinchados",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "nocturnal dyspnoea plus edema meets the contact threshold, floor red",
-          "model_color": "red",
-          "model_reason": "recurrence of the pattern that escalated eight days ago",
-          "final_color": "red",
-          "summary_line": "5 de 6 dosis; despertó ahogado y con los pies muy hinchados."
-        }
-      ],
-      "queue_state": "en_revision",
-      "audit": [
-        {
-          "days_ago": 11,
-          "actor": "CL-02",
-          "from_state": "pendiente",
-          "to_state": "en_revision",
-          "note": "Se levanta el caso por hinchazón y falta de aire nocturna."
-        },
-        {
-          "days_ago": 8,
-          "actor": "CL-02",
-          "from_state": "en_revision",
-          "to_state": "contactado",
-          "note": "Se llamó al paciente y se citó a control en el consultorio."
-        },
-        {
-          "days_ago": 5,
-          "actor": "CL-02",
-          "from_state": "contactado",
-          "to_state": "cerrado",
-          "note": "Control realizado con enfermera, se cierra el episodio."
-        },
-        {
-          "days_ago": 0,
-          "actor": "CL-02",
-          "from_state": "cerrado",
-          "to_state": "en_revision",
-          "note": "Reingresa por episodio nocturno y edema de hoy."
-        }
-      ]
-    },
-    {
       "code": "PV-003",
       "display_name": "María Teresa Ormeño Lagos",
       "age": 74,
@@ -804,7 +466,7 @@
     {
       "code": "PV-004",
       "display_name": "Luis Alberto Toledo Sanhueza",
-      "age": 86,
+      "age": 70,
       "sex": "M",
       "comuna": "Cerro Navia",
       "conditions": [
@@ -947,300 +609,6 @@
           "from_state": "en_revision",
           "to_state": "cerrado",
           "note": "Sin hinchazón en los últimos días, se cierra el caso."
-        }
-      ]
-    },
-    {
-      "code": "PV-005",
-      "display_name": "Gladys del Carmen Pizarro Millán",
-      "age": 83,
-      "sex": "F",
-      "comuna": "Renca",
-      "conditions": [
-        "insuficiencia_cardiaca",
-        "diabetes_tipo_2"
-      ],
-      "assigned_clinician": "CL-02",
-      "enrolled_days_ago": 28,
-      "medications": [
-        {
-          "name": "Furosemida",
-          "dose": "40 mg",
-          "schedule_text": "una tableta en la mañana",
-          "times_per_day": 1
-        },
-        {
-          "name": "Carvedilol",
-          "dose": "6,25 mg",
-          "schedule_text": "una tableta en la mañana y una en la noche",
-          "times_per_day": 2
-        },
-        {
-          "name": "Metformina",
-          "dose": "850 mg",
-          "schedule_text": "una tableta con el desayuno y una con la cena",
-          "times_per_day": 2
-        },
-        {
-          "name": "Insulina NPH",
-          "dose": "12 unidades",
-          "schedule_text": "una vez en la noche antes de acostarse",
-          "times_per_day": 1
-        },
-        {
-          "name": "Aspirina",
-          "dose": "100 mg",
-          "schedule_text": "una tableta después del almuerzo",
-          "times_per_day": 1
-        }
-      ],
-      "check_ins": [
-        {
-          "days_ago": 20,
-          "patient_message": "Buenos días, hijita. Me tomé todos y me puse la insulina en la noche. Amanecí bien, si Dios quiere seguimos así.",
-          "agent_message": "Buenos días, doña Gladys. Anoto sus siete dosis de hoy. ¿Cómo ha estado respirando?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "7 de 7 dosis; sin síntomas referidos."
-        },
-        {
-          "days_ago": 19,
-          "patient_message": "Se me olvidó la aspirina del almuerzo, lo demás todo. Anduve en el patio con las matas.",
-          "agent_message": "Gracias por contarme, doña Gladys. Anoto seis de sus siete dosis. ¿Se cansó estando en el patio?",
-          "doses_reported_taken": 6,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "yellow",
-          "rules_reason": "adherence gap: 1 of 7 doses missed, floor yellow",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "yellow",
-          "summary_line": "6 de 7 dosis; olvidó la dosis del almuerzo."
-        },
-        {
-          "days_ago": 18,
-          "patient_message": "Hoy todo tomado y la insulina puesta. Bien, gracias a Dios.",
-          "agent_message": "Me alegro, doña Gladys. Anoto sus siete dosis. ¿Ha dormido bien acostada?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "7 de 7 dosis; duerme bien acostada."
-        },
-        {
-          "days_ago": 16,
-          "patient_message": "Todo tomado, hijita. Le cuento que en la mañana estaba haciéndole el desayuno a mi nieto y me puse a temblar y a sudar frío, me tomé un juguito y se me pasó al rato. Después lo fui a dejar al colegio lo más bien.",
-          "agent_message": "Gracias por contarme eso, doña Gladys. Anoto sus siete dosis. Lo del temblor y el sudor frío lo estoy pasando ahora al equipo del consultorio para que se comuniquen con usted hoy. ¿Había comido algo antes de que le pasara?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [
-            {
-              "term": "hipoglicemia",
-              "verbatim": "me puse a temblar y a sudar frío, me tomé un juguito y se me pasó",
-              "mentioned_in_passing": true
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "tremor and cold sweating before eating, floor red",
-          "model_color": "red",
-          "model_reason": "symptoms may be blunted by the beta blocker she takes",
-          "final_color": "red",
-          "summary_line": "7 de 7 dosis; temblor y sudor frío en ayunas, cedió con jugo."
-        },
-        {
-          "days_ago": 15,
-          "patient_message": "No me volvió el temblor. Comí temprano y me tomé todo.",
-          "agent_message": "Me alegro, doña Gladys. Anoto sus siete dosis. El equipo del consultorio ya tiene su caso. ¿Ha comido a sus horas hoy?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "yellow",
-          "model_reason": "hypoglycaemia episode the previous day, keep in review",
-          "final_color": "yellow",
-          "summary_line": "7 de 7 dosis; sin temblor hoy, comió temprano."
-        },
-        {
-          "days_ago": 13,
-          "patient_message": "Todo tomado y la insulina. Ando tranquila.",
-          "agent_message": "Gracias, doña Gladys. Anoto sus siete dosis. ¿Cómo ha estado de los pies?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "7 de 7 dosis; sin molestias referidas."
-        },
-        {
-          "days_ago": 12,
-          "patient_message": "Me pesé en la pesa de mi hija y subí dos kilos en tres días. Yo como lo mismo de siempre. Todo tomado.",
-          "agent_message": "Gracias por pesarse y contarme, doña Gladys. Anoto sus siete dosis. Lo del peso lo estoy pasando al equipo del consultorio para que la contacten. ¿Ha sentido los pies o las manos hinchadas?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [
-            {
-              "term": "aumento_de_peso",
-              "verbatim": "subí dos kilos en tres días, yo como lo mismo de siempre",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "weight gain over 2 kg in 3 days, floor red",
-          "model_color": "yellow",
-          "model_reason": "weight gain reported alone, no swelling or breathlessness",
-          "final_color": "red",
-          "summary_line": "7 de 7 dosis; subió dos kilos en tres días comiendo igual."
-        },
-        {
-          "days_ago": 10,
-          "patient_message": "Los pies muy hinchados, no me entran los zapatos. Se me pasó la metformina de la cena.",
-          "agent_message": "Gracias por decírmelo, doña Gladys. Anoto seis de sus siete dosis. Lo de los pies ya va al equipo del consultorio junto con lo del peso. ¿Ha podido dormir acostada?",
-          "doses_reported_taken": 6,
-          "doses_expected": 7,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los pies muy hinchados, no me entran los zapatos",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "limb edema plus 1 missed dose, floor yellow",
-          "model_color": "red",
-          "model_reason": "edema two days after a 2 kg gain in 3 days",
-          "final_color": "red",
-          "summary_line": "6 de 7 dosis; pies muy hinchados, no le entran los zapatos."
-        },
-        {
-          "days_ago": 8,
-          "patient_message": "Ando mejor de los pies. Desde ayer estoy orinando harto más que antes. Todo tomado.",
-          "agent_message": "Gracias por contarme, doña Gladys. Anoto sus siete dosis. Lo de orinar más queda anotado para el equipo. ¿Ha estado tomando agua igual que siempre?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [
-            {
-              "term": "poliuria",
-              "verbatim": "desde ayer estoy orinando harto más que antes",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "change in urine output, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "increased output alongside improving edema",
-          "final_color": "yellow",
-          "summary_line": "7 de 7 dosis; orina más desde ayer y los pies están mejor."
-        },
-        {
-          "days_ago": 6,
-          "patient_message": "Todo tomado, hijita. Ando bien, hasta salí a la esquina.",
-          "agent_message": "Qué bueno, doña Gladys. Anoto sus siete dosis. ¿Se cansó al volver?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "7 de 7 dosis; salió a la esquina sin molestias."
-        },
-        {
-          "days_ago": 4,
-          "patient_message": "Todo tomado. Ando cansada, me da lata hasta salir al patio.",
-          "agent_message": "Gracias por contarme cómo se siente, doña Gladys. Anoto sus siete dosis. Lo del cansancio lo dejo anotado para el equipo del consultorio. ¿Ha dormido bien en la noche?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag: tiredness alone is not in the flag table",
-          "model_color": "yellow",
-          "model_reason": "new tiredness and withdrawal from usual activity",
-          "final_color": "yellow",
-          "summary_line": "7 de 7 dosis; refiere cansancio y no sale al patio."
-        },
-        {
-          "days_ago": 2,
-          "patient_message": "Anoche me costó respirar acostada, me tuve que sentar un rato en la cama. Todo tomado igual.",
-          "agent_message": "Gracias por avisarme, doña Gladys. Anoto sus siete dosis. Esto lo estoy pasando ahora al equipo del consultorio para que la contacten hoy. ¿Cómo está respirando en este momento?",
-          "doses_reported_taken": 7,
-          "doses_expected": 7,
-          "symptoms": [
-            {
-              "term": "ortopnea",
-              "verbatim": "me costó respirar acostada, me tuve que sentar un rato en la cama",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "orthopnoea on the alarm list, floor red",
-          "model_color": "red",
-          "model_reason": "orthopnoea after weight gain, edema and tiredness this month",
-          "final_color": "red",
-          "summary_line": "7 de 7 dosis; le costó respirar acostada y debió sentarse."
-        },
-        {
-          "days_ago": 0,
-          "patient_message": "No pude tomar las de la tarde, ando muy cansada. Me desperté ahogada en la noche y tengo los pies muy hinchados.",
-          "agent_message": "Gracias por avisarme al tiro, doña Gladys. Anoto cinco de sus siete dosis. Estoy pasando esto ahora mismo al equipo del consultorio para que la contacten hoy. Si se siente peor mientras tanto, vaya al servicio de urgencia o llame al 131.",
-          "doses_reported_taken": 5,
-          "doses_expected": 7,
-          "symptoms": [
-            {
-              "term": "ortopnea",
-              "verbatim": "me desperté ahogada en la noche",
-              "mentioned_in_passing": false
-            },
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "tengo los pies muy hinchados",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "nocturnal dyspnoea plus edema meets the contact threshold, floor red",
-          "model_color": "red",
-          "model_reason": "second night of orthopnoea with an adherence gap",
-          "final_color": "red",
-          "summary_line": "5 de 7 dosis; despertó ahogada y con los pies muy hinchados."
-        }
-      ],
-      "queue_state": "en_revision",
-      "audit": [
-        {
-          "days_ago": 11,
-          "actor": "CL-02",
-          "from_state": "pendiente",
-          "to_state": "en_revision",
-          "note": "Se levanta por alza de peso y episodio de temblor en ayunas."
-        },
-        {
-          "days_ago": 9,
-          "actor": "CL-02",
-          "from_state": "en_revision",
-          "to_state": "contactado",
-          "note": "Se habló con la hija, se coordinó visita domiciliaria."
-        },
-        {
-          "days_ago": 1,
-          "actor": "CL-02",
-          "from_state": "contactado",
-          "to_state": "en_revision",
-          "note": "Vuelve a revisión por falta de aire al acostarse."
         }
       ]
     },
@@ -1408,230 +776,6 @@
       ]
     },
     {
-      "code": "PV-007",
-      "display_name": "Berta Olivia Quezada Antileo",
-      "age": 89,
-      "sex": "F",
-      "comuna": "Conchalí",
-      "conditions": [
-        "hipertension",
-        "insuficiencia_cardiaca"
-      ],
-      "assigned_clinician": "CL-01",
-      "enrolled_days_ago": 27,
-      "medications": [
-        {
-          "name": "Furosemida",
-          "dose": "40 mg",
-          "schedule_text": "una tableta en la mañana",
-          "times_per_day": 1
-        },
-        {
-          "name": "Losartán",
-          "dose": "50 mg",
-          "schedule_text": "una tableta en la mañana y una en la noche",
-          "times_per_day": 2
-        },
-        {
-          "name": "Espironolactona",
-          "dose": "25 mg",
-          "schedule_text": "una tableta al mediodía",
-          "times_per_day": 1
-        }
-      ],
-      "check_ins": [
-        {
-          "days_ago": 20,
-          "patient_message": "Buenos días, habla Marisol, la hija de la señora Berta. Mi mamá tomó sus cuatro remedios hoy y amaneció bien.",
-          "agent_message": "Buenos días, Marisol. Gracias por contestar por su mamá. Anoto los cuatro remedios de doña Berta. ¿Cómo ha estado durmiendo ella?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "4 de 4 dosis; responde la hija, la paciente amaneció bien."
-        },
-        {
-          "days_ago": 19,
-          "patient_message": "Todo tomado. Durmió bien anoche, sin despertarse.",
-          "agent_message": "Gracias, Marisol. Anoto los cuatro remedios de doña Berta. ¿Ha estado caminando dentro de la casa?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "4 de 4 dosis; durmió toda la noche sin despertar."
-        },
-        {
-          "days_ago": 17,
-          "patient_message": "Se nos pasó la de la noche, llegué tarde del trabajo y ella ya se había acostado.",
-          "agent_message": "Gracias por decírmelo, Marisol. Anoto tres de los cuatro remedios de doña Berta. ¿Cómo la vio durante el día?",
-          "doses_reported_taken": 3,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "yellow",
-          "rules_reason": "adherence gap: 1 of 4 doses missed, floor yellow",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "yellow",
-          "summary_line": "3 de 4 dosis; se pasó la dosis de la noche."
-        },
-        {
-          "days_ago": 16,
-          "patient_message": "Hoy los cuatro. Anduvo bien, estuvo tejiendo toda la tarde.",
-          "agent_message": "Qué bueno, Marisol. Anoto los cuatro remedios. ¿Se le han hinchado los pies?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "4 de 4 dosis; pasó la tarde tejiendo, sin molestias."
-        },
-        {
-          "days_ago": 14,
-          "patient_message": "Todo tomado. Le cuento que ayer la llevé donde el nieto y le costó subir las escaleras, tuvo que parar en el descanso a tomar aire. Ella dice que es la edad no más. Estuvo contenta igual con los bisnietos.",
-          "agent_message": "Gracias por contarme, Marisol. Anoto los cuatro remedios de doña Berta. Lo de la escalera lo voy a dejar anotado para el equipo del consultorio. ¿Le había costado antes subir escaleras?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [
-            {
-              "term": "disnea_de_esfuerzo",
-              "verbatim": "le costó subir las escaleras, tuvo que parar en el descanso a tomar aire",
-              "mentioned_in_passing": true
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "dyspnoea on exertion, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "first report of stopping on stairs, attributed to age by the patient",
-          "final_color": "yellow",
-          "summary_line": "4 de 4 dosis; paró a tomar aire subiendo escaleras donde el nieto."
-        },
-        {
-          "days_ago": 12,
-          "patient_message": "Anda bien, durmió toda la noche. Los cuatro tomados.",
-          "agent_message": "Gracias, Marisol. Anoto los cuatro remedios. ¿Ha vuelto a cansarse al caminar?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "yellow",
-          "model_reason": "dyspnoea on exertion two days ago, keep in review",
-          "final_color": "yellow",
-          "summary_line": "4 de 4 dosis; durmió bien, sin cansancio al caminar hoy."
-        },
-        {
-          "days_ago": 10,
-          "patient_message": "Los cuatro. Sin novedad por acá.",
-          "agent_message": "Anotado, Marisol. ¿Alguna molestia que quiera contarme de doña Berta?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "4 de 4 dosis; sin novedades."
-        },
-        {
-          "days_ago": 8,
-          "patient_message": "Se cayó en el baño en la mañana. No se golpeó la cabeza y se levantó sola, pero quedó asustada. Los cuatro remedios los tomó igual.",
-          "agent_message": "Gracias por avisarme al tiro, Marisol. Anoto los cuatro remedios. La caída la estoy pasando ahora al equipo del consultorio para que se comuniquen con ustedes hoy. ¿Le quedó algún dolor?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [
-            {
-              "term": "caida",
-              "verbatim": "se cayó en el baño en la mañana, no se golpeó la cabeza y se levantó sola",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "fall at home without head injury, floor yellow",
-          "model_color": "red",
-          "model_reason": "fall in an 89-year-old on a diuretic, with dyspnoea the week before",
-          "final_color": "red",
-          "summary_line": "4 de 4 dosis; se cayó en el baño, sin golpe en la cabeza."
-        },
-        {
-          "days_ago": 5,
-          "patient_message": "Anda bien, un poco adolorida del brazo del lado que se cayó. Los cuatro tomados.",
-          "agent_message": "Gracias, Marisol. Anoto los cuatro remedios. El equipo del consultorio ya tiene el caso. ¿Ha podido caminar tranquila estos días?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "yellow",
-          "model_reason": "residual pain three days after a fall",
-          "final_color": "yellow",
-          "summary_line": "4 de 4 dosis; brazo adolorido tras la caída del lunes."
-        },
-        {
-          "days_ago": 3,
-          "patient_message": "Ya no le duele el brazo. Tomó los cuatro.",
-          "agent_message": "Me alegro, Marisol. Anoto los cuatro remedios. ¿Ha dormido bien doña Berta?",
-          "doses_reported_taken": 4,
-          "doses_expected": 4,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "4 de 4 dosis; sin dolor de brazo, duerme bien."
-        },
-        {
-          "days_ago": 0,
-          "patient_message": "Se nos pasó la del mediodía. Está bien, pero se cansa cuando camina hasta el almacén de la esquina y tiene que parar.",
-          "agent_message": "Gracias por contarme, Marisol. Anoto tres de los cuatro remedios. Lo del cansancio al caminar lo estoy dejando para el equipo del consultorio. ¿Se le han hinchado los pies?",
-          "doses_reported_taken": 3,
-          "doses_expected": 4,
-          "symptoms": [
-            {
-              "term": "disnea_de_esfuerzo",
-              "verbatim": "se cansa cuando camina hasta el almacén de la esquina y tiene que parar",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "dyspnoea on exertion plus 1 missed dose, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "same distance-limited pattern as two weeks ago",
-          "final_color": "yellow",
-          "summary_line": "3 de 4 dosis; se cansa y para al caminar hasta el almacén."
-        }
-      ],
-      "queue_state": "contactado",
-      "audit": [
-        {
-          "days_ago": 7,
-          "actor": "CL-01",
-          "from_state": "pendiente",
-          "to_state": "en_revision",
-          "note": "Caída en el domicilio informada por la hija."
-        },
-        {
-          "days_ago": 6,
-          "actor": "CL-01",
-          "from_state": "en_revision",
-          "to_state": "contactado",
-          "note": "Se habló con la hija y se pidió evaluación de riesgo de caídas."
-        }
-      ]
-    },
-    {
       "code": "PV-008",
       "display_name": "Orlando Enrique Fuentealba Vergara",
       "age": 72,
@@ -1776,7 +920,7 @@
     {
       "code": "PV-009",
       "display_name": "Silvia Amanda Cortés Leiva",
-      "age": 77,
+      "age": 73,
       "sex": "F",
       "comuna": "Lo Prado",
       "conditions": [
@@ -1984,272 +1128,6 @@
       ]
     },
     {
-      "code": "PV-010",
-      "display_name": "Juan Ramón Alarcón Painemal",
-      "age": 84,
-      "sex": "M",
-      "comuna": "La Pintana",
-      "conditions": [
-        "insuficiencia_cardiaca"
-      ],
-      "assigned_clinician": "CL-02",
-      "enrolled_days_ago": 29,
-      "medications": [
-        {
-          "name": "Furosemida",
-          "dose": "40 mg",
-          "schedule_text": "una tableta en la mañana y una al mediodía",
-          "times_per_day": 2
-        },
-        {
-          "name": "Carvedilol",
-          "dose": "12,5 mg",
-          "schedule_text": "una tableta en la mañana y una en la noche",
-          "times_per_day": 2
-        },
-        {
-          "name": "Espironolactona",
-          "dose": "25 mg",
-          "schedule_text": "una tableta en la mañana",
-          "times_per_day": 1
-        }
-      ],
-      "check_ins": [
-        {
-          "days_ago": 20,
-          "patient_message": "buenos dias tome los cinco remedios ando bien gracias",
-          "agent_message": "Buenos días, don Juan. Anoto sus cinco remedios. ¿Cómo ha estado respirando hoy?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "5 de 5 dosis; sin síntomas referidos."
-        },
-        {
-          "days_ago": 19,
-          "patient_message": "todo tomado sin novedad",
-          "agent_message": "Gracias, don Juan. Anoto sus cinco remedios. ¿Ha dormido bien acostado?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "5 de 5 dosis; duerme bien acostado."
-        },
-        {
-          "days_ago": 18,
-          "patient_message": "se me paso la del mediodia andaba en la calle",
-          "agent_message": "Gracias por contarme, don Juan. Anoto cuatro de sus cinco remedios. ¿Cómo se sintió en la tarde?",
-          "doses_reported_taken": 4,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "yellow",
-          "rules_reason": "adherence gap: 1 of 5 doses missed, floor yellow",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "yellow",
-          "summary_line": "4 de 5 dosis; olvidó la dosis del mediodía fuera de casa."
-        },
-        {
-          "days_ago": 16,
-          "patient_message": "los cinco tomados hoy ando tranquilo",
-          "agent_message": "Anotado, don Juan, sus cinco remedios. ¿Se le han hinchado los pies?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "5 de 5 dosis; sin hinchazón de pies."
-        },
-        {
-          "days_ago": 15,
-          "patient_message": "tome todo ayer fui a ver a mi hija a puente alto y de vuelta en el paradero me tuve que sentar porque me faltaba el aire pero llegue bien a la casa la nieta esta grande",
-          "agent_message": "Gracias por contarme, don Juan. Anoto sus cinco remedios. Lo de tener que sentarse en el paradero lo estoy pasando al equipo del consultorio para que se comuniquen con usted. ¿Le había pasado antes al caminar?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [
-            {
-              "term": "disnea_de_esfuerzo",
-              "verbatim": "en el paradero me tuve que sentar porque me faltaba el aire",
-              "mentioned_in_passing": true
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "dyspnoea on exertion, floor yellow",
-          "model_color": "red",
-          "model_reason": "had to sit down after short walking, new for this patient",
-          "final_color": "red",
-          "summary_line": "5 de 5 dosis; debió sentarse en el paradero por falta de aire."
-        },
-        {
-          "days_ago": 13,
-          "patient_message": "ando mejor hoy no camine mucho tome los cinco",
-          "agent_message": "Gracias, don Juan. Anoto sus cinco remedios. ¿Ha sentido falta de aire dentro de la casa?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "yellow",
-          "model_reason": "dyspnoea two days ago, avoiding walking today",
-          "final_color": "yellow",
-          "summary_line": "5 de 5 dosis; sin falta de aire, pero caminó menos hoy."
-        },
-        {
-          "days_ago": 11,
-          "patient_message": "me duele el pecho cuando camino harto se me pasa cuando paro sera un infarto",
-          "agent_message": "Don Juan, yo no puedo decirle qué es lo que siente. Anoto sus cinco remedios y estoy pasando ahora mismo lo del dolor de pecho al equipo del consultorio para que lo contacten hoy. Si el dolor vuelve o se hace más fuerte, vaya al servicio de urgencia o llame al 131.",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [
-            {
-              "term": "dolor_toracico",
-              "verbatim": "me duele el pecho cuando camino harto se me pasa cuando paro",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "chest pain on exertion, floor red",
-          "model_color": "red",
-          "model_reason": "exertional chest pain after dyspnoea earlier in the week",
-          "final_color": "red",
-          "summary_line": "5 de 5 dosis; dolor de pecho al caminar que cede al parar."
-        },
-        {
-          "days_ago": 9,
-          "patient_message": "hoy no me dolio el pecho tome los cinco",
-          "agent_message": "Gracias por avisarme, don Juan. Anoto sus cinco remedios. El equipo del consultorio ya tiene su caso. ¿Ha caminado hoy?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "yellow",
-          "model_reason": "chest pain two days ago, case still open",
-          "final_color": "yellow",
-          "summary_line": "5 de 5 dosis; sin dolor de pecho hoy."
-        },
-        {
-          "days_ago": 6,
-          "patient_message": "ando bien los cinco tomados",
-          "agent_message": "Me alegro, don Juan. Anoto sus cinco remedios. ¿Ha dormido bien?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [],
-          "rules_color": "green",
-          "rules_reason": "no flag",
-          "model_color": "green",
-          "model_reason": "no escalation",
-          "final_color": "green",
-          "summary_line": "5 de 5 dosis; sin novedades."
-        },
-        {
-          "days_ago": 4,
-          "patient_message": "en la noche me despierto con tos como a las dos tome todo igual",
-          "agent_message": "Gracias por contarme, don Juan. Anoto sus cinco remedios y la tos de la noche para el equipo del consultorio. ¿Le cuesta respirar cuando está acostado?",
-          "doses_reported_taken": 5,
-          "doses_expected": 5,
-          "symptoms": [
-            {
-              "term": "tos_nocturna",
-              "verbatim": "en la noche me despierto con tos como a las dos",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "yellow",
-          "rules_reason": "nocturnal cough on the heart failure alarm list, floor yellow",
-          "model_color": "yellow",
-          "model_reason": "cough waking him at night, no breathlessness reported yet",
-          "final_color": "yellow",
-          "summary_line": "5 de 5 dosis; se despierta con tos alrededor de las dos."
-        },
-        {
-          "days_ago": 2,
-          "patient_message": "los pies hinchados y ando con tos en la noche se me paso una dosis",
-          "agent_message": "Gracias por decírmelo, don Juan. Anoto cuatro de sus cinco remedios. Los pies hinchados y la tos los estoy pasando ahora al equipo del consultorio. ¿Ha podido dormir acostado?",
-          "doses_reported_taken": 4,
-          "doses_expected": 5,
-          "symptoms": [
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los pies hinchados",
-              "mentioned_in_passing": false
-            },
-            {
-              "term": "tos_nocturna",
-              "verbatim": "ando con tos en la noche",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "edema plus nocturnal cough, both on the alarm list, floor red",
-          "model_color": "red",
-          "model_reason": "two alarm signs together with a missed dose",
-          "final_color": "red",
-          "summary_line": "4 de 5 dosis; pies hinchados y tos nocturna el mismo día."
-        },
-        {
-          "days_ago": 0,
-          "patient_message": "anoche dormi sentado en la silla porque acostado me ahogo y los pies muy hinchados no alcance a tomar dos remedios",
-          "agent_message": "Gracias por avisarme al tiro, don Juan. Anoto tres de sus cinco remedios. Estoy pasando esto ahora mismo al equipo del consultorio para que lo contacten hoy. Si se siente peor mientras tanto, vaya al servicio de urgencia o llame al 131.",
-          "doses_reported_taken": 3,
-          "doses_expected": 5,
-          "symptoms": [
-            {
-              "term": "ortopnea",
-              "verbatim": "anoche dormi sentado en la silla porque acostado me ahogo",
-              "mentioned_in_passing": false
-            },
-            {
-              "term": "edema_de_extremidades",
-              "verbatim": "los pies muy hinchados",
-              "mentioned_in_passing": false
-            }
-          ],
-          "rules_color": "red",
-          "rules_reason": "orthopnoea plus edema meets the contact threshold, floor red",
-          "model_color": "red",
-          "model_reason": "slept sitting up, edema worse and two doses missed",
-          "final_color": "red",
-          "summary_line": "3 de 5 dosis; durmió sentado por ahogo y con pies muy hinchados."
-        }
-      ],
-      "queue_state": "en_revision",
-      "audit": [
-        {
-          "days_ago": 10,
-          "actor": "CL-02",
-          "from_state": "pendiente",
-          "to_state": "en_revision",
-          "note": "Se levanta por dolor de pecho al caminar."
-        },
-        {
-          "days_ago": 8,
-          "actor": "CL-02",
-          "from_state": "en_revision",
-          "to_state": "contactado",
-          "note": "Se llamó al paciente y se derivó a evaluación médica."
-        },
-        {
-          "days_ago": 0,
-          "actor": "CL-02",
-          "from_state": "contactado",
-          "to_state": "en_revision",
-          "note": "Vuelve a revisión por ahogo nocturno e hinchazón de pies."
-        }
-      ]
-    },
-    {
       "code": "PV-011",
       "display_name": "Nelly Ester Zambrano Poblete",
       "age": 68,
@@ -2379,7 +1257,7 @@
     {
       "code": "PV-012",
       "display_name": "Sergio Antonio Valdebenito Cáceres",
-      "age": 79,
+      "age": 75,
       "sex": "M",
       "comuna": "Independencia",
       "conditions": [
@@ -2558,6 +1436,179 @@
           "note": "Control realizado, sin nuevos episodios, se cierra el caso."
         }
       ]
+    },
+    {
+      "code": "PV-013",
+      "display_name": "Hernán Villalobos Sepúlveda",
+      "age": 73,
+      "sex": "M",
+      "comuna": "La Cisterna",
+      "conditions": [
+        "hipertension",
+        "diabetes_tipo_2"
+      ],
+      "assigned_clinician": "CL-01",
+      "enrolled_days_ago": 21,
+      "medications": [
+        {
+          "name": "Losartán",
+          "dose": "50 mg",
+          "schedule_text": "una tableta en la mañana y una en la noche",
+          "times_per_day": 2
+        },
+        {
+          "name": "Amlodipino",
+          "dose": "5 mg",
+          "schedule_text": "una tableta en la mañana",
+          "times_per_day": 1
+        },
+        {
+          "name": "Metformina",
+          "dose": "850 mg",
+          "schedule_text": "una tableta con el desayuno y una con la cena",
+          "times_per_day": 2
+        },
+        {
+          "name": "Atorvastatina",
+          "dose": "20 mg",
+          "schedule_text": "una tableta en la noche",
+          "times_per_day": 1
+        },
+        {
+          "name": "Aspirina",
+          "dose": "100 mg",
+          "schedule_text": "una tableta después del almuerzo",
+          "times_per_day": 1
+        }
+      ],
+      "check_ins": [
+        {
+          "days_ago": 14,
+          "patient_message": "Buenos días. Me los tomé todos. Salí temprano a comprar el pan, así que ando bien.",
+          "agent_message": "Buenos días, don Hernán. Anoto sus siete remedios tomados. ¿Cómo ha andado de ánimo esta semana?",
+          "doses_reported_taken": 7,
+          "doses_expected": 7,
+          "symptoms": [],
+          "rules_color": "green",
+          "rules_reason": "no flag",
+          "model_color": "green",
+          "model_reason": "no escalation",
+          "final_color": "green",
+          "summary_line": "7 de 7 dosis; sin síntomas referidos."
+        },
+        {
+          "days_ago": 12,
+          "patient_message": "Todo tomado. Sin novedad por acá.",
+          "agent_message": "Gracias, don Hernán. Anoto sus siete remedios. Que tenga buena tarde.",
+          "doses_reported_taken": 7,
+          "doses_expected": 7,
+          "symptoms": [],
+          "rules_color": "green",
+          "rules_reason": "no flag",
+          "model_color": "green",
+          "model_reason": "no escalation",
+          "final_color": "green",
+          "summary_line": "7 de 7 dosis; sin síntomas referidos."
+        },
+        {
+          "days_ago": 10,
+          "patient_message": "Me faltaron los de la noche. Me quedé dormido viendo las noticias y desperté como a las dos de la mañana.",
+          "agent_message": "Gracias por contarme, don Hernán. Anoto cinco de sus siete remedios. Lo dejo anotado para el equipo del consultorio. ¿Le pasa seguido que se le pasa la hora de la noche?",
+          "doses_reported_taken": 5,
+          "doses_expected": 7,
+          "symptoms": [],
+          "rules_color": "yellow",
+          "rules_reason": "2 missed doses in one day, floor yellow",
+          "model_color": "yellow",
+          "model_reason": "first reported miss, patient gives a clear reason",
+          "final_color": "yellow",
+          "summary_line": "5 de 7 dosis; se durmió y omitió las de la noche."
+        },
+        {
+          "days_ago": 8,
+          "patient_message": "Hoy sí me los tomé todos. Le puse la alarma al celular como me dijo mi hija.",
+          "agent_message": "Muy bien, don Hernán. Anoto sus siete remedios tomados. ¿Cómo se ha sentido hoy?",
+          "doses_reported_taken": 7,
+          "doses_expected": 7,
+          "symptoms": [],
+          "rules_color": "green",
+          "rules_reason": "no flag",
+          "model_color": "green",
+          "model_reason": "no escalation",
+          "final_color": "green",
+          "summary_line": "7 de 7 dosis; sin síntomas referidos."
+        },
+        {
+          "days_ago": 6,
+          "patient_message": "Todos tomados. Ando con un dolor de cabeza en la nuca que me agarra en las mañanas, pero se me pasa después del desayuno.",
+          "agent_message": "Gracias por contarme, don Hernán. Anoto sus siete remedios y también lo del dolor en la nuca en las mañanas. Lo voy a dejar anotado para el equipo del consultorio. ¿Desde cuándo lo tiene?",
+          "doses_reported_taken": 7,
+          "doses_expected": 7,
+          "symptoms": [
+            {
+              "term": "cefalea_occipital_matinal",
+              "verbatim": "un dolor de cabeza en la nuca que me agarra en las mañanas",
+              "mentioned_in_passing": false
+            }
+          ],
+          "rules_color": "yellow",
+          "rules_reason": "occipital morning headache on a treated hypertensive, floor yellow",
+          "model_color": "yellow",
+          "model_reason": "headache described as brief and self-limited",
+          "final_color": "yellow",
+          "summary_line": "7 de 7 dosis; dolor de cabeza en la nuca en las mañanas."
+        },
+        {
+          "days_ago": 4,
+          "patient_message": "Todo tomado. Hoy amanecí sin el dolor de cabeza, así que bien.",
+          "agent_message": "Me alegro, don Hernán. Anoto sus siete remedios tomados y que hoy amaneció sin dolor. Seguimos conversando mañana.",
+          "doses_reported_taken": 7,
+          "doses_expected": 7,
+          "symptoms": [],
+          "rules_color": "green",
+          "rules_reason": "no flag",
+          "model_color": "green",
+          "model_reason": "no escalation",
+          "final_color": "green",
+          "summary_line": "7 de 7 dosis; cede el dolor de cabeza referido el día anterior."
+        },
+        {
+          "days_ago": 2,
+          "patient_message": "Me faltó la aspirina del almuerzo porque salí donde mi hermana. De ahí todo bien.",
+          "agent_message": "Gracias, don Hernán. Anoto seis de sus siete remedios. Lo dejo anotado para el equipo del consultorio. ¿Cómo se ha sentido en estos días?",
+          "doses_reported_taken": 6,
+          "doses_expected": 7,
+          "symptoms": [],
+          "rules_color": "yellow",
+          "rules_reason": "1 missed dose, floor yellow",
+          "model_color": "yellow",
+          "model_reason": "isolated miss with a stated reason",
+          "final_color": "yellow",
+          "summary_line": "6 de 7 dosis; omitió la aspirina del almuerzo."
+        },
+        {
+          "days_ago": 1,
+          "patient_message": "Sí, me tomé los siete, todo en orden. Ah, y ayer en la tarde se me durmió el brazo derecho como diez minutos y se me trabó un poco la lengua, pero ya se me pasó, así que no le di importancia.",
+          "agent_message": "Gracias por contarme, don Hernán. Anoto sus siete remedios. Lo que me cuenta del brazo y de la lengua lo estoy pasando ahora mismo al equipo del consultorio para que se comuniquen con usted. Aunque ya se le haya pasado, por favor acuda a un servicio de urgencia o llame al 131. ¿Hay alguien en la casa que lo pueda acompañar?",
+          "doses_reported_taken": 7,
+          "doses_expected": 7,
+          "symptoms": [
+            {
+              "term": "deficit_neurologico_transitorio",
+              "verbatim": "se me durmió el brazo derecho como diez minutos y se me trabó un poco la lengua",
+              "mentioned_in_passing": true
+            }
+          ],
+          "rules_color": "red",
+          "rules_reason": "transient unilateral weakness with speech disturbance, floor red",
+          "model_color": "red",
+          "model_reason": "volunteered after the patient reported himself well and dismissed it as resolved",
+          "final_color": "red",
+          "summary_line": "7 de 7 dosis; menciona de pasada adormecimiento del brazo derecho y lengua trabada, ya resuelto."
+        }
+      ],
+      "queue_state": "pendiente",
+      "audit": []
     }
   ]
 }

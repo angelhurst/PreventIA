@@ -54,6 +54,8 @@ SYMPTOM_LABELS = {
     "aumento_de_peso": "aumento de peso",
     "tos_nocturna": "tos en la noche",
     "caida": "caída",
+    "cefalea_occipital_matinal": "dolor de cabeza en la nuca en la mañana",
+    "deficit_neurologico_transitorio": "adormecimiento de un lado y dificultad para hablar",
 }
 
 TEXT = {
@@ -86,7 +88,19 @@ TEXT = {
     "font_size_steps": ["Normal", "Grande", "Muy grande"],
     "skip_to_queue": "Saltar a la cola",
     "state_change_failed": "El cambio de estado no se registró. El caso sigue como estaba.",
+    "contact_title": "Contacto directo del médico",
+    "contact_badge": "Solo médico",
+    "contact_help": "Registre aquí un contacto que usted ya realizó con la persona. Queda firmado con su nombre y la hora, y no se envía ningún mensaje desde el sistema.",
+    "contact_note_label": "Qué se hizo",
+    "contact_note_hint": "Por ejemplo: llamado telefónico, se adelantó el control, se avisó a la familia.",
+    "contact_submit": "Registrar contacto",
+    "contact_only_doctor": "Solo un médico puede registrar un contacto directo. No se registró nada.",
+    "contact_needs_note": "Escriba qué se hizo. Un contacto sin registro de lo ocurrido no se guarda.",
     "acting_as": "Registrando como",
+    "setup_title": "Falta la ficha clínica",
+    "setup_body": "El tablero no encontró la base de datos del registro clínico, así que no hay nada que mostrar todavía. Ejecute esto en la carpeta del proyecto y vuelva a cargar la página.",
+    "setup_command": "python -m preventia.data.seed_cohort",
+    "setup_path_label": "Ruta que se buscó",
     "not_a_diagnosis": "PreventIA no diagnostica ni indica tratamientos. Este resumen es apoyo al seguimiento entre controles.",
 }
 
@@ -105,6 +119,17 @@ def condition_label(value):
 
 def symptom_label(value):
     return SYMPTOM_LABELS.get(value, value.replace("_", " "))
+
+
+ERRORS = {
+    "estado": "state_change_failed",
+    "solo_medico": "contact_only_doctor",
+    "falta_nota": "contact_needs_note",
+}
+
+
+def error_message(code):
+    return TEXT.get(ERRORS.get(code, ""), "")
 
 
 def when(value, today=None):
