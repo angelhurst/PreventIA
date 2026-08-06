@@ -11,6 +11,9 @@ from .. import channels
 from ..agent import models
 from ..agent.core import run_check_in
 from ..clinical.extraction import ExtractionFailed
+from ..environment import load_env_file
+
+load_env_file()
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_DB = BASE_DIR.parent / "data" / "preventia.db"

@@ -16,6 +16,7 @@ from preventia.channels.whatsapp_webhook import (
     WhatsAppCredentials,
 )
 from preventia.dashboard.intake import connect, patient_for_agent, persist
+from preventia.environment import load_env_file
 from preventia.patient_copy import FALLBACK_ACKNOWLEDGEMENT
 
 DEFAULT_PORT = 8080
@@ -28,25 +29,6 @@ def webhook_port() -> int:
 
 def database_path() -> Path:
     return Path(os.environ.get("PREVENTIA_DB") or DEFAULT_DB)
-
-
-def env_file() -> Path:
-    override = os.environ.get("PREVENTIA_ENV_FILE")
-    if override:
-        return Path(override)
-    return Path(__file__).resolve().parents[2] / ".env"
-
-
-def load_env_file(path: Path | None = None) -> None:
-    path = path or env_file()
-    if not path.exists():
-        return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        stripped = line.strip()
-        if not stripped or stripped.startswith("#") or "=" not in stripped:
-            continue
-        key, _, value = stripped.partition("=")
-        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
 def check_in(message: InboundMessage) -> str:
