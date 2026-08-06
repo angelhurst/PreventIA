@@ -5,7 +5,7 @@ from ..clinical import guardrails
 from ..clinical.extraction import extract
 from ..clinical.rules import evaluate
 from ..clinical.semaforo import Color
-from ..patient_copy import URGENCY_REDIRECT
+from ..patient_copy import TEAM_NOTIFIED, URGENCY_REDIRECT
 from .models import build_model
 
 
@@ -50,6 +50,8 @@ def run_check_in(patient, message, model=None):
     reply = guard.message
     if verdict.color is Color.RED:
         reply = f"{reply} {URGENCY_REDIRECT}"
+    elif final is Color.RED and guard.allowed:
+        reply = f"{reply} {TEAM_NOTIFIED}"
 
     return CheckInResult(
         patient_code=patient["code"],

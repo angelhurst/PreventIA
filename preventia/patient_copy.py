@@ -23,6 +23,8 @@ URGENCY_REDIRECT = (
     "Ya avisé a su equipo de salud."
 )
 
+TEAM_NOTIFIED = "Ya avisé a su equipo de salud para que se comunique con usted."
+
 FALLBACK_ACKNOWLEDGEMENT = (
     "Gracias por contarme cómo se ha sentido. "
     "Dejé anotado su mensaje para el equipo del consultorio."
