@@ -59,6 +59,11 @@ SYMPTOM_LABELS = {
 }
 
 TEXT = {
+    "crisis_title": "Contacto humano inmediato",
+    "crisis_subtitle": "Fuera del semáforo. Estos casos no son de seguimiento cardiovascular y no se ordenan por color.",
+    "crisis_words": "Lo que escribió la persona",
+    "crisis_detected": "Detectado",
+    "crisis_replied": "Lo que se le respondió",
     "queue_title": "Cola de seguimiento",
     "queue_subtitle": "Ordenada por riesgo. Los casos rojos van primero.",
     "empty_queue": "No hay casos en esta vista.",

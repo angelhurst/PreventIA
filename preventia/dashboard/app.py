@@ -112,6 +112,7 @@ async def queue(request: Request, filtro: str = "abiertos"):
         only_open = filtro != "todos"
         rows = repository.queue_rows(conn, only_open=only_open)
         roster = repository.clinicians(conn)
+        crises = intake.open_crises(conn)
     finally:
         conn.close()
 
@@ -120,6 +121,7 @@ async def queue(request: Request, filtro: str = "abiertos"):
         "queue.html",
         {
             "rows": rows,
+            "crises": crises,
             "filtro": "todos" if filtro == "todos" else "abiertos",
             "roster": roster,
             "actor": acting_clinician(request, roster),
