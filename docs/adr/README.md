@@ -22,3 +22,4 @@ is flipping its Status line to "Superseded by 00YY".
 | [0012](0012-hand-rolled-agent-core-without-strands.md) | Hand-rolled provider-agnostic agent core, without Strands | Accepted |
 | [0013](0013-urgency-redirect-only-on-a-rules-red.md) | The urgency redirect is allowed only where a rule fired red | Accepted |
 | [0014](0014-append-only-audit-log-as-queue-state.md) | The append-only audit log is the queue's state | Accepted |
+| [0015](0015-crisis-protocol-outside-the-semaforo.md) | The crisis protocol runs outside the semáforo | Accepted |
