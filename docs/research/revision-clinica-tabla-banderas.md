@@ -132,6 +132,24 @@ y similares no gatillan nada.
 Una mujer de 71 años en Chile probablemente no dice "quiero suicidarme"; dice otra cosa. Esa otra cosa
 es la que necesitamos.
 
+## Cuarta parte: quién puede bajar un color
+
+El semáforo tiene una regla que no se puede romper: el modelo puede **subir** un color, nunca bajarlo.
+Eso está garantizado en el código y probado.
+
+Una persona sí puede bajarlo, y desde hoy existe el control: se elige el color, se escribe la razón —
+obligatoria — y queda registrado con nombre y hora. La primera vez que se usó, quedó así:
+
+> Cambio de color · AMARILLO — baja gravedad por confirmación de asistencia de SAMU
+
+Hoy ese control está restringido a **médico**. Una enfermera que lo intenta recibe "Solo un médico
+puede cambiar el color. No se cambió nada."
+
+**Pregunta 6.** ¿Es correcto? En la atención primaria chilena el Programa de Salud Cardiovascular lo
+lleva en gran medida enfermería, y el rescate de inasistentes es trabajo de enfermería según la propia
+Orientación Técnica del Minsal. Restringirlo a médico puede ser lo prudente o puede ser no entender
+cómo funciona un CESFAM. Ustedes saben cuál de las dos.
+
 ## Lo que ocurre después
 
 Su revisión se registra como decisión clínica: la tabla queda con autor, y la ADR correspondiente lleva
