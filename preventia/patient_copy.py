@@ -5,6 +5,12 @@ ASSISTANT_DISCLOSURE = (
     "Lo que usted me cuente queda anotado para su equipo de salud."
 )
 
+CRISIS_DIVERSION = (
+    "Gracias por contarme algo así de difícil. Usted no tiene que pasar por esto sin apoyo. "
+    "Estoy avisando ahora mismo a su equipo de salud para que se comuniquen con usted lo antes "
+    "posible. Por favor manténgase acompañado y deje su teléfono cerca."
+)
+
 SAFE_REDIRECT = (
     "Prefiero no responderle eso, porque no soy médico. "
     "Estoy dejando su mensaje anotado para el equipo del consultorio, "
