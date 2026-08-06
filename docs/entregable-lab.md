@@ -71,3 +71,28 @@ un evaluador.
 
 En los cinco casos la derivación termina en una persona identificada, con registro de quién cambió el
 estado y cuándo.
+
+## Cómo se evalúa
+
+La rúbrica del Lab, con el peso de cada bloque y qué campo la responde.
+
+| Bloque | Peso | Criterio | Cómo se evalúa | Qué lo responde |
+|---|---|---|---|---|
+| Problema y población | 12% | La población está nombrada de forma específica, no "los pacientes" (50%) | Campo `segmento_ciudadano`: condición de salud o etapa vital más un eje adicional: edad, territorio, sistema previsional | `docs/entregable-tecnico.md`, sección `segmento_ciudadano` |
+| Problema y población | 12% | El impacto está cuantificado con un número y una fuente oficial verificable (50%) | Campos `impacto_cuantificado` y `fuente_impacto_url`, en dominio oficial | `docs/entregable-tecnico.md`, sección `impacto_cuantificado` |
+| Responsabilidad clínica | 12% | Cita al menos 2 fuentes oficiales de salud con URL (50%) | Campo `fuentes_regulatorias` con dos o más URLs de organismos oficiales | Este documento, `fuentes_regulatorias`: cinco fuentes Minsal |
+| Responsabilidad clínica | 12% | Declara explícitamente qué no hace el agente y cuándo deriva a un profesional (50%) | Campos `agente_no_hace` y `agente_deriva` del entregable técnico | Este documento, ambas secciones |
+| Construyó con Claude | 16% | El mentor vio el agente funcionando, aunque sea parcialmente (50%) | Observación directa del mentor en el venue. No requiere subir nada | Pantalla `/consulta`: entra el mensaje del paciente, sale el color y la respuesta |
+| Construyó con Claude | 16% | Claude es el motor de la solución, no un agregado decorativo (50%) | Observación del mentor: si se saca a Claude, ¿la solución deja de funcionar? | `preventia/clinical/extraction.py`: sin el modelo no hay extracción de adherencia ni de síntomas, y el semáforo queda sin hechos que evaluar |
+
+Dos advertencias sobre este cuadro, para que nadie las descubra por nosotros.
+
+**Los dos campos que puntúa "Problema y población" no están en este archivo.** Viven en
+`docs/entregable-tecnico.md`. Si el formulario se llena desde aquí, hay que ir a buscarlos allá.
+
+**El segundo criterio de "Construyó con Claude" tiene una respuesta honesta y una trampa.** Sin Claude
+no hay extracción: nadie convierte "ando con harta tos seca en la noche" en un hecho estructurado. Lo
+que sí sigue funcionando sin Claude es la mitad determinista, y eso es deliberado: el piso del
+semáforo, el filtro de salida y la detección de crisis son código, no modelo. Conviene decirlo en ese
+orden. Claude es el motor de la comprensión; las barreras clínicas están puestas para no depender de
+él.
