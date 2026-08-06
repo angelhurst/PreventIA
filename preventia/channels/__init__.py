@@ -29,6 +29,20 @@ def build_channel(name=None):
     return LocalConsoleChannel()
 
 
+def recipient_for_patient(patient_code):
+    from .whatsapp_webhook import StaticPatientDirectory
+
+    return StaticPatientDirectory.from_environment().channel_address_for(patient_code)
+
+
+def has_recipient(patient_code):
+    try:
+        recipient_for_patient(patient_code)
+    except UnknownSender:
+        return False
+    return True
+
+
 def describe_channel():
     name = resolve_channel_name()
     if name == WHATSAPP:
@@ -50,5 +64,7 @@ __all__ = [
     "UnknownSender",
     "build_channel",
     "describe_channel",
+    "has_recipient",
+    "recipient_for_patient",
     "resolve_channel_name",
 ]
